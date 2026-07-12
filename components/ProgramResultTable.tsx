@@ -1,0 +1,121 @@
+import { DeficitBadge } from "./DeficitBadge";
+import { SourceLink } from "./SourceLink";
+import type { EvaluationResult, RuleResult } from "@/lib/types";
+
+type ProgramResultTableProps = {
+  evaluations: readonly EvaluationResult[];
+  tone: "passed" | "near";
+  emptyMessage: string;
+};
+
+function RuleSummary({ result }: { result: RuleResult }) {
+  return (
+    <li className={result.passed ? "rule-line passed" : "rule-line failed"}>
+      <span className="rule-order">第 {result.rule.order} 關</span>
+      <span className="rule-name">{result.rule.label}</span>
+      <span className="rule-score">
+        你的 <b>{result.userScore}</b>
+        <i aria-hidden="true">/</i>
+        門檻 {result.minScore}
+      </span>
+      <span className="rule-status">
+        {result.passed ? "通過" : `差 ${result.deficit}`}
+      </span>
+    </li>
+  );
+}
+
+function BoostPlan({ evaluation }: { evaluation: EvaluationResult }) {
+  const plan = evaluation.nearestBoost[0];
+  if (!plan) {
+    return (
+      <p className="boost-copy unavailable">
+        在單科最高 15 級分的限制下，沒有可行的補分組合。
+      </p>
+    );
+  }
+
+  return (
+    <div className="boost-plan">
+      <span className="boost-label">最省力方向</span>
+      <p className="boost-copy">
+        {plan.changes.map((change, index) => (
+          <span key={change.subject}>
+            {index > 0 ? "、" : ""}
+            <b>{change.subject}</b> +{change.points}
+          </span>
+        ))}
+      </p>
+      {evaluation.nearestBoost.length > 1 ? (
+        <span className="boost-alternatives">
+          另有 {evaluation.nearestBoost.length - 1} 種同分方案
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
+export function ProgramResultTable({
+  evaluations,
+  tone,
+  emptyMessage,
+}: ProgramResultTableProps) {
+  if (evaluations.length === 0) {
+    return <div className="empty-state">{emptyMessage}</div>;
+  }
+
+  return (
+    <div className="program-list">
+      {evaluations.map((evaluation, index) => (
+        <article
+          className={`program-card ${tone}`}
+          key={evaluation.program.programCode}
+        >
+          <div className="program-rank" aria-label={`第 ${index + 1} 筆`}>
+            {String(index + 1).padStart(2, "0")}
+          </div>
+          <div className="program-main">
+            <div className="program-heading">
+              <div>
+                <div className="school-line">
+                  <span>{evaluation.program.schoolName}</span>
+                  <span className="program-code">
+                    {evaluation.program.programCode}
+                  </span>
+                </div>
+                <h3>{evaluation.program.programName}</h3>
+              </div>
+              <div className="program-actions">
+                {tone === "passed" ? (
+                  <span className="pass-badge">可能通過</span>
+                ) : (
+                  <DeficitBadge
+                    points={evaluation.nearestBoost[0]?.totalPoints ?? 0}
+                  />
+                )}
+                <SourceLink
+                  compact
+                  href={evaluation.program.source.reportHtmlUrl}
+                />
+              </div>
+            </div>
+
+            <ul className="rule-list" aria-label="逐關篩選結果">
+              {(tone === "passed"
+                ? evaluation.ruleResults
+                : evaluation.failedRules
+              ).map((result) => (
+                <RuleSummary
+                  key={`${evaluation.program.programCode}-${result.rule.order}`}
+                  result={result}
+                />
+              ))}
+            </ul>
+
+            {tone === "near" ? <BoostPlan evaluation={evaluation} /> : null}
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}

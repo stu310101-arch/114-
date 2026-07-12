@@ -1,0 +1,723 @@
+[
+  {
+    "year": 114,
+    "schoolId": "001",
+    "schoolName": "國立臺灣大學",
+    "programCode": "001552",
+    "programName": "資訊管理學系",
+    "groupTags": ["自然組", "社會組"],
+    "departmentKeywords": ["資管", "資訊管理"],
+    "screeningRules": [
+      { "order": 1, "label": "國文＋英文＋數A＋自然", "subjects": ["國文", "英文", "數A", "自然"], "minScore": 53, "rawText": "國英數A自53" },
+      { "order": 2, "label": "英文＋數A", "subjects": ["英文", "數A"], "minScore": 28, "rawText": "（英文＋數學A）28" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/001.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/001.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "001",
+    "schoolName": "國立臺灣大學",
+    "programCode": "001582",
+    "programName": "電機工程學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["電機", "電機工程"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋數A＋自然", "subjects": ["英文", "數A", "自然"], "minScore": 44, "rawText": "（英文＋數學A＋自然）44" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/001.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/001.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "001",
+    "schoolName": "國立臺灣大學",
+    "programCode": "001592",
+    "programName": "資訊工程學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["資工", "資訊工程"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋自然", "subjects": ["英文", "自然"], "minScore": 26, "rawText": "（英文＋自然）26" },
+      { "order": 2, "label": "數A", "subjects": ["數A"], "minScore": 15, "rawText": "數學A15" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/001.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/001.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "001",
+    "schoolName": "國立臺灣大學",
+    "programCode": "001622",
+    "programName": "法律學系法學組",
+    "groupTags": ["社會組"],
+    "departmentKeywords": ["法律", "法學"],
+    "screeningRules": [
+      { "order": 1, "label": "國文＋英文", "subjects": ["國文", "英文"], "minScore": 30, "rawText": "（國文＋英文）30" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/001.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/001.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "004",
+    "schoolName": "國立成功大學",
+    "programCode": "004242",
+    "programName": "工業與資訊管理學系",
+    "groupTags": ["自然組", "社會組"],
+    "departmentKeywords": ["資管", "工業與資訊管理"],
+    "screeningRules": [
+      { "order": 1, "label": "英文", "subjects": ["英文"], "minScore": 12, "rawText": "英文12" },
+      { "order": 2, "label": "數A", "subjects": ["數A"], "minScore": 11, "rawText": "數學A11" },
+      { "order": 3, "label": "國文＋英文＋數A", "subjects": ["國文", "英文", "數A"], "minScore": 38, "rawText": "國英數A38" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/004.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/004.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "004",
+    "schoolName": "國立成功大學",
+    "programCode": "004422",
+    "programName": "電機工程學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["電機", "電機工程"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋數A＋自然", "subjects": ["英文", "數A", "自然"], "minScore": 42, "rawText": "（英文＋數學A＋自然）42" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/004.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/004.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "004",
+    "schoolName": "國立成功大學",
+    "programCode": "004442",
+    "programName": "資訊工程學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["資工", "資訊工程"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋數A＋自然", "subjects": ["英文", "數A", "自然"], "minScore": 42, "rawText": "（英文＋數學A＋自然）42" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/004.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/004.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "004",
+    "schoolName": "國立成功大學",
+    "programCode": "004452",
+    "programName": "資訊工程學系（智慧系統組）",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["資工", "資訊工程", "智慧系統"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋數A", "subjects": ["英文", "數A"], "minScore": 27, "rawText": "（英文＋數學A）27" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/004.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/004.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "004",
+    "schoolName": "國立成功大學",
+    "programCode": "004462",
+    "programName": "資訊工程學系（智慧運算組）",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["資工", "資訊工程", "智慧運算"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋數A＋自然", "subjects": ["英文", "數A", "自然"], "minScore": 40, "rawText": "（英文＋數學A＋自然）40" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/004.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/004.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "013",
+    "schoolName": "國立陽明交通大學",
+    "programCode": "013062",
+    "programName": "資訊工程學系甲組",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["資工", "資訊工程"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋自然", "subjects": ["英文", "自然"], "minScore": 25, "rawText": "（英文＋自然）25" },
+      { "order": 2, "label": "數A", "subjects": ["數A"], "minScore": 15, "rawText": "數學A15" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/013.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/013.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "013",
+    "schoolName": "國立陽明交通大學",
+    "programCode": "013072",
+    "programName": "資訊工程學系乙組",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["資工", "資訊工程"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋自然", "subjects": ["英文", "自然"], "minScore": 26, "rawText": "（英文＋自然）26" },
+      { "order": 2, "label": "數A", "subjects": ["數A"], "minScore": 14, "rawText": "數學A14" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/013.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/013.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "013",
+    "schoolName": "國立陽明交通大學",
+    "programCode": "013262",
+    "programName": "管理科學系",
+    "groupTags": ["自然組", "社會組"],
+    "departmentKeywords": ["管理科學", "企管"],
+    "screeningRules": [
+      { "order": 1, "label": "國文＋英文＋數A", "subjects": ["國文", "英文", "數A"], "minScore": 37, "rawText": "（國文＋英文＋數學A）37" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/013.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/013.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "013",
+    "schoolName": "國立陽明交通大學",
+    "programCode": "013312",
+    "programName": "傳播與科技學系",
+    "groupTags": ["社會組"],
+    "departmentKeywords": ["傳播", "科技傳播"],
+    "screeningRules": [
+      { "order": 1, "label": "國文＋英文＋社會", "subjects": ["國文", "英文", "社會"], "minScore": 41, "rawText": "（國文＋英文＋社會）41" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/013.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/013.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "016",
+    "schoolName": "國立中央大學",
+    "programCode": "016052",
+    "programName": "數學系數學科學組",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["數學", "數學科學"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋自然", "subjects": ["英文", "自然"], "minScore": 17, "rawText": "（英文＋自然）17" },
+      { "order": 2, "label": "數A", "subjects": ["數A"], "minScore": 11, "rawText": "數學A11" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/016.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "016",
+    "schoolName": "國立中央大學",
+    "programCode": "016062",
+    "programName": "數學系計算與資料科學組",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["數學", "資料科學"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋自然", "subjects": ["英文", "自然"], "minScore": 21, "rawText": "（英文＋自然）21" },
+      { "order": 2, "label": "數A", "subjects": ["數A"], "minScore": 12, "rawText": "數學A12" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/016.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "016",
+    "schoolName": "國立中央大學",
+    "programCode": "016112",
+    "programName": "土木工程學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["土木", "土木工程"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋數A＋自然", "subjects": ["英文", "數A", "自然"], "minScore": 34, "rawText": "英數A自34" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/016.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "016",
+    "schoolName": "國立中央大學",
+    "programCode": "016182",
+    "programName": "資訊管理學系",
+    "groupTags": ["自然組", "社會組"],
+    "departmentKeywords": ["資管", "資訊管理"],
+    "screeningRules": [
+      { "order": 1, "label": "數A", "subjects": ["數A"], "minScore": 9, "rawText": "數學A9" },
+      { "order": 2, "label": "自然", "subjects": ["自然"], "minScore": 13, "rawText": "自然13" },
+      { "order": 3, "label": "英文", "subjects": ["英文"], "minScore": 13, "rawText": "英文13" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/016.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "016",
+    "schoolName": "國立中央大學",
+    "programCode": "016202",
+    "programName": "經濟學系",
+    "groupTags": ["社會組"],
+    "departmentKeywords": ["經濟"],
+    "screeningRules": [
+      { "order": 1, "label": "國文＋英文", "subjects": ["國文", "英文"], "minScore": 22, "rawText": "（國文＋英文）22" },
+      { "order": 2, "label": "數B", "subjects": ["數B"], "minScore": 13, "rawText": "數學B13" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/016.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "016",
+    "schoolName": "國立中央大學",
+    "programCode": "016212",
+    "programName": "財務金融學系",
+    "groupTags": ["社會組"],
+    "departmentKeywords": ["財金", "財務金融"],
+    "screeningRules": [
+      { "order": 1, "label": "國文＋英文", "subjects": ["國文", "英文"], "minScore": 23, "rawText": "（國文＋英文）23" },
+      { "order": 2, "label": "社會", "subjects": ["社會"], "minScore": 10, "rawText": "社會10" },
+      { "order": 3, "label": "英文＋社會", "subjects": ["英文", "社會"], "minScore": 27, "rawText": "英社27" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/016.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "016",
+    "schoolName": "國立中央大學",
+    "programCode": "016222",
+    "programName": "電機工程學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["電機", "電機工程"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋數A＋自然", "subjects": ["英文", "數A", "自然"], "minScore": 40, "rawText": "（英文＋數學A＋自然）40" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/016.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "016",
+    "schoolName": "國立中央大學",
+    "programCode": "016232",
+    "programName": "資訊工程學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["資工", "資訊工程"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋自然", "subjects": ["英文", "自然"], "minScore": 23, "rawText": "（英文＋自然）23" },
+      { "order": 2, "label": "數A", "subjects": ["數A"], "minScore": 12, "rawText": "數學A12" },
+      { "order": 3, "label": "英文＋數A＋自然", "subjects": ["英文", "數A", "自然"], "minScore": 39, "rawText": "英數A自39" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/016.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "016",
+    "schoolName": "國立中央大學",
+    "programCode": "016262",
+    "programName": "通訊工程學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["電機", "通訊工程"],
+    "screeningRules": [
+      { "order": 1, "label": "國文＋自然", "subjects": ["國文", "自然"], "minScore": 25, "rawText": "（國文＋自然）25" },
+      { "order": 2, "label": "國文＋英文＋數A＋自然", "subjects": ["國文", "英文", "數A", "自然"], "minScore": 50, "rawText": "國英數A自50" },
+      { "order": 3, "label": "英文＋數A", "subjects": ["英文", "數A"], "minScore": 24, "rawText": "（英文＋數學A）24" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/016.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "016",
+    "schoolName": "國立中央大學",
+    "programCode": "016342",
+    "programName": "生命科學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["生命科學", "生科"],
+    "screeningRules": [
+      { "order": 1, "label": "數A", "subjects": ["數A"], "minScore": 8, "rawText": "數學A8" },
+      { "order": 2, "label": "自然", "subjects": ["自然"], "minScore": 14, "rawText": "自然14" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/016.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "016",
+    "schoolName": "國立中央大學",
+    "programCode": "016352",
+    "programName": "生醫科學與工程學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["生醫", "生醫工程"],
+    "screeningRules": [
+      { "order": 1, "label": "英文", "subjects": ["英文"], "minScore": 13, "rawText": "英文13" },
+      { "order": 2, "label": "數A＋自然", "subjects": ["數A", "自然"], "minScore": 23, "rawText": "（數學A＋自然）23" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/016.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "027",
+    "schoolName": "國立中山大學",
+    "programCode": "027172",
+    "programName": "資訊工程學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["資工", "資訊工程"],
+    "screeningRules": [
+      { "order": 1, "label": "英文", "subjects": ["英文"], "minScore": 10, "rawText": "英文10" },
+      { "order": 2, "label": "自然", "subjects": ["自然"], "minScore": 13, "rawText": "自然13" },
+      { "order": 3, "label": "國文＋英文＋數A＋自然", "subjects": ["國文", "英文", "數A", "自然"], "minScore": 50, "rawText": "國英數A自50" },
+      { "order": 4, "label": "英文＋數A", "subjects": ["英文", "數A"], "minScore": 24, "rawText": "（英文＋數學A）24" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/027.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/027.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "027",
+    "schoolName": "國立中山大學",
+    "programCode": "027242",
+    "programName": "資訊管理學系",
+    "groupTags": ["自然組", "社會組"],
+    "departmentKeywords": ["資管", "資訊管理"],
+    "screeningRules": [
+      { "order": 1, "label": "國文＋英文＋數A", "subjects": ["國文", "英文", "數A"], "minScore": 36, "rawText": "國英數A36" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/027.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/027.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "027",
+    "schoolName": "國立中山大學",
+    "programCode": "027252",
+    "programName": "財務管理學系",
+    "groupTags": ["自然組", "社會組"],
+    "departmentKeywords": ["財金", "財務管理"],
+    "screeningRules": [
+      { "order": 1, "label": "數A", "subjects": ["數A"], "minScore": 8, "rawText": "數學A8" },
+      { "order": 2, "label": "英文", "subjects": ["英文"], "minScore": 13, "rawText": "英文13" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/027.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/027.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "027",
+    "schoolName": "國立中山大學",
+    "programCode": "027262",
+    "programName": "國際經營管理全英語學士學位學程",
+    "groupTags": ["社會組"],
+    "departmentKeywords": ["企管", "國際管理"],
+    "screeningRules": [
+      { "order": 1, "label": "數B", "subjects": ["數B"], "minScore": 6, "rawText": "數學B6" },
+      { "order": 2, "label": "英文", "subjects": ["英文"], "minScore": 13, "rawText": "英文13" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/027.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/027.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "027",
+    "schoolName": "國立中山大學",
+    "programCode": "027302",
+    "programName": "政治經濟學系",
+    "groupTags": ["自然組", "社會組"],
+    "departmentKeywords": ["政治", "經濟", "政治經濟"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋數A", "subjects": ["英文", "數A"], "minScore": 19, "rawText": "英數A19" },
+      { "order": 2, "label": "數A", "subjects": ["數A"], "minScore": 9, "rawText": "數學A9" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/027.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/027.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "027",
+    "schoolName": "國立中山大學",
+    "programCode": "027352",
+    "programName": "護理學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["護理"],
+    "screeningRules": [
+      { "order": 1, "label": "英文", "subjects": ["英文"], "minScore": 8, "rawText": "英文8" },
+      { "order": 2, "label": "自然", "subjects": ["自然"], "minScore": 11, "rawText": "自然11" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/027.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/027.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "041",
+    "schoolName": "國立中正大學",
+    "programCode": "041152",
+    "programName": "資訊工程學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["資工", "資訊工程"],
+    "screeningRules": [
+      { "order": 1, "label": "英文＋數A＋自然", "subjects": ["英文", "數A", "自然"], "minScore": 37, "rawText": "英數A自37" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/041.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/041.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "041",
+    "schoolName": "國立中正大學",
+    "programCode": "041162",
+    "programName": "電機工程學系",
+    "groupTags": ["自然組"],
+    "departmentKeywords": ["電機", "電機工程"],
+    "screeningRules": [
+      { "order": 1, "label": "數A", "subjects": ["數A"], "minScore": 6, "rawText": "數學A6" },
+      { "order": 2, "label": "國文＋英文＋數A＋自然", "subjects": ["國文", "英文", "數A", "自然"], "minScore": 51, "rawText": "國英數A自51" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/041.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/041.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "041",
+    "schoolName": "國立中正大學",
+    "programCode": "041242",
+    "programName": "企業管理學系",
+    "groupTags": ["社會組"],
+    "departmentKeywords": ["企管", "企業管理"],
+    "screeningRules": [
+      { "order": 1, "label": "國文", "subjects": ["國文"], "minScore": 10, "rawText": "國文10" },
+      { "order": 2, "label": "數B", "subjects": ["數B"], "minScore": 8, "rawText": "數學B8" },
+      { "order": 3, "label": "英文", "subjects": ["英文"], "minScore": 12, "rawText": "英文12" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/041.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/041.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "041",
+    "schoolName": "國立中正大學",
+    "programCode": "041252",
+    "programName": "會計與資訊科技學系",
+    "groupTags": ["社會組"],
+    "departmentKeywords": ["會計", "資訊科技"],
+    "screeningRules": [
+      { "order": 1, "label": "國文", "subjects": ["國文"], "minScore": 10, "rawText": "國文10" },
+      { "order": 2, "label": "英文", "subjects": ["英文"], "minScore": 12, "rawText": "英文12" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/041.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/041.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "041",
+    "schoolName": "國立中正大學",
+    "programCode": "041262",
+    "programName": "資訊管理學系",
+    "groupTags": ["自然組", "社會組"],
+    "departmentKeywords": ["資管", "資訊管理"],
+    "screeningRules": [
+      { "order": 1, "label": "數A", "subjects": ["數A"], "minScore": 8, "rawText": "數學A8" },
+      { "order": 2, "label": "英文", "subjects": ["英文"], "minScore": 14, "rawText": "英文14" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/041.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/041.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "041",
+    "schoolName": "國立中正大學",
+    "programCode": "041282",
+    "programName": "法律學系法學組",
+    "groupTags": ["社會組"],
+    "departmentKeywords": ["法律", "法學"],
+    "screeningRules": [
+      { "order": 1, "label": "英文", "subjects": ["英文"], "minScore": 11, "rawText": "英文11" },
+      { "order": 2, "label": "國文", "subjects": ["國文"], "minScore": 13, "rawText": "國文13" },
+      { "order": 3, "label": "社會", "subjects": ["社會"], "minScore": 13, "rawText": "社會13" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/041.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/041.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "041",
+    "schoolName": "國立中正大學",
+    "programCode": "041302",
+    "programName": "財經法律學系",
+    "groupTags": ["社會組"],
+    "departmentKeywords": ["法律", "財經法律"],
+    "screeningRules": [
+      { "order": 1, "label": "社會", "subjects": ["社會"], "minScore": 12, "rawText": "社會12" },
+      { "order": 2, "label": "國文＋英文", "subjects": ["國文", "英文"], "minScore": 26, "rawText": "（國文＋英文）26" },
+      { "order": 3, "label": "國文＋英文＋數B＋社會", "subjects": ["國文", "英文", "數B", "社會"], "minScore": 49, "rawText": "國英數B社49" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/041.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/041.png"
+    },
+    "verified": true
+  },
+  {
+    "year": 114,
+    "schoolId": "041",
+    "schoolName": "國立中正大學",
+    "programCode": "041322",
+    "programName": "犯罪防治學系",
+    "groupTags": ["社會組"],
+    "departmentKeywords": ["犯罪防治", "犯罪學"],
+    "screeningRules": [
+      { "order": 1, "label": "數B", "subjects": ["數B"], "minScore": 6, "rawText": "數學B6" },
+      { "order": 2, "label": "社會", "subjects": ["社會"], "minScore": 12, "rawText": "社會12" },
+      { "order": 3, "label": "國文＋英文", "subjects": ["國文", "英文"], "minScore": 25, "rawText": "（國文＋英文）25" }
+    ],
+    "source": {
+      "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
+      "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/041.htm",
+      "reportImageUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/pict/041.png"
+    },
+    "verified": true
+  }
+]
