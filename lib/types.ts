@@ -12,6 +12,48 @@ export type Subject = (typeof SUBJECTS)[number];
 
 export type GroupTag = "自然組" | "社會組";
 
+export const PROGRAM_DATA_STATUSES = ["complete", "needs-review"] as const;
+
+/** Whether all official fields required for a safe pass/fail result were parsed. */
+export type ProgramDataStatus = (typeof PROGRAM_DATA_STATUSES)[number];
+
+export const EVALUATION_SUPPORT_STATUSES = [
+  "supported",
+  "unsupported",
+] as const;
+
+export type EvaluationSupportStatus =
+  (typeof EVALUATION_SUPPORT_STATUSES)[number];
+
+export const REQUIREMENT_STANDARDS = [
+  "頂標",
+  "前標",
+  "均標",
+  "後標",
+  "底標",
+] as const;
+
+export type RequirementStandard = (typeof REQUIREMENT_STANDARDS)[number];
+
+export const LISTENING_STANDARDS = ["A級", "B級", "C級"] as const;
+
+export type ListeningStandard = (typeof LISTENING_STANDARDS)[number];
+
+/** An official subject threshold converted with the 114 GSAT five standards. */
+export type SubjectRequirement =
+  | {
+      subject: Exclude<Subject, "英聽">;
+      standard: RequirementStandard;
+      minScore: number;
+      rawText: string;
+    }
+  | {
+      subject: "英聽";
+      standard: ListeningStandard;
+      minScore: number;
+      rawText: string;
+    };
+
 export type ScreeningRule = {
   order: number;
   label: string;
@@ -24,6 +66,8 @@ export type ProgramSource = {
   collegeListUrl: string;
   reportHtmlUrl: string;
   reportImageUrl: string;
+  /** Official 114 application catalog page for this exact program. */
+  programDetailUrl?: string;
 };
 
 export type Program = {
@@ -35,8 +79,17 @@ export type Program = {
   quota?: number;
   groupTags: GroupTag[];
   departmentKeywords: string[];
+  requirements?: SubjectRequirement[];
   screeningRules: ScreeningRule[];
   source: ProgramSource;
+  /**
+   * New official imports always set both fields. They are optional only so the
+   * original hand-curated 114 snapshot can remain readable during migration.
+   */
+  dataStatus?: ProgramDataStatus;
+  evaluationSupport?: EvaluationSupportStatus;
+  reviewReasons?: string[];
+  /** Legacy mirror retained for existing UI/data consumers. */
   verified: boolean;
 };
 
@@ -44,6 +97,14 @@ export type UserScores = Partial<Record<Subject, number>>;
 
 export type RuleResult = {
   rule: ScreeningRule;
+  userScore: number;
+  minScore: number;
+  deficit: number;
+  passed: boolean;
+};
+
+export type RequirementResult = {
+  requirement: SubjectRequirement;
   userScore: number;
   minScore: number;
   deficit: number;
@@ -68,7 +129,9 @@ export type EvaluationResult = {
   program: Program;
   ruleResults: RuleResult[];
   failedRules: RuleResult[];
-  /** Sum of each failed rule's deficit; overlapping rules may count the same point. */
+  requirementResults: RequirementResult[];
+  failedRequirements: RequirementResult[];
+  /** Sum of failed rule/requirement deficits; overlapping constraints may count the same point. */
   totalDeficit: number;
   /** Subjects used by this program that are absent (or undefined) in UserScores. */
   missingSubjects: Subject[];

@@ -9,6 +9,7 @@ export const SCORE_SUBJECTS = [
   "數B",
   "社會",
   "自然",
+  "英聽",
 ] as const satisfies readonly Subject[];
 
 export type ScoreSubject = (typeof SCORE_SUBJECTS)[number];
@@ -45,7 +46,7 @@ export function ScoreForm({
       </div>
 
       <p className="section-help">
-        每科 0–15 級分；留白會以 0 計算，結果中也會提醒你。
+        學測每科 0–15 級分，英聽選擇等級；留白會以 0 計算並提醒你。
       </p>
 
       <div className="score-grid">
@@ -53,20 +54,38 @@ export function ScoreForm({
           <label className="score-field" key={subject}>
             <span>{subject}</span>
             <span className="score-input-wrap">
-              <input
-                aria-label={`${subject}級分`}
-                data-testid={`score-${subject}`}
-                inputMode="numeric"
-                max={15}
-                min={0}
-                name={subject}
-                onChange={(event) => onChange(subject, event.target.value)}
-                placeholder="—"
-                step={1}
-                type="number"
-                value={scores[subject]}
-              />
-              <span aria-hidden="true">級</span>
+              {subject === "英聽" ? (
+                <select
+                  aria-label="英語聽力測驗等級"
+                  data-testid="score-英聽"
+                  name={subject}
+                  onChange={(event) => onChange(subject, event.target.value)}
+                  value={scores[subject]}
+                >
+                  <option value="">未填</option>
+                  <option value="3">A級</option>
+                  <option value="2">B級</option>
+                  <option value="1">C級</option>
+                  <option value="0">未達C級</option>
+                </select>
+              ) : (
+                <>
+                  <input
+                    aria-label={`${subject}級分`}
+                    data-testid={`score-${subject}`}
+                    inputMode="numeric"
+                    max={15}
+                    min={0}
+                    name={subject}
+                    onChange={(event) => onChange(subject, event.target.value)}
+                    placeholder="—"
+                    step={1}
+                    type="number"
+                    value={scores[subject]}
+                  />
+                  <span aria-hidden="true">級</span>
+                </>
+              )}
             </span>
           </label>
         ))}

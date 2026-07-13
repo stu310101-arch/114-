@@ -155,7 +155,7 @@ export function FilterPanel({
               ))}
             </div>
             <p className="microcopy">
-              66 所官方來源皆可選；正式結果只會顯示已人工校對的校系。
+              66 所官方來源皆可選；需術科或 APCS 的校系會提示查看官方資料。
             </p>
           </div>
         ) : null}

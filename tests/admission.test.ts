@@ -43,6 +43,8 @@ function program(
     departmentKeywords: [],
     screeningRules,
     source: SOURCE,
+    dataStatus: "complete",
+    evaluationSupport: "supported",
     verified: true,
     ...overrides,
   };
@@ -210,12 +212,62 @@ describe("evaluateProgram", () => {
     expect(result.nearestBoost).toEqual([]);
   });
 
-  it("拒絕未人工驗證的校系資料", () => {
-    const target = program([rule(1, ["英文"], 10)], { verified: false });
+  it("拒絕官方門檻仍待確認的校系資料", () => {
+    const target = program([], {
+      dataStatus: "needs-review",
+      evaluationSupport: "unsupported",
+      verified: false,
+    });
 
     expect(() => evaluateProgram(target, { 英文: 15 })).toThrow(
-      "尚未人工驗證",
+      "尚待確認",
     );
+  });
+
+  it("檢定標準與倍率篩選規則必須同時通過", () => {
+    const target = program([rule(1, ["英文", "自然"], 20)], {
+      requirements: [
+        {
+          subject: "英文",
+          standard: "前標",
+          minScore: 11,
+          rawText: "英文前標",
+        },
+      ],
+    });
+
+    const result = evaluateProgram(target, { 英文: 10, 自然: 10 });
+    expect(result.ruleResults[0].passed).toBe(true);
+    expect(result.requirementResults[0].passed).toBe(false);
+    expect(result.passed).toBe(false);
+    expect(result.totalDeficit).toBe(1);
+    expect(result.nearestBoost[0]).toEqual({
+      totalPoints: 1,
+      changes: [{ subject: "英文", points: 1, from: 10, to: 11 }],
+    });
+  });
+
+  it("英聽檢定可單獨成為第一階條件並使用 A、B、C 等級換算", () => {
+    const target = program([], {
+      requirements: [
+        {
+          subject: "英聽",
+          standard: "B級",
+          minScore: 2,
+          rawText: "英聽B級",
+        },
+      ],
+    });
+
+    expect(evaluateProgram(target, { 英聽: 3 }).passed).toBe(true);
+
+    const below = evaluateProgram(target, { 英聽: 1 });
+    expect(below.passed).toBe(false);
+    expect(below.totalDeficit).toBe(1);
+    expect(below.nearestBoost[0]).toEqual({
+      totalPoints: 1,
+      changes: [{ subject: "英聽", points: 1, from: 1, to: 2 }],
+    });
   });
 
   it("拒絕超出 0 到 15 的成績", () => {

@@ -2,6 +2,7 @@ import {
   SUBJECTS,
   type EvaluationResult,
   type Program,
+  type RequirementResult,
   type RuleResult,
   type ScreeningRule,
   type Subject,
@@ -12,7 +13,7 @@ import {
   assertValidUserScores,
   getSubjectScore,
   hasSubjectScore,
-  SUBJECT_MAX_SCORE,
+  SUBJECT_MAX_SCORES,
 } from "./subjects";
 
 const MAX_BOOST_PLANS = 5;
@@ -51,6 +52,9 @@ function usedSubjects(program: Program): Subject[] {
   const used = new Set(
     program.screeningRules.flatMap((rule) => uniqueRuleSubjects(rule)),
   );
+  for (const requirement of program.requirements ?? []) {
+    used.add(requirement.subject);
+  }
 
   return SUBJECTS.filter((subject) => used.has(subject));
 }
@@ -106,7 +110,7 @@ function findNearestBoosts(
   )
     .map((subject) => ({
       subject,
-      capacity: SUBJECT_MAX_SCORE - getSubjectScore(scores, subject),
+      capacity: SUBJECT_MAX_SCORES[subject] - getSubjectScore(scores, subject),
     }))
     .filter(({ capacity }) => capacity > 0)
     .sort((left, right) => {
@@ -268,9 +272,16 @@ export function evaluateProgram(
   program: Program,
   scores: UserScores,
 ): EvaluationResult {
-  if (!program.verified) {
+  const evaluationSupported =
+    program.evaluationSupport === "supported" ||
+    (program.evaluationSupport === undefined && program.verified);
+  if (
+    !evaluationSupported ||
+    (program.screeningRules.length === 0 &&
+      (program.requirements?.length ?? 0) === 0)
+  ) {
     throw new Error(
-      `校系 ${program.programCode} 尚未人工驗證，不能進入正式判斷`,
+      `校系 ${program.programCode} 的官方篩選門檻尚待確認，不能自動判斷`,
     );
   }
 
@@ -280,21 +291,58 @@ export function evaluateProgram(
     evaluateRule(rule, scores),
   );
   const failedRules = ruleResults.filter((result) => !result.passed);
+  const requirementResults: RequirementResult[] = (
+    program.requirements ?? []
+  ).map((requirement) => {
+    const userScore = getSubjectScore(scores, requirement.subject);
+    const deficit = Math.max(0, requirement.minScore - userScore);
+    return {
+      requirement,
+      userScore,
+      minScore: requirement.minScore,
+      deficit,
+      passed: deficit === 0,
+    };
+  });
+  const failedRequirements = requirementResults.filter(
+    (result) => !result.passed,
+  );
   const missingSubjects = usedSubjects(program).filter(
     (subject) => !hasSubjectScore(scores, subject),
   );
+  const requirementRules: RuleResult[] = failedRequirements.map((result) => ({
+    rule: {
+      order: 0,
+      label: `${result.requirement.subject}${result.requirement.standard}`,
+      subjects: [result.requirement.subject],
+      minScore: result.minScore,
+      rawText: result.requirement.rawText,
+    },
+    userScore: result.userScore,
+    minScore: result.minScore,
+    deficit: result.deficit,
+    passed: false,
+  }));
 
   return {
-    passed: failedRules.length === 0,
+    passed: failedRules.length === 0 && failedRequirements.length === 0,
     program,
     ruleResults,
     failedRules,
+    requirementResults,
+    failedRequirements,
     totalDeficit: failedRules.reduce(
       (total, result) => total + result.deficit,
-      0,
+      failedRequirements.reduce(
+        (total, result) => total + result.deficit,
+        0,
+      ),
     ),
     missingSubjects,
-    nearestBoost: findNearestBoosts(failedRules, scores),
+    nearestBoost: findNearestBoosts(
+      [...failedRules, ...requirementRules],
+      scores,
+    ),
   };
 }
 

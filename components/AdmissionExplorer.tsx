@@ -52,6 +52,7 @@ const EMPTY_SCORES: ScoreDraft = {
   數B: "",
   社會: "",
   自然: "",
+  英聽: "",
 };
 
 const EXAMPLE_SCORES: ScoreDraft = {
@@ -61,6 +62,7 @@ const EXAMPLE_SCORES: ScoreDraft = {
   數B: "10",
   社會: "12",
   自然: "11",
+  英聽: "2",
 };
 
 function toUserScores(draft: ScoreDraft): UserScores {
@@ -160,9 +162,13 @@ export function AdmissionExplorer({
     };
     const matched = filterPrograms(programs, criteria);
     const userScores = toUserScores(scores);
-    const evaluated = matched.map((program) =>
-      evaluateProgram(program, userScores),
-    );
+    const evaluated = matched
+      .filter(
+        (program) =>
+          program.evaluationSupport === "supported" ||
+          (program.evaluationSupport === undefined && program.verified),
+      )
+      .map((program) => evaluateProgram(program, userScores));
     const passed = evaluated.filter((result) => result.passed).sort(comparePrograms);
     const near = evaluated.filter((result) => !result.passed).sort(compareNear);
     const missingSubjects = SCORE_SUBJECTS.filter((subject) =>
@@ -189,7 +195,8 @@ export function AdmissionExplorer({
 
     const numericValue = Number(value);
     if (!Number.isFinite(numericValue)) return;
-    const bounded = Math.max(0, Math.min(15, Math.trunc(numericValue)));
+    const maximum = subject === "英聽" ? 3 : 15;
+    const bounded = Math.max(0, Math.min(maximum, Math.trunc(numericValue)));
     setScores((current) => ({ ...current, [subject]: String(bounded) }));
   }
 

@@ -35,6 +35,8 @@ function program(
       },
     ],
     source: SOURCE,
+    dataStatus: "complete",
+    evaluationSupport: "supported",
     verified: true,
     ...overrides,
   };
@@ -82,19 +84,19 @@ const programs: Program[] = [
 ];
 
 describe("filterPrograms", () => {
-  it("沒有條件時仍只回傳 verified=true 的正式資料", () => {
-    expect(filterPrograms(programs)).toHaveLength(4);
-    expect(filterPrograms(programs).map(({ programCode }) => programCode)).not
+  it("沒有條件時所有官方校系（包含待確認門檻）都可搜尋", () => {
+    expect(filterPrograms(programs)).toHaveLength(5);
+    expect(filterPrograms(programs).map(({ programCode }) => programCode))
       .toContain("901001");
   });
 
-  it("verified=false 即使符合全部條件也不可進入正式篩選", () => {
+  it("待確認門檻的校系仍可依科系與組別搜尋", () => {
     expect(
       matchesProgramFilters(programs[4], {
         groupTags: ["自然組"],
         departmentKeywordIds: ["資工"],
       }),
-    ).toBe(false);
+    ).toBe(true);
   });
 
   it("組別多選採聯集", () => {
@@ -106,6 +108,7 @@ describe("filterPrograms", () => {
       "041082",
       "099202",
       "900001",
+      "901001",
     ]);
   });
 
@@ -134,6 +137,7 @@ describe("filterPrograms", () => {
     expect(result.map(({ programCode }) => programCode)).toEqual([
       "001012",
       "900001",
+      "901001",
     ]);
     expect(matchedDepartmentKeywords(programs[0])).toContain("資工");
   });
@@ -161,6 +165,9 @@ describe("validatePrograms", () => {
       schoolName: "待校對大學",
       programCode: "777001",
       programName: "待校對學系",
+      dataStatus: "needs-review",
+      evaluationSupport: "unsupported",
+      screeningRules: [],
       verified: false,
     });
 
@@ -168,7 +175,7 @@ describe("validatePrograms", () => {
     expect(report.valid).toBe(true);
     expect(report.verifiedCount).toBe(0);
     expect(report.unverifiedCount).toBe(1);
-    expect(report.warnings[0]?.message).toContain("正式篩選會排除");
+    expect(report.warnings[0]?.message).toContain("仍可搜尋");
   });
 
   it("一次找出重複校系代碼、空規則、錯誤門檻、缺少來源與 verified 狀態", () => {

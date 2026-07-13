@@ -1,11 +1,23 @@
 import { DeficitBadge } from "./DeficitBadge";
 import { SourceLink } from "./SourceLink";
-import type { EvaluationResult, RuleResult } from "@/lib/types";
+import type {
+  EvaluationResult,
+  Program,
+  RequirementResult,
+  RuleResult,
+} from "@/lib/types";
 
 type ProgramResultTableProps = {
   evaluations: readonly EvaluationResult[];
   tone: "passed" | "near";
   emptyMessage: string;
+  startIndex?: number;
+};
+
+type UnsupportedProgramTableProps = {
+  programs: readonly Program[];
+  emptyMessage: string;
+  startIndex?: number;
 };
 
 function RuleSummary({ result }: { result: RuleResult }) {
@@ -25,12 +37,32 @@ function RuleSummary({ result }: { result: RuleResult }) {
   );
 }
 
+function RequirementSummary({ result }: { result: RequirementResult }) {
+  const isListening = result.requirement.subject === "英聽";
+  return (
+    <li className={result.passed ? "rule-line passed" : "rule-line failed"}>
+      <span className="rule-order">檢定</span>
+      <span className="rule-name">
+        {result.requirement.subject}{result.requirement.standard}
+      </span>
+      <span className="rule-score">
+        {isListening ? "已換算等級" : <>你的 <b>{result.userScore}</b></>}
+        <i aria-hidden="true">/</i>
+        門檻 {result.requirement.standard}
+      </span>
+      <span className="rule-status">
+        {result.passed ? "通過" : isListening ? "未達" : `差 ${result.deficit}`}
+      </span>
+    </li>
+  );
+}
+
 function BoostPlan({ evaluation }: { evaluation: EvaluationResult }) {
   const plan = evaluation.nearestBoost[0];
   if (!plan) {
     return (
       <p className="boost-copy unavailable">
-        在單科最高 15 級分的限制下，沒有可行的補分組合。
+        在各科成績上限內，沒有可行的補分組合。
       </p>
     );
   }
@@ -59,6 +91,7 @@ export function ProgramResultTable({
   evaluations,
   tone,
   emptyMessage,
+  startIndex = 0,
 }: ProgramResultTableProps) {
   if (evaluations.length === 0) {
     return <div className="empty-state">{emptyMessage}</div>;
@@ -71,8 +104,11 @@ export function ProgramResultTable({
           className={`program-card ${tone}`}
           key={evaluation.program.programCode}
         >
-          <div className="program-rank" aria-label={`第 ${index + 1} 筆`}>
-            {String(index + 1).padStart(2, "0")}
+          <div
+            className="program-rank"
+            aria-label={`第 ${startIndex + index + 1} 筆`}
+          >
+            {String(startIndex + index + 1).padStart(2, "0")}
           </div>
           <div className="program-main">
             <div className="program-heading">
@@ -102,6 +138,15 @@ export function ProgramResultTable({
 
             <ul className="rule-list" aria-label="逐關篩選結果">
               {(tone === "passed"
+                ? evaluation.requirementResults
+                : evaluation.failedRequirements
+              ).map((result) => (
+                <RequirementSummary
+                  key={`${evaluation.program.programCode}-requirement-${result.requirement.subject}`}
+                  result={result}
+                />
+              ))}
+              {(tone === "passed"
                 ? evaluation.ruleResults
                 : evaluation.failedRules
               ).map((result) => (
@@ -113,6 +158,67 @@ export function ProgramResultTable({
             </ul>
 
             {tone === "near" ? <BoostPlan evaluation={evaluation} /> : null}
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+export function UnsupportedProgramTable({
+  programs,
+  emptyMessage,
+  startIndex = 0,
+}: UnsupportedProgramTableProps) {
+  if (programs.length === 0) {
+    return <div className="empty-state">{emptyMessage}</div>;
+  }
+
+  return (
+    <div className="program-list">
+      {programs.map((program, index) => (
+        <article
+          className="program-card needs-review"
+          key={program.programCode}
+        >
+          <div
+            className="program-rank"
+            aria-label={`第 ${startIndex + index + 1} 筆`}
+          >
+            {String(startIndex + index + 1).padStart(2, "0")}
+          </div>
+          <div className="program-main">
+            <div className="program-heading">
+              <div>
+                <div className="school-line">
+                  <span>{program.schoolName}</span>
+                  <span className="program-code">{program.programCode}</span>
+                </div>
+                <h3>{program.programName}</h3>
+              </div>
+              <div className="program-actions">
+                <span className="review-badge">資料待確認</span>
+                <SourceLink
+                  compact
+                  href={
+                    program.source.programDetailUrl ??
+                    program.source.reportHtmlUrl
+                  }
+                />
+              </div>
+            </div>
+
+            <div className="review-reasons">
+              <b>目前無法安全自動判斷：</b>
+              <ul>
+                {(program.reviewReasons?.length
+                  ? program.reviewReasons
+                  : ["官方最低級分資料仍待人工確認"]
+                ).map((reason) => (
+                  <li key={reason}>{reason}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         </article>
       ))}

@@ -1,8 +1,24 @@
-import { SUBJECTS, type Subject, type UserScores } from "./types";
+import {
+  SUBJECTS,
+  type ListeningStandard,
+  type RequirementStandard,
+  type Subject,
+  type UserScores,
+} from "./types.ts";
 
 export { SUBJECTS };
 
 export const SUBJECT_MAX_SCORE = 15;
+
+export const SUBJECT_MAX_SCORES: Readonly<Record<Subject, number>> = {
+  國文: 15,
+  英文: 15,
+  數A: 15,
+  數B: 15,
+  社會: 15,
+  自然: 15,
+  英聽: 3,
+};
 
 export const SUBJECT_LABELS: Readonly<Record<Subject, string>> = {
   國文: "國文",
@@ -13,6 +29,34 @@ export const SUBJECT_LABELS: Readonly<Record<Subject, string>> = {
   自然: "自然",
   英聽: "英聽",
 };
+
+export const GSAT_114_FIVE_STANDARDS: Readonly<
+  Record<Exclude<Subject, "英聽">, Readonly<Record<RequirementStandard, number>>>
+> = {
+  國文: { 頂標: 13, 前標: 12, 均標: 10, 後標: 9, 底標: 7 },
+  英文: { 頂標: 13, 前標: 11, 均標: 8, 後標: 4, 底標: 3 },
+  數A: { 頂標: 11, 前標: 9, 均標: 6, 後標: 4, 底標: 3 },
+  數B: { 頂標: 12, 前標: 10, 均標: 6, 後標: 4, 底標: 3 },
+  社會: { 頂標: 13, 前標: 12, 均標: 10, 後標: 8, 底標: 7 },
+  自然: { 頂標: 13, 前標: 12, 均標: 9, 後標: 7, 底標: 5 },
+};
+
+export function scoreFor114Standard(
+  subject: Exclude<Subject, "英聽">,
+  standard: RequirementStandard,
+): number {
+  return GSAT_114_FIVE_STANDARDS[subject][standard];
+}
+
+export const ENGLISH_LISTENING_LEVEL_SCORES: Readonly<
+  Record<ListeningStandard, number>
+> = { A級: 3, B級: 2, C級: 1 };
+
+export function scoreForEnglishListening(
+  standard: ListeningStandard,
+): number {
+  return ENGLISH_LISTENING_LEVEL_SCORES[standard];
+}
 
 /** A numeric zero is an entered score. An absent or undefined value is not. */
 export function hasSubjectScore(scores: UserScores, subject: Subject): boolean {
@@ -37,9 +81,11 @@ export function assertValidUserScores(scores: UserScores): void {
       !Number.isFinite(score) ||
       !Number.isInteger(score) ||
       score < 0 ||
-      score > SUBJECT_MAX_SCORE
+      score > SUBJECT_MAX_SCORES[subject]
     ) {
-      throw new RangeError(`${subject}級分必須是 0 到 ${SUBJECT_MAX_SCORE} 的整數`);
+      throw new RangeError(
+        `${subject}成績必須是 0 到 ${SUBJECT_MAX_SCORES[subject]} 的整數`,
+      );
     }
   }
 }

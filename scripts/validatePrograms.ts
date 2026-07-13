@@ -12,7 +12,28 @@ const VALID_SUBJECTS = new Set([
   "自然",
   "英聽",
 ]);
+const VALID_REQUIREMENT_SUBJECTS = new Set([
+  "國文",
+  "英文",
+  "數A",
+  "數B",
+  "社會",
+  "自然",
+  "英聽",
+]);
+const VALID_REQUIREMENT_STANDARDS = new Set([
+  "頂標",
+  "前標",
+  "均標",
+  "後標",
+  "底標",
+  "A級",
+  "B級",
+  "C級",
+]);
 const VALID_GROUP_TAGS = new Set(["自然組", "社會組"]);
+const VALID_DATA_STATUSES = new Set(["complete", "needs-review"]);
+const VALID_EVALUATION_SUPPORT = new Set(["supported", "unsupported"]);
 const SOURCE_URL_FIELDS = [
   "collegeListUrl",
   "reportHtmlUrl",
@@ -27,6 +48,10 @@ export type ValidationIssue = Readonly<{
 export type ProgramsValidationReport = Readonly<{
   valid: boolean;
   programCount: number;
+  schoolCount: number;
+  supportedCount: number;
+  unsupportedCount: number;
+  /** Legacy aliases retained for the existing CLI/tests. */
   verifiedCount: number;
   unverifiedCount: number;
   errors: readonly ValidationIssue[];
@@ -53,9 +78,26 @@ function isHttpUrl(value: unknown): value is string {
   }
 }
 
+function addNumericScoreError(
+  value: unknown,
+  maximum: number,
+  addError: (field: string, message: string) => void,
+  field: string,
+): void {
+  if (
+    typeof value !== "number" ||
+    !Number.isFinite(value) ||
+    !Number.isInteger(value)
+  ) {
+    addError(field, "必須是有限整數");
+  } else if (value < 0 || value > maximum) {
+    addError(field, `必須介於 0 與 ${maximum} 之間`);
+  }
+}
+
 /**
- * 驗證原始 JSON；不因 `verified: false` 判為結構錯誤，但會明確列入警告。
- * 正式查詢是否排除未校對資料，則由 `lib/filters.ts` 強制保證。
+ * 驗證完整官方校系資料。待確認門檻不算結構錯誤，且仍須保留讓使用者搜尋；
+ * 只有 `evaluationSupport: supported` 的資料可以交給判斷函式。
  */
 export function validatePrograms(input: unknown): ProgramsValidationReport {
   const errors: ValidationIssue[] = [];
@@ -65,6 +107,9 @@ export function validatePrograms(input: unknown): ProgramsValidationReport {
     return {
       valid: false,
       programCount: 0,
+      schoolCount: 0,
+      supportedCount: 0,
+      unsupportedCount: 0,
       verifiedCount: 0,
       unverifiedCount: 0,
       errors: [{ path: "$", message: "根節點必須是校系陣列" }],
@@ -73,8 +118,9 @@ export function validatePrograms(input: unknown): ProgramsValidationReport {
   }
 
   const seenProgramCodes = new Map<string, number>();
-  let verifiedCount = 0;
-  let unverifiedCount = 0;
+  const schoolIds = new Set<string>();
+  let supportedCount = 0;
+  let unsupportedCount = 0;
 
   input.forEach((candidate, index) => {
     const basePath = `$[${index}]`;
@@ -87,9 +133,7 @@ export function validatePrograms(input: unknown): ProgramsValidationReport {
       return;
     }
 
-    if (candidate.year !== 114) {
-      addError("year", "year 必須是數字 114");
-    }
+    if (candidate.year !== 114) addError("year", "year 必須是數字 114");
 
     for (const field of [
       "schoolId",
@@ -102,8 +146,25 @@ export function validatePrograms(input: unknown): ProgramsValidationReport {
       }
     }
 
+    if (isNonEmptyString(candidate.schoolId)) {
+      const schoolId = candidate.schoolId.trim();
+      schoolIds.add(schoolId);
+      if (!/^\d{3}$/.test(schoolId)) {
+        addError("schoolId", "schoolId 必須是三位數校碼");
+      }
+      if (
+        isNonEmptyString(candidate.programCode) &&
+        !candidate.programCode.trim().startsWith(schoolId)
+      ) {
+        addError("programCode", "校系代碼必須以 schoolId 開頭");
+      }
+    }
+
     if (isNonEmptyString(candidate.programCode)) {
       const code = candidate.programCode.trim();
+      if (!/^\d{6}$/.test(code)) {
+        addError("programCode", "programCode 必須是六位數校系代碼");
+      }
       const firstIndex = seenProgramCodes.get(code);
       if (firstIndex !== undefined) {
         addError(
@@ -124,47 +185,100 @@ export function validatePrograms(input: unknown): ProgramsValidationReport {
       addError("quota", "quota 必須是非負整數");
     }
 
-    if (
-      !Array.isArray(candidate.groupTags) ||
-      candidate.groupTags.length === 0
-    ) {
+    if (!Array.isArray(candidate.groupTags) || candidate.groupTags.length === 0) {
       addError("groupTags", "groupTags 至少要有自然組或社會組其中一項");
     } else {
       candidate.groupTags.forEach((tag, tagIndex) => {
         if (typeof tag !== "string" || !VALID_GROUP_TAGS.has(tag)) {
-          addError(
-            `groupTags[${tagIndex}]`,
-            "groupTags 只能包含自然組或社會組",
-          );
+          addError(`groupTags[${tagIndex}]`, "只能包含自然組或社會組");
         }
       });
     }
 
     if (
       !Array.isArray(candidate.departmentKeywords) ||
-      candidate.departmentKeywords.some((keyword) =>
-        !isNonEmptyString(keyword),
-      )
+      candidate.departmentKeywords.some((keyword) => !isNonEmptyString(keyword))
     ) {
-      addError(
-        "departmentKeywords",
-        "departmentKeywords 必須是字串陣列",
-      );
+      addError("departmentKeywords", "必須是非空字串組成的陣列");
     }
 
+    const evaluationSupport = candidate.evaluationSupport;
+    const legacySupported =
+      evaluationSupport === undefined && candidate.verified === true;
+    const isSupported = evaluationSupport === "supported" || legacySupported;
     if (
-      !Array.isArray(candidate.screeningRules) ||
-      candidate.screeningRules.length === 0
+      evaluationSupport !== undefined &&
+      (typeof evaluationSupport !== "string" ||
+        !VALID_EVALUATION_SUPPORT.has(evaluationSupport))
     ) {
-      addError("screeningRules", "screeningRules 至少要有一筆規則");
+      addError(
+        "evaluationSupport",
+        "evaluationSupport 只能是 supported 或 unsupported",
+      );
+    }
+    if (
+      candidate.dataStatus !== undefined &&
+      (typeof candidate.dataStatus !== "string" ||
+        !VALID_DATA_STATUSES.has(candidate.dataStatus))
+    ) {
+      addError("dataStatus", "dataStatus 只能是 complete 或 needs-review");
+    }
+
+    if (typeof candidate.verified !== "boolean") {
+      addError("verified", "verified 必須明確為 boolean");
+    }
+    if (evaluationSupport === "supported") {
+      supportedCount += 1;
+      if (candidate.verified !== true) {
+        addError("verified", "supported 資料的 verified 必須為 true");
+      }
+      if (candidate.dataStatus !== "complete") {
+        addError("dataStatus", "supported 資料的 dataStatus 必須為 complete");
+      }
+    } else if (evaluationSupport === "unsupported") {
+      unsupportedCount += 1;
+      if (candidate.verified !== false) {
+        addError("verified", "unsupported 資料的 verified 必須為 false");
+      }
+      if (candidate.dataStatus !== "needs-review") {
+        addError(
+          "dataStatus",
+          "unsupported 資料的 dataStatus 必須為 needs-review",
+        );
+      }
+      warnings.push({
+        path: `${basePath}.evaluationSupport`,
+        message: "官方校系仍可搜尋，但門檻待確認，禁止自動判斷",
+      });
+    } else if (candidate.verified === true) {
+      supportedCount += 1;
+    } else if (candidate.verified === false) {
+      unsupportedCount += 1;
+      warnings.push({
+        path: `${basePath}.verified`,
+        message: "此筆仍可搜尋，但門檻待確認，禁止自動判斷",
+      });
+    }
+
+    if (!Array.isArray(candidate.screeningRules)) {
+      addError("screeningRules", "screeningRules 必須是 rules array");
     } else {
+      if (
+        isSupported &&
+        candidate.screeningRules.length === 0 &&
+        (!Array.isArray(candidate.requirements) || candidate.requirements.length === 0)
+      ) {
+        addError(
+          "screeningRules",
+          "可自動判斷的校系至少要有一筆可信篩選規則",
+        );
+      }
       candidate.screeningRules.forEach((rule, ruleIndex) => {
         const rulePath = `screeningRules[${ruleIndex}]`;
         if (!isRecord(rule)) {
           addError(rulePath, "每筆 screeningRule 必須是物件");
           return;
         }
-
         if (
           typeof rule.order !== "number" ||
           !Number.isInteger(rule.order) ||
@@ -178,7 +292,6 @@ export function validatePrograms(input: unknown): ProgramsValidationReport {
         if (typeof rule.rawText !== "string") {
           addError(`${rulePath}.rawText`, "rawText 必須是字串");
         }
-
         if (!Array.isArray(rule.subjects) || rule.subjects.length === 0) {
           addError(`${rulePath}.subjects`, "subjects 至少要有一個科目");
         } else {
@@ -197,26 +310,53 @@ export function validatePrograms(input: unknown): ProgramsValidationReport {
             }
             seenSubjects.add(subject);
           });
-        }
-
-        if (
-          typeof rule.minScore !== "number" ||
-          !Number.isFinite(rule.minScore)
-        ) {
-          addError(`${rulePath}.minScore`, "minScore 必須是有限數字");
-        } else if (rule.minScore < 0) {
-          addError(`${rulePath}.minScore`, "minScore 不可小於 0");
-        } else if (
-          Array.isArray(rule.subjects) &&
-          rule.subjects.length > 0 &&
-          rule.minScore > rule.subjects.length * 15
-        ) {
-          addError(
+          addNumericScoreError(
+            rule.minScore,
+            rule.subjects.length * 15,
+            addError,
             `${rulePath}.minScore`,
-            "minScore 超過所列科目的最高總級分",
           );
         }
       });
+    }
+
+    if (candidate.requirements !== undefined) {
+      if (!Array.isArray(candidate.requirements)) {
+        addError("requirements", "requirements 必須是陣列");
+      } else {
+        candidate.requirements.forEach((requirement, requirementIndex) => {
+          const path = `requirements[${requirementIndex}]`;
+          if (!isRecord(requirement)) {
+            addError(path, "每筆 requirement 必須是物件");
+            return;
+          }
+          if (
+            typeof requirement.subject !== "string" ||
+            !VALID_REQUIREMENT_SUBJECTS.has(requirement.subject)
+          ) {
+            addError(`${path}.subject`, "未知的學測檢定科目");
+          }
+          const isListening = requirement.subject === "英聽";
+          const validStandard =
+            typeof requirement.standard === "string" &&
+            VALID_REQUIREMENT_STANDARDS.has(requirement.standard) &&
+            (isListening
+              ? ["A級", "B級", "C級"].includes(requirement.standard)
+              : !["A級", "B級", "C級"].includes(requirement.standard));
+          if (!validStandard) {
+            addError(`${path}.standard`, "檢定科目與標準不相符");
+          }
+          addNumericScoreError(
+            requirement.minScore,
+            isListening ? 3 : 15,
+            addError,
+            `${path}.minScore`,
+          );
+          if (typeof requirement.rawText !== "string") {
+            addError(`${path}.rawText`, "rawText 必須是字串");
+          }
+        });
+      }
     }
 
     if (!isRecord(candidate.source)) {
@@ -232,24 +372,26 @@ export function validatePrograms(input: unknown): ProgramsValidationReport {
       }
     }
 
-    if (typeof candidate.verified !== "boolean") {
-      addError("verified", "verified 必須明確為 boolean");
-    } else if (candidate.verified) {
-      verifiedCount += 1;
-    } else {
-      unverifiedCount += 1;
-      warnings.push({
-        path: `${basePath}.verified`,
-        message: "此筆尚未人工校對，正式篩選會排除",
-      });
+    if (candidate.reviewReasons !== undefined) {
+      if (
+        !Array.isArray(candidate.reviewReasons) ||
+        candidate.reviewReasons.some((reason) => !isNonEmptyString(reason))
+      ) {
+        addError("reviewReasons", "reviewReasons 必須是非空字串陣列");
+      } else if (evaluationSupport === "unsupported" && candidate.reviewReasons.length === 0) {
+        addError("reviewReasons", "待確認資料至少要說明一個原因");
+      }
     }
   });
 
   return {
     valid: errors.length === 0,
     programCount: input.length,
-    verifiedCount,
-    unverifiedCount,
+    schoolCount: schoolIds.size,
+    supportedCount,
+    unsupportedCount,
+    verifiedCount: supportedCount,
+    unverifiedCount: unsupportedCount,
     errors,
     warnings,
   };
@@ -258,7 +400,6 @@ export function validatePrograms(input: unknown): ProgramsValidationReport {
 async function main(): Promise<void> {
   const filePath = resolve(process.argv[2] ?? "data/programs_114.json");
   let input: unknown;
-
   try {
     input = JSON.parse(await readFile(filePath, "utf8")) as unknown;
   } catch (error) {
@@ -271,17 +412,12 @@ async function main(): Promise<void> {
   }
 
   const report = validatePrograms(input);
-  for (const issue of report.errors) {
-    console.error(`錯誤 ${issue.path}: ${issue.message}`);
-  }
-  for (const issue of report.warnings) {
-    console.warn(`警告 ${issue.path}: ${issue.message}`);
-  }
-
+  for (const issue of report.errors) console.error(`錯誤 ${issue.path}: ${issue.message}`);
+  for (const issue of report.warnings) console.warn(`警告 ${issue.path}: ${issue.message}`);
   console.log(
-    `校系 ${report.programCount} 筆；已校對 ${report.verifiedCount} 筆；未校對 ${report.unverifiedCount} 筆`,
+    `校系 ${report.programCount} 筆／學校 ${report.schoolCount} 所；` +
+      `可判斷 ${report.supportedCount} 筆；待確認 ${report.unsupportedCount} 筆`,
   );
-
   if (!report.valid) {
     console.error(`資料驗證失敗，共 ${report.errors.length} 個錯誤`);
     process.exitCode = 1;
@@ -293,9 +429,6 @@ async function main(): Promise<void> {
 const entryUrl = process.argv[1]
   ? pathToFileURL(resolve(process.argv[1])).href
   : undefined;
-if (entryUrl === import.meta.url) {
-  void main();
-}
+if (entryUrl === import.meta.url) void main();
 
-// 保留顯式型別關聯，確保 validator 與正式資料介面同步接受 TypeScript 檢查。
 export type ValidatedProgram = Program;

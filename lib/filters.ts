@@ -112,15 +112,15 @@ export function matchesSchoolSelection(
 }
 
 /**
- * 正式查詢的單筆判斷。不同欄位間採交集；同一欄位內的多選採聯集。
- * `verified !== true` 一律排除，呼叫端不能繞過人工校對安全線。
+ * 查詢的單筆判斷。不同欄位間採交集；同一欄位內的多選採聯集。
+ *
+ * 所有官方校系都必須可被搜尋；能否進行分數判斷由
+ * `evaluationSupport` 控制，而不是在搜尋階段把待確認校系藏起來。
  */
 export function matchesProgramFilters(
   program: Program,
   criteria: ProgramFilterCriteria = {},
 ): boolean {
-  if (program.verified !== true) return false;
-
   const groupTags = criteria.groupTags ?? [];
   if (
     groupTags.length > 0 &&
