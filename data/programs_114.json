@@ -44637,15 +44637,6 @@
         ],
         "minScore": 7,
         "rawText": "國文7"
-      },
-      {
-        "order": 2,
-        "label": "自然",
-        "subjects": [
-          "自然"
-        ],
-        "minScore": 0,
-        "rawText": "自然—（官方未啟動倍率篩選）"
       }
     ],
     "source": {
@@ -44974,6 +44965,18 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題",
+        "minScore": 2,
+        "rawText": "APCS 觀念題2"
+      },
+      {
+        "label": "國文＋英文",
+        "minScore": 9,
+        "rawText": "國文＋英文9"
+      }
+    ],
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/018.htm",
@@ -44983,7 +44986,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -45089,6 +45092,18 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題",
+        "minScore": 2,
+        "rawText": "APCS 觀念題2"
+      },
+      {
+        "label": "數學B",
+        "minScore": 3,
+        "rawText": "數學B3"
+      }
+    ],
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/018.htm",
@@ -45098,7 +45113,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -45216,6 +45231,18 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題",
+        "minScore": 2,
+        "rawText": "APCS 觀念題2"
+      },
+      {
+        "label": "國文",
+        "minScore": 6,
+        "rawText": "國文6"
+      }
+    ],
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/018.htm",
@@ -45225,7 +45252,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
