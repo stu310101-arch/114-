@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import { NavigationLoadingProvider } from "@/components/NavigationLoadingProvider";
 import "./globals.css";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -45,7 +46,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-Hant">
-      <body>{children}</body>
+      <body>
+        <NavigationLoadingProvider>{children}</NavigationLoadingProvider>
+      </body>
     </html>
   );
 }

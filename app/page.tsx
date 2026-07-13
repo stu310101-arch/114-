@@ -79,7 +79,6 @@ export default function Home() {
             <span>判斷核心</span>
             <code>Σ 科目級分 ≥ 每關門檻</code>
           </div>
-          <p>每一個校系都以 rules[] 保存多關篩選條件，必須逐關達標。</p>
         </aside>
       </section>
     </main>

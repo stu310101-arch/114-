@@ -1,9 +1,16 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import type { FormEvent } from "react";
-import type { DepartmentKeywordId } from "@/config/departmentKeywords";
-import { FilterPanel, type GroupSelection, type SchoolSourceOption } from "./FilterPanel";
+import {
+  selectedUniqueProgramCodes,
+  type ProgramOption,
+} from "@/lib/programSelection";
+import { FilterPanel, type SchoolSourceOption } from "./FilterPanel";
+import {
+  NavigationLoadingScreen,
+  useNavigationLoading,
+} from "./NavigationLoadingProvider";
 import { ScoreForm, type ScoreSubject } from "./ScoreForm";
 import { PageNavigation, SubpageHeader } from "./PageNavigation";
 import {
@@ -14,10 +21,12 @@ import {
   routePath,
   saveQueryState,
   type AdmissionQueryState,
+  type GroupSelection,
 } from "./queryState";
 
 type QueryWorkspaceProps = {
   programCount: number;
+  programOptions: readonly ProgramOption[];
   schoolSources: readonly SchoolSourceOption[];
 };
 
@@ -30,25 +39,26 @@ export function QueryWorkspace(props: QueryWorkspaceProps) {
     () => false,
   );
 
-  if (!hydrated) {
-    return (
-      <main className="subpage-main query-page">
-        <SubpageHeader kicker="YOUR PROFILE" title="輸入成績與篩選校系" />
-        <div className="page-loading" role="status">正在準備查詢表單…</div>
-      </main>
-    );
-  }
+  if (!hydrated) return <NavigationLoadingScreen />;
 
   return <HydratedQueryWorkspace {...props} />;
 }
 
 function HydratedQueryWorkspace({
-  programCount,
+  programOptions,
   schoolSources,
 }: QueryWorkspaceProps) {
   const [query, setQuery] = useState<AdmissionQueryState>(() =>
     restoreQueryState(),
   );
+  const { navigate } = useNavigationLoading();
+
+  const selectedProgramCodes = useMemo(
+    () => selectedUniqueProgramCodes(programOptions, query.programSelections),
+    [programOptions, query.programSelections],
+  );
+  const selectedCount = selectedProgramCodes.length;
+  const requiresProgramSelection = selectedCount === 0;
 
   function updateScore(subject: ScoreSubject, value: string) {
     if (value === "") {
@@ -76,15 +86,21 @@ function HydratedQueryWorkspace({
     setQuery((current) => ({ ...current, [key]: value }));
   }
 
+  function selectGroup(value: Exclude<GroupSelection, "all">) {
+    setQuery((current) => ({ ...current, groupSelection: value }));
+  }
+
   function showResults(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (requiresProgramSelection) return;
     saveQueryState(query);
     const params = queryStateToParams(query).toString();
     const destination = routePath("results");
-    window.location.assign(params ? `${destination}?${params}` : destination);
+    navigate(params ? `${destination}?${params}` : destination);
   }
 
   const querySearch = queryStateToParams(query).toString();
+  const comparisonCount = selectedCount;
 
   return (
     <main className="subpage-main query-page">
@@ -106,22 +122,25 @@ function HydratedQueryWorkspace({
           />
           <FilterPanel
             customSchoolIds={query.customSchoolIds}
-            departmentKeywordIds={query.departmentKeywordIds}
-            freeText={query.freeText}
             groupSelection={query.groupSelection}
-            onCustomSchoolIdsChange={(value: string[]) =>
+            onCustomSchoolIdsChange={(value) =>
               update("customSchoolIds", value)
             }
-            onDepartmentKeywordIdsChange={(value: DepartmentKeywordId[]) =>
-              update("departmentKeywordIds", value)
+            onGroupSelectionChange={selectGroup}
+            onProgramSelectionChange={(group, value) =>
+              setQuery((current) => ({
+                ...current,
+                programSelections: {
+                  ...current.programSelections,
+                  [group]: value,
+                },
+              }))
             }
-            onFreeTextChange={(value: string) => update("freeText", value)}
-            onGroupSelectionChange={(value: GroupSelection) =>
-              update("groupSelection", value)
-            }
-            onSchoolSelectionChange={(value: string) =>
+            onSchoolSelectionChange={(value) =>
               update("schoolSelection", value)
             }
+            programOptions={programOptions}
+            programSelections={query.programSelections}
             schoolSelection={query.schoolSelection}
             schoolSources={schoolSources}
           />
@@ -131,15 +150,26 @@ function HydratedQueryWorkspace({
           <div>
             <span className="submit-index">03</span>
             <p>
-              將依目前條件逐關比對 <b>{programCount}</b> 筆校系資料
+              將依目前條件逐關比對 <b>{comparisonCount}</b> 筆校系資料
             </p>
+            {requiresProgramSelection ? (
+              <small className="submit-guidance" role="status">
+                請至少勾選一個科系，或按右上角「全選」。
+              </small>
+            ) : null}
           </div>
-          <button className="submit-button" data-testid="submit-query" type="submit">
+          <button
+            className="submit-button"
+            data-testid="submit-query"
+            disabled={requiresProgramSelection}
+            type="submit"
+          >
             查看 <span aria-hidden="true">→</span>
           </button>
         </div>
       </form>
       <PageNavigation
+        nextDisabled={requiresProgramSelection}
         nextLabel="下一頁：查看結果"
         nextRoute="results"
         nextSearch={querySearch}

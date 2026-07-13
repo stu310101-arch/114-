@@ -1,5 +1,6 @@
 import { DeficitBadge } from "./DeficitBadge";
 import { SourceLink } from "./SourceLink";
+import { GSAT_114_FIVE_STANDARDS } from "@/lib/subjects";
 import type {
   EvaluationResult,
   Program,
@@ -37,6 +38,18 @@ function RuleSummary({ result }: { result: RuleResult }) {
   );
 }
 
+function requirementThresholdLabel(result: RequirementResult): string {
+  const { requirement } = result;
+
+  if (requirement.subject === "英聽") {
+    return requirement.standard;
+  }
+
+  const grade =
+    GSAT_114_FIVE_STANDARDS[requirement.subject][requirement.standard];
+  return `${requirement.standard}（${grade} 級分）`;
+}
+
 function RequirementSummary({ result }: { result: RequirementResult }) {
   const isListening = result.requirement.subject === "英聽";
   return (
@@ -48,7 +61,7 @@ function RequirementSummary({ result }: { result: RequirementResult }) {
       <span className="rule-score">
         {isListening ? "已換算等級" : <>你的 <b>{result.userScore}</b></>}
         <i aria-hidden="true">/</i>
-        門檻 {result.requirement.standard}
+        門檻 {requirementThresholdLabel(result)}
       </span>
       <span className="rule-status">
         {result.passed ? "通過" : isListening ? "未達" : `差 ${result.deficit}`}

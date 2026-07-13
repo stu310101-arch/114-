@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
-import type { DepartmentKeywordId } from "@/config/departmentKeywords";
 import { SCHOOL_GROUPS, type SchoolGroupId } from "@/config/schoolGroups";
 import { evaluateProgram } from "@/lib/admission";
 import { filterPrograms, type ProgramFilterCriteria } from "@/lib/filters";
 import type { EvaluationResult, Program, UserScores } from "@/lib/types";
 import { PageNavigation, RouteLink, SubpageHeader } from "./PageNavigation";
+import { NavigationLoadingScreen } from "./NavigationLoadingProvider";
 import {
   ProgramResultTable,
   UnsupportedProgramTable,
@@ -116,19 +116,6 @@ function supportsEvaluation(program: Program): boolean {
   );
 }
 
-function formatSelectedDepartment(
-  keywordIds: readonly DepartmentKeywordId[],
-  freeText: string,
-): string {
-  if (keywordIds.length === 1 && !freeText.trim()) {
-    return `${keywordIds[0]}相關校系`;
-  }
-  if (keywordIds.length === 0 && freeText.trim()) {
-    return `「${freeText.trim()}」相關校系`;
-  }
-  return "所選條件的校系";
-}
-
 const subscribeToHydration = () => () => {};
 
 export function ResultsWorkspace(props: ResultsWorkspaceProps) {
@@ -138,14 +125,7 @@ export function ResultsWorkspace(props: ResultsWorkspaceProps) {
     () => false,
   );
 
-  if (!hydrated) {
-    return (
-      <main className="subpage-main results-page">
-        <SubpageHeader kicker="YOUR RESULTS" title="一階篩選回測結果" />
-        <div className="page-loading" role="status">正在整理你的回測結果…</div>
-      </main>
-    );
-  }
+  if (!hydrated) return <NavigationLoadingScreen />;
 
   return <HydratedResultsWorkspace {...props} />;
 }
@@ -162,8 +142,6 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
 
   const evaluation = useMemo(() => {
     const criteria: ProgramFilterCriteria = {
-      groupTags:
-        query.groupSelection === "all" ? undefined : [query.groupSelection],
       schoolGroupIds:
         query.schoolSelection === "top" ||
         query.schoolSelection === "central" ||
@@ -172,8 +150,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
           : undefined,
       customSchoolIds:
         query.schoolSelection === "custom" ? query.customSchoolIds : undefined,
-      departmentKeywordIds: query.departmentKeywordIds,
-      freeText: query.freeText.trim() || undefined,
+      groupedProgramSelections: query.programSelections,
     };
     const matched = filterPrograms(programs, criteria);
     const userScores = toUserScores(query);
@@ -202,9 +179,9 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
 
   const querySearch = queryStateToParams(query).toString();
   const closest = evaluation.near[0];
-  const hasDepartmentFilter = Boolean(
-    query.departmentKeywordIds.length > 0 || query.freeText.trim().length > 0,
-  );
+  const hasDepartmentFilter =
+    query.programSelections.自然組.mode !== "none" ||
+    query.programSelections.社會組.mode !== "none";
   const passedStart = passedPage * RESULT_PAGE_SIZE;
   const nearStart = nearPage * RESULT_PAGE_SIZE;
   const reviewStart = reviewPage * RESULT_PAGE_SIZE;
@@ -258,8 +235,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
           <div className="closest-callout">
             <span>最接近目標</span>
             <p>
-              你目前沒有通過任何
-              {formatSelectedDepartment(query.departmentKeywordIds, query.freeText)}。
+              你目前選取的科系尚未有任何一筆通過。
               最接近的是 <b>{closest.program.schoolName}</b>
               {closest.program.programName}，最少還需 +
               {closest.nearestBoost[0]?.totalPoints ?? "—"} 級分。

@@ -6,6 +6,12 @@ import {
   SCHOOL_GROUPS,
   type SchoolGroupId,
 } from "../config/schoolGroups";
+import {
+  matchesGroupedProgramSelections,
+  matchesProgramSelection,
+  type GroupedProgramSelections,
+  type ProgramSelection,
+} from "./programSelection";
 import type { Program } from "./types";
 
 export type ProgramGroupTag = Program["groupTags"][number];
@@ -21,6 +27,10 @@ export type ProgramFilterCriteria = Readonly<{
   departmentKeywordIds?: readonly DepartmentKeywordId[];
   /** 自由文字會再縮小快捷科系結果，兩者都存在時採交集。 */
   freeText?: string;
+  /** 新版查詢以 6 碼校系代碼精確選取；未傳入時不限制科系。 */
+  programSelection?: ProgramSelection;
+  /** 自然組與社會組各自選取後採聯集，重疊校系只保留一次。 */
+  groupedProgramSelections?: GroupedProgramSelections;
 }>;
 
 function normalizeText(value: string): string {
@@ -152,6 +162,23 @@ export function matchesProgramFilters(
   if (
     criteria.freeText !== undefined &&
     !matchesDepartmentFreeText(program, criteria.freeText)
+  ) {
+    return false;
+  }
+
+  if (
+    criteria.programSelection !== undefined &&
+    !matchesProgramSelection(program.programCode, criteria.programSelection)
+  ) {
+    return false;
+  }
+
+  if (
+    criteria.groupedProgramSelections !== undefined &&
+    !matchesGroupedProgramSelections(
+      program,
+      criteria.groupedProgramSelections,
+    )
   ) {
     return false;
   }

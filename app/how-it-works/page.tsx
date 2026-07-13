@@ -2,6 +2,10 @@ import {
   PageNavigation,
   SubpageHeader,
 } from "@/components/PageNavigation";
+import { GSAT_114_FIVE_STANDARDS } from "@/lib/subjects";
+
+const GSAT_SUBJECTS = ["國文", "英文", "數A", "數B", "社會", "自然"] as const;
+const FIVE_STANDARDS = ["頂標", "前標", "均標", "後標", "底標"] as const;
 
 export default function HowItWorksPage() {
   return (
@@ -41,6 +45,51 @@ export default function HowItWorksPage() {
           <code>sum(使用者科目級分) ≥ 官方通過篩選最低級分</code>
           <p>一個校系 = 一組 rules[]；所有 rules 通過，Program 才通過。</p>
         </div>
+
+        <section className="five-standard-section" aria-labelledby="five-standard-title">
+          <div className="five-standard-heading">
+            <span>官方換算基準</span>
+            <h2 id="five-standard-title">114 學年度學測五標</h2>
+            <p>校系檢定條件若採頂標、前標、均標、後標或底標，系統會依下表換算為級分。</p>
+          </div>
+
+          <div className="five-standard-table-wrap">
+            <table className="five-standard-table">
+              <caption>114 學年度學科能力測驗各科成績標準</caption>
+              <thead>
+                <tr>
+                  <th scope="col">科目</th>
+                  {FIVE_STANDARDS.map((standard) => (
+                    <th scope="col" key={standard}>{standard}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {GSAT_SUBJECTS.map((subject) => (
+                  <tr key={subject}>
+                    <th scope="row">{subject}</th>
+                    {FIVE_STANDARDS.map((standard) => (
+                      <td key={standard}>
+                        {GSAT_114_FIVE_STANDARDS[subject][standard]}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p className="five-standard-source">
+            資料來源：
+            <a
+              href="https://www.ceec.edu.tw/xmdoc/cont?sid=0P055615788466837352&xsmsid=0J018604485538810196"
+              rel="noreferrer"
+              target="_blank"
+            >
+              大學入學考試中心 114 學年度學測各科成績標準
+            </a>
+          </p>
+        </section>
 
         <aside className="method-notice">
           本網站提供歷史資料回測，不代表下一學年度一定通過；正式選填前仍應回查甄選委員會公告。

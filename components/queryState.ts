@@ -1,17 +1,22 @@
-import { DEPARTMENT_KEYWORD_OPTIONS } from "@/config/departmentKeywords";
-import type { DepartmentKeywordId } from "@/config/departmentKeywords";
-import type { GroupSelection } from "./FilterPanel";
+import {
+  EMPTY_GROUPED_PROGRAM_SELECTIONS,
+  PROGRAM_SELECTION_MODES,
+  type GroupedProgramSelections,
+  type ProgramSelection,
+  type ProgramSelectionMode,
+} from "../lib/programSelection";
+import type { GroupTag } from "../lib/types";
 import { SCORE_SUBJECTS, type ScoreDraft } from "./ScoreForm";
 
 export type SiteRoute = "home" | "how-it-works" | "query" | "results";
+export type GroupSelection = "all" | GroupTag;
 
 export type AdmissionQueryState = {
   scores: ScoreDraft;
   groupSelection: GroupSelection;
   schoolSelection: string;
   customSchoolIds: string[];
-  departmentKeywordIds: DepartmentKeywordId[];
-  freeText: string;
+  programSelections: GroupedProgramSelections;
 };
 
 export const EMPTY_SCORES: ScoreDraft = {
@@ -39,11 +44,10 @@ export const DEFAULT_QUERY_STATE: AdmissionQueryState = {
   groupSelection: "all",
   schoolSelection: "all",
   customSchoolIds: [],
-  departmentKeywordIds: [],
-  freeText: "",
+  programSelections: EMPTY_GROUPED_PROGRAM_SELECTIONS,
 };
 
-const SESSION_KEY = "admission-114-query-v1";
+const SESSION_KEY = "admission-114-query-v3";
 const SCORE_PARAMS = {
   國文: "ch",
   英文: "en",
@@ -53,8 +57,15 @@ const SCORE_PARAMS = {
   自然: "na",
   英聽: "li",
 } as const;
+const PROGRAM_SELECTION_PARAMS = {
+  自然組: { mode: "naturalMode", code: "natural" },
+  社會組: { mode: "socialMode", code: "social" },
+} as const;
 
-function safeScore(value: unknown, subject: (typeof SCORE_SUBJECTS)[number]): string {
+function safeScore(
+  value: unknown,
+  subject: (typeof SCORE_SUBJECTS)[number],
+): string {
   if (typeof value !== "string" || value.trim() === "") return "";
   const score = Number(value);
   if (!Number.isFinite(score)) return "";
@@ -68,18 +79,52 @@ function safeGroup(value: unknown): GroupSelection {
 
 function safeStringArray(value: unknown): string[] {
   if (!Array.isArray(value)) return [];
-  return value.filter(
-    (item): item is string => typeof item === "string" && item.length > 0,
-  );
+  return [
+    ...new Set(
+      value
+        .filter((item): item is string => typeof item === "string")
+        .map((item) => item.trim())
+        .filter(Boolean),
+    ),
+  ];
 }
 
-function safeDepartmentIds(value: unknown): DepartmentKeywordId[] {
-  const allowed = new Set(
-    DEPARTMENT_KEYWORD_OPTIONS.map((option) => option.id),
-  );
-  return safeStringArray(value).filter((item): item is DepartmentKeywordId =>
-    allowed.has(item as DepartmentKeywordId),
-  );
+function safeProgramCodes(value: unknown): string[] {
+  return safeStringArray(value).filter((code) => /^\d{6}$/.test(code));
+}
+
+function safeProgramSelection(value: unknown): ProgramSelection {
+  if (!value || typeof value !== "object") {
+    return { mode: "none", codes: [] };
+  }
+  const candidate = value as Partial<ProgramSelection>;
+  const mode = PROGRAM_SELECTION_MODES.includes(
+    candidate.mode as ProgramSelectionMode,
+  )
+    ? (candidate.mode as ProgramSelectionMode)
+    : "none";
+
+  if (mode === "none" || mode === "all") {
+    return { mode, codes: [] };
+  }
+
+  const codes = safeProgramCodes(candidate.codes);
+  return codes.length > 0
+    ? { mode, codes }
+    : { mode: "none", codes: [] };
+}
+
+function safeGroupedProgramSelections(
+  value: unknown,
+): GroupedProgramSelections {
+  const candidate =
+    value && typeof value === "object"
+      ? (value as Partial<GroupedProgramSelections>)
+      : {};
+  return {
+    自然組: safeProgramSelection(candidate.自然組),
+    社會組: safeProgramSelection(candidate.社會組),
+  };
 }
 
 function normalizeStoredState(value: unknown): AdmissionQueryState | null {
@@ -101,15 +146,23 @@ function normalizeStoredState(value: unknown): AdmissionQueryState | null {
         ? candidate.schoolSelection
         : "all",
     customSchoolIds: safeStringArray(candidate.customSchoolIds),
-    departmentKeywordIds: safeDepartmentIds(candidate.departmentKeywordIds),
-    freeText: typeof candidate.freeText === "string" ? candidate.freeText : "",
+    programSelections: safeGroupedProgramSelections(candidate.programSelections),
   };
 }
 
 export function queryStateFromParams(
   params: URLSearchParams,
 ): AdmissionQueryState {
-  const departmentIds = params.get("dept")?.split(",").filter(Boolean) ?? [];
+  const programSelections: GroupedProgramSelections = {
+    自然組: safeProgramSelection({
+      mode: params.get(PROGRAM_SELECTION_PARAMS.自然組.mode),
+      codes: params.getAll(PROGRAM_SELECTION_PARAMS.自然組.code),
+    }),
+    社會組: safeProgramSelection({
+      mode: params.get(PROGRAM_SELECTION_PARAMS.社會組.mode),
+      codes: params.getAll(PROGRAM_SELECTION_PARAMS.社會組.code),
+    }),
+  };
 
   return {
     scores: SCORE_SUBJECTS.reduce<ScoreDraft>(
@@ -123,8 +176,7 @@ export function queryStateFromParams(
     schoolSelection: params.get("school") || "all",
     customSchoolIds:
       params.get("schoolIds")?.split(",").filter(Boolean) ?? [],
-    departmentKeywordIds: safeDepartmentIds(departmentIds),
-    freeText: params.get("q") ?? "",
+    programSelections,
   };
 }
 
@@ -144,10 +196,13 @@ export function queryStateToParams(state: AdmissionQueryState): URLSearchParams 
   if (state.customSchoolIds.length > 0) {
     params.set("schoolIds", state.customSchoolIds.join(","));
   }
-  if (state.departmentKeywordIds.length > 0) {
-    params.set("dept", state.departmentKeywordIds.join(","));
-  }
-  if (state.freeText.trim()) params.set("q", state.freeText.trim());
+  (["自然組", "社會組"] as const).forEach((group) => {
+    const selection = state.programSelections[group];
+    const names = PROGRAM_SELECTION_PARAMS[group];
+    if (selection.mode === "none") return;
+    params.set(names.mode, selection.mode);
+    selection.codes.forEach((code) => params.append(names.code, code));
+  });
 
   return params;
 }
@@ -161,8 +216,10 @@ export function restoreQueryState(): AdmissionQueryState {
     "group",
     "school",
     "schoolIds",
-    "dept",
-    "q",
+    "naturalMode",
+    "natural",
+    "socialMode",
+    "social",
   ]);
   if ([...params.keys()].some((key) => queryKeys.has(key))) {
     return queryStateFromParams(params);

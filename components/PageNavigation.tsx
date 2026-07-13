@@ -1,5 +1,7 @@
 "use client";
 
+import type { MouseEvent } from "react";
+import { useNavigationLoading } from "./NavigationLoadingProvider";
 import { routePath, type SiteRoute } from "./queryState";
 
 type RouteLinkProps = {
@@ -10,11 +12,48 @@ type RouteLinkProps = {
 };
 
 export function RouteLink({ children, className, route, search }: RouteLinkProps) {
+  const { navigate } = useNavigationLoading();
   const path = routePath(route);
   const href = search ? `${path}?${search}` : path;
 
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    const anchor = event.currentTarget;
+
+    if (
+      (anchor.target && anchor.target.toLowerCase() !== "_self") ||
+      anchor.hasAttribute("download")
+    ) {
+      return;
+    }
+
+    const destination = new URL(anchor.href, window.location.href);
+
+    if (destination.origin !== window.location.origin) {
+      return;
+    }
+
+    event.preventDefault();
+    navigate(`${destination.pathname}${destination.search}${destination.hash}`);
+  };
+
   return (
-    <a className={className} href={href} suppressHydrationWarning>
+    <a
+      className={className}
+      href={href}
+      onClick={handleClick}
+      suppressHydrationWarning
+    >
       {children}
     </a>
   );
@@ -42,6 +81,7 @@ export function SubpageHeader({ kicker, title }: SubpageHeaderProps) {
 type PageNavigationProps = {
   nextLabel: string;
   nextRoute: SiteRoute;
+  nextDisabled?: boolean;
   nextSearch?: string;
   previousLabel: string;
   previousRoute: SiteRoute;
@@ -51,6 +91,7 @@ type PageNavigationProps = {
 export function PageNavigation({
   nextLabel,
   nextRoute,
+  nextDisabled = false,
   nextSearch,
   previousLabel,
   previousRoute,
@@ -65,9 +106,15 @@ export function PageNavigation({
       >
         <span aria-hidden="true">←</span> {previousLabel}
       </RouteLink>
-      <RouteLink className="page-next" route={nextRoute} search={nextSearch}>
-        {nextLabel} <span aria-hidden="true">→</span>
-      </RouteLink>
+      {nextDisabled ? (
+        <span className="page-next disabled" aria-disabled="true">
+          {nextLabel} <span aria-hidden="true">→</span>
+        </span>
+      ) : (
+        <RouteLink className="page-next" route={nextRoute} search={nextSearch}>
+          {nextLabel} <span aria-hidden="true">→</span>
+        </RouteLink>
+      )}
     </nav>
   );
 }
