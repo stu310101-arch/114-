@@ -1,0 +1,7 @@
+1:"$Sreact.fragment"
+2:I[2073,["454","static/chunks/454-e1c722bb3f4ac2e4.js","884","static/chunks/app/other-admissions/page-02a1f87fbba76ca7.js"],"SubpageHeader"]
+3:I[471,["454","static/chunks/454-e1c722bb3f4ac2e4.js","884","static/chunks/app/other-admissions/page-02a1f87fbba76ca7.js"],"OtherAdmissionsDirectory"]
+4:I[484,[],"OutletBoundary"]
+5:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"subpage-main other-admissions-page","children":[["$","$L2",null,{"kicker":"OTHER ADMISSIONS","title":"其他招生管道"}],["$","div",null,{"className":"other-admissions-shell","children":["$","$L3",null,{}]}]]}],null,["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"jVXD7hgpYMK_JML5TokUG"}
+6:null
