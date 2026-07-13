@@ -60,6 +60,9 @@ const SESSION_KEY = "admission-114-query-v4";
 const LEGACY_SESSION_KEYS = ["admission-114-query-v3"] as const;
 const SCHOOL_MODE_PARAM = "schoolMode";
 const MULTI_SCHOOL_MODE = "multi";
+const CONFIGURED_BASE_PATH = (process.env.NEXT_PUBLIC_BASE_PATH ?? "")
+  .replace(/\/$/, "")
+  .replace(/^\/$/, "");
 const SCORE_PARAMS = {
   國文: "ch",
   英文: "en",
@@ -307,7 +310,11 @@ export function saveQueryState(state: AdmissionQueryState): void {
 }
 
 export function routePath(route: SiteRoute): string {
-  if (typeof window === "undefined") return route === "home" ? "/" : `/${route}`;
+  if (typeof window === "undefined") {
+    return route === "home"
+      ? `${CONFIGURED_BASE_PATH}/`
+      : `${CONFIGURED_BASE_PATH}/${route}`;
+  }
 
   const pathname = window.location.pathname;
   const routeSuffix =
