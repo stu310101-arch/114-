@@ -111,6 +111,26 @@
       "reviewReasons": [
         "需特殊檢定（術科），詳情請至官方網站查詢"
       ]
+    },
+    "004252": {
+      "additionalScreeningRules": [
+        { "label": "英文＋數學A", "minScore": 21, "rawText": "英文＋數學A21" },
+        { "label": "APCS 觀念題＋實作題", "minScore": 8, "rawText": "APCS 觀念題＋實作題8" }
+      ],
+      "reviewReasons": [
+        "需特殊檢定（APCS），詳情請至官方網站查詢"
+      ]
+    },
+    "004522": {
+      "additionalScreeningRules": [
+        { "label": "國文", "minScore": 10, "rawText": "國文10" },
+        { "label": "APCS 觀念題＋實作題", "minScore": 5, "rawText": "APCS 觀念題＋實作題5" },
+        { "label": "英文＋數學A", "minScore": 16, "rawText": "英文＋數學A16" },
+        { "label": "自然", "minScore": 12, "rawText": "自然12" }
+      ],
+      "reviewReasons": [
+        "需特殊檢定（APCS），詳情請至官方網站查詢"
+      ]
     }
   }
 }

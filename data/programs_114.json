@@ -13302,6 +13302,18 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "英文＋數學A",
+        "minScore": 21,
+        "rawText": "英文＋數學A21"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 8,
+        "rawText": "APCS 觀念題＋實作題8"
+      }
+    ],
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/004.htm",
@@ -15117,6 +15129,28 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "國文",
+        "minScore": 10,
+        "rawText": "國文10"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 5,
+        "rawText": "APCS 觀念題＋實作題5"
+      },
+      {
+        "label": "英文＋數學A",
+        "minScore": 16,
+        "rawText": "英文＋數學A16"
+      },
+      {
+        "label": "自然",
+        "minScore": 12,
+        "rawText": "自然12"
+      }
+    ],
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/004.htm",

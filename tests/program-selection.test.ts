@@ -274,6 +274,35 @@ describe("114 官方校系選取資料", () => {
     expect(music?.reviewReasons?.join("；")).toContain("19 種主修樂器名額加總");
     expect(music?.reviewReasons?.join("；")).toContain("名額與術科最低分不同");
   });
+
+  it("完整保留成功大學 2 筆 APCS 組最低篩選分數", () => {
+    const expectedRules = {
+      "004252": [["英文＋數學A", 21], ["APCS 觀念題＋實作題", 8]],
+      "004522": [
+        ["國文", 10],
+        ["APCS 觀念題＋實作題", 5],
+        ["英文＋數學A", 16],
+        ["自然", 12],
+      ],
+    } as const;
+
+    Object.entries(expectedRules).forEach(([programCode, rules]) => {
+      const program = programs.find(
+        (candidate) => candidate.programCode === programCode,
+      );
+      expect(program).toMatchObject({
+        programCode,
+        evaluationSupport: "unsupported",
+        screeningRules: [],
+      });
+      expect(
+        program?.additionalScreeningRules?.map(({ label, minScore }) => [
+          label,
+          minScore,
+        ]),
+      ).toEqual(rules);
+    });
+  });
 });
 
 describe("programSelection", () => {
