@@ -88,11 +88,15 @@ test("keeps the homepage header static and removes starter preview files", async
   assert.match(page, /route="how-it-works"/);
   assert.match(page, /route="query"/);
   assert.match(layout, /title:\s*"114 申請入學一階落點查詢/);
-  assert.match(layout, /images:\s*\[\{ url: socialImagePath/);
-  assert.match(layout, /const socialImagePath = "\/og-share\.png"/);
+  assert.match(layout, /url: socialImageUrl/);
+  assert.match(
+    layout,
+    /new URL\("og-share-text\.png", siteUrl\)\.toString\(\)/,
+  );
+  assert.match(layout, /https:\/\/stu310101-arch\.github\.io\/114-\//);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 
-  await access(new URL("../public/og-share.png", import.meta.url));
+  await access(new URL("../public/og-share-text.png", import.meta.url));
   await assert.rejects(access(new URL("../public/og.png", import.meta.url)));
   await assert.rejects(access(new URL("app/_sites-preview", projectRoot)));
 });

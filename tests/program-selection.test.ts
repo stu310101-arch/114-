@@ -993,7 +993,7 @@ describe("科系選取網址狀態", () => {
     const params = queryStateToParams({
       ...DEFAULT_QUERY_STATE,
       scores: EXAMPLE_SCORES,
-      groupSelection: "自然組",
+      groupSelection: ["自然組"],
       programSelections: {
         自然組: {
           mode: "include",
@@ -1004,7 +1004,7 @@ describe("科系選取網址狀態", () => {
     });
     const restored = queryStateFromParams(params);
 
-    expect(restored.groupSelection).toBe("自然組");
+    expect(restored.groupSelection).toEqual(["自然組"]);
     expect(restored.programSelections.自然組).toEqual({
       mode: "include",
       codes: ["030012", "030022"],
@@ -1019,7 +1019,7 @@ describe("科系選取網址狀態", () => {
   it("兩組全選各自只傳模式，不在網址列展開上千個代碼", () => {
     const params = queryStateToParams({
       ...DEFAULT_QUERY_STATE,
-      groupSelection: "社會組",
+      groupSelection: ["自然組", "社會組"],
       programSelections: {
         自然組: { mode: "all", codes: [] },
         社會組: { mode: "all", codes: [] },
@@ -1028,6 +1028,7 @@ describe("科系選取網址狀態", () => {
 
     expect(params.get("naturalMode")).toBe("all");
     expect(params.get("socialMode")).toBe("all");
+    expect(params.getAll("group")).toEqual(["自然組", "社會組"]);
     expect(params.getAll("natural")).toEqual([]);
     expect(params.getAll("social")).toEqual([]);
   });

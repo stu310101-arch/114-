@@ -22,7 +22,7 @@ export type SiteRoute =
   | "other-admissions"
   | "query"
   | "results";
-export type GroupSelection = "all" | GroupTag;
+export type GroupSelection = GroupTag[];
 
 export type AdmissionQueryState = {
   scores: ScoreDraft;
@@ -57,15 +57,16 @@ export const EXAMPLE_SCORES: ScoreDraft = {
 export const DEFAULT_QUERY_STATE: AdmissionQueryState = {
   scores: { ...EMPTY_SCORES },
   applicantGender: "",
-  groupSelection: "all",
+  groupSelection: [],
   schoolGroupIds: [],
   customSchoolIds: [],
   programSelections: EMPTY_GROUPED_PROGRAM_SELECTIONS,
   learningGroupIds: [],
 };
 
-const SESSION_KEY = "admission-114-query-v7";
+const SESSION_KEY = "admission-114-query-v8";
 const LEGACY_SESSION_KEYS = [
+  { key: "admission-114-query-v7", usesLegacySchoolState: false },
   { key: "admission-114-query-v6", usesLegacySchoolState: false },
   { key: "admission-114-query-v5", usesLegacySchoolState: false },
   { key: "admission-114-query-v4", usesLegacySchoolState: false },
@@ -103,8 +104,11 @@ function safeScore(
   return String(Math.max(0, Math.min(maximum, Math.trunc(score))));
 }
 
-function safeGroup(value: unknown): GroupSelection {
-  return value === "自然組" || value === "社會組" ? value : "all";
+function safeGroups(value: unknown): GroupSelection {
+  const values = Array.isArray(value) ? value : [value];
+  return [...new Set(values.filter((item): item is GroupTag =>
+    item === "自然組" || item === "社會組",
+  ))];
 }
 
 function safeApplicantGender(value: unknown): ApplicantGender | "" {
@@ -197,7 +201,7 @@ function normalizeStoredState(
       { ...EMPTY_SCORES },
     ),
     applicantGender: safeApplicantGender(candidate.applicantGender),
-    groupSelection: safeGroup(candidate.groupSelection),
+    groupSelection: safeGroups(candidate.groupSelection),
     schoolGroupIds:
       !legacy && storedSchoolGroupIds.length > 0
         ? storedSchoolGroupIds
@@ -242,7 +246,7 @@ export function queryStateFromParams(
       { ...EMPTY_SCORES },
     ),
     applicantGender: safeApplicantGender(params.get(APPLICANT_GENDER_PARAM)),
-    groupSelection: safeGroup(params.get("group")),
+    groupSelection: safeGroups(params.getAll("group")),
     schoolGroupIds:
       hasMultiSchoolState && schoolGroupIds.length > 0
         ? schoolGroupIds
@@ -270,9 +274,9 @@ export function queryStateToParams(state: AdmissionQueryState): URLSearchParams 
   safeLearningGroupIds(state.learningGroupIds).forEach((learningGroupId) => {
     params.append(LEARNING_GROUP_PARAM, learningGroupId);
   });
-  if (state.groupSelection !== "all") {
-    params.set("group", state.groupSelection);
-  }
+  safeGroups(state.groupSelection).forEach((group) => {
+    params.append("group", group);
+  });
   const schoolGroupIds = safeSchoolGroupIds(state.schoolGroupIds);
   const customSchoolIds = safeSchoolIds(state.customSchoolIds);
   if (schoolGroupIds.length > 0 || customSchoolIds.length > 0) {

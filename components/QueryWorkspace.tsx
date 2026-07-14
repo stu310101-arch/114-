@@ -4,9 +4,11 @@ import { useMemo, useState, useSyncExternalStore } from "react";
 import type { FormEvent } from "react";
 import { matchesSchoolSelection } from "@/lib/filters";
 import {
+  EMPTY_PROGRAM_SELECTION,
   selectedUniqueProgramCodes,
   type ProgramOption,
 } from "@/lib/programSelection";
+import type { GroupTag } from "@/lib/types";
 import { matchesLearningGroupIds } from "@/lib/learningGroups";
 import { FilterPanel, type SchoolSourceOption } from "./FilterPanel";
 import {
@@ -123,8 +125,21 @@ function HydratedQueryWorkspace({
     setQuery((current) => ({ ...current, [key]: value }));
   }
 
-  function selectGroup(value: Exclude<GroupSelection, "all">) {
-    setQuery((current) => ({ ...current, groupSelection: value }));
+  function selectGroups(value: GroupSelection) {
+    setQuery((current) => {
+      const removedGroups = current.groupSelection.filter(
+        (group) => !value.includes(group),
+      );
+      const programSelections = { ...current.programSelections };
+      removedGroups.forEach((group: GroupTag) => {
+        programSelections[group] = EMPTY_PROGRAM_SELECTION;
+      });
+      return {
+        ...current,
+        groupSelection: value,
+        programSelections,
+      };
+    });
   }
 
   function showResults(event: FormEvent<HTMLFormElement>) {
@@ -166,7 +181,7 @@ function HydratedQueryWorkspace({
             onCustomSchoolIdsChange={(value) =>
               update("customSchoolIds", value)
             }
-            onGroupSelectionChange={selectGroup}
+            onGroupSelectionChange={selectGroups}
             onProgramSelectionChange={(group, value) =>
               setQuery((current) => ({
                 ...current,

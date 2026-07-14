@@ -3,15 +3,16 @@ import { NavigationLoadingProvider } from "@/components/NavigationLoadingProvide
 import "./globals.css";
 
 const basePath = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://admission-114-review-tw.lhxuan970930.chatgpt.site/";
-// Next applies `basePath` to Open Graph images during a static export.
-const socialImagePath = "/og-share.png";
+const siteUrl = new URL(
+  (process.env.NEXT_PUBLIC_SITE_URL ??
+    "https://stu310101-arch.github.io/114-/").replace(/\/?$/, "/"),
+);
+// Use a new, absolute filename so social crawlers do not reuse the old card.
+const socialImageUrl = new URL("og-share-text.png", siteUrl).toString();
 const faviconPath = `${basePath}/favicon.svg`;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: siteUrl,
   title: "114 申請入學一階落點查詢｜逐關倍率篩選",
   description:
     "輸入學測級分，以 114 學年度官方通過倍率篩選最低級分逐關回測，查看可能通過與接近的校系。",
@@ -20,13 +21,20 @@ export const metadata: Metadata = {
     description: "每一關都算清楚，看看你離目標校系有多近。",
     locale: "zh_TW",
     type: "website",
-    images: [{ url: socialImagePath, width: 1536, height: 1024 }],
+    images: [
+      {
+        url: socialImageUrl,
+        width: 1536,
+        height: 1024,
+        alt: "114 申請入學一階落點查詢｜倍率篩選回測工具",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "114 申請入學一階落點查詢",
     description: "官方資料逐關回測，找出可能通過與最接近的校系。",
-    images: [socialImagePath],
+    images: [socialImageUrl],
   },
   icons: {
     icon: faviconPath,

@@ -33,6 +33,33 @@ function restoreFromSession(key: string, value: unknown) {
 }
 
 describe("school query state", () => {
+  it("自然組與社會組可複選並完整寫入網址", () => {
+    const params = queryStateToParams({
+      ...DEFAULT_QUERY_STATE,
+      groupSelection: ["自然組", "社會組"],
+    });
+
+    expect(params.getAll("group")).toEqual(["自然組", "社會組"]);
+    expect(queryStateFromParams(params).groupSelection).toEqual([
+      "自然組",
+      "社會組",
+    ]);
+    expect(
+      queryStateFromParams(
+        new URLSearchParams("group=自然組&group=unknown&group=自然組"),
+      ).groupSelection,
+    ).toEqual(["自然組"]);
+  });
+
+  it("v7 的單一組別狀態會升級為複選陣列", () => {
+    const restored = restoreFromSession("admission-114-query-v7", {
+      ...DEFAULT_QUERY_STATE,
+      groupSelection: "社會組",
+    });
+
+    expect(restored.groupSelection).toEqual(["社會組"]);
+  });
+
   it("官方十八學群可不選、單選或複選並安全寫入網址", () => {
     const params = queryStateToParams({
       ...DEFAULT_QUERY_STATE,
