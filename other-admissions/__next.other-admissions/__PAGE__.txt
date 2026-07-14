@@ -1,7 +1,7 @@
 1:"$Sreact.fragment"
-2:I[13250,["/114-/_next/static/chunks/16.-kf-hu-aha.js","/114-/_next/static/chunks/07ctbjs8m3ven.js","/114-/_next/static/chunks/0c6t0hn172r3r.js"],"SubpageHeader"]
-3:I[11099,["/114-/_next/static/chunks/16.-kf-hu-aha.js","/114-/_next/static/chunks/07ctbjs8m3ven.js","/114-/_next/static/chunks/0c6t0hn172r3r.js"],"OtherAdmissionsDirectory"]
+2:I[13250,["/114-/_next/static/chunks/16.-kf-hu-aha.js","/114-/_next/static/chunks/07ctbjs8m3ven.js","/114-/_next/static/chunks/08176.29qby8z.js"],"SubpageHeader"]
+3:I[11099,["/114-/_next/static/chunks/16.-kf-hu-aha.js","/114-/_next/static/chunks/07ctbjs8m3ven.js","/114-/_next/static/chunks/08176.29qby8z.js"],"OtherAdmissionsDirectory"]
 4:I[89137,["/114-/_next/static/chunks/16.-kf-hu-aha.js","/114-/_next/static/chunks/07ctbjs8m3ven.js"],"OutletBoundary"]
 5:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"subpage-main other-admissions-page","children":[["$","$L2",null,{"kicker":"OTHER ADMISSIONS","title":"其他招生管道"}],["$","div",null,{"className":"other-admissions-shell","children":["$","$L3",null,{}]}]]}],[["$","script","script-0",{"src":"/114-/_next/static/chunks/0c6t0hn172r3r.js","async":true}]],["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"77Sl6ut72tqH8br7BoDYf"}
+0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"subpage-main other-admissions-page","children":[["$","$L2",null,{"kicker":"OTHER ADMISSIONS","title":"其他招生管道"}],["$","div",null,{"className":"other-admissions-shell","children":["$","$L3",null,{}]}]]}],[["$","script","script-0",{"src":"/114-/_next/static/chunks/08176.29qby8z.js","async":true}]],["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"ktUvMmckFehyM0EmnGxyh"}
 6:null
