@@ -8151,9 +8151,9 @@
         "rawText": "體育百分等級75.36"
       },
       {
-        "label": "國文＋英文",
+        "label": "國文＋英文＋社會＋自然",
         "minScore": 30,
-        "rawText": "國文＋英文30"
+        "rawText": "國文＋英文＋社會＋自然30"
       }
     ],
     "source": {
@@ -8166,7 +8166,7 @@
     "evaluationSupport": "unsupported",
     "reviewReasons": [
       "需特殊檢定（術科），不可用一般學測成績完整判定，詳情請至官方網站查詢",
-      "官方另列最低分：體育百分等級 75.36、國文＋英文 30；術科條件尚未納入自動判斷"
+      "官方另列最低分：體育百分等級 75.36、國文＋英文＋社會＋自然 30；術科條件尚未納入自動判斷"
     ],
     "verified": false
   },
@@ -8216,9 +8216,9 @@
         "rawText": "體育百分等級75.3"
       },
       {
-        "label": "國文＋英文",
+        "label": "國文＋英文＋社會＋自然",
         "minScore": 37,
-        "rawText": "國文＋英文37"
+        "rawText": "國文＋英文＋社會＋自然37"
       }
     ],
     "source": {
@@ -8231,7 +8231,7 @@
     "evaluationSupport": "unsupported",
     "reviewReasons": [
       "需特殊檢定（術科），不可用一般學測成績完整判定，詳情請至官方網站查詢",
-      "官方另列最低分：體育百分等級 75.3、國文＋英文 37；術科條件尚未納入自動判斷"
+      "官方另列最低分：體育百分等級 75.3、國文＋英文＋社會＋自然 37；術科條件尚未納入自動判斷"
     ],
     "verified": false
   },
@@ -8281,9 +8281,9 @@
         "rawText": "體育百分等級82.7"
       },
       {
-        "label": "國文＋英文",
+        "label": "國文＋英文＋社會＋自然",
         "minScore": 43,
-        "rawText": "國文＋英文43"
+        "rawText": "國文＋英文＋社會＋自然43"
       }
     ],
     "source": {
@@ -8296,7 +8296,7 @@
     "evaluationSupport": "unsupported",
     "reviewReasons": [
       "需特殊檢定（術科），不可用一般學測成績完整判定，詳情請至官方網站查詢",
-      "官方另列最低分：體育百分等級 82.7、國文＋英文 43；術科條件尚未納入自動判斷"
+      "官方另列最低分：體育百分等級 82.7、國文＋英文＋社會＋自然 43；術科條件尚未納入自動判斷"
     ],
     "verified": false
   },
@@ -60268,15 +60268,39 @@
     ],
     "departmentKeywords": [],
     "requirements": [],
-    "screeningRules": [
+    "screeningRules": [],
+    "screeningVariants": [
       {
-        "order": 1,
-        "label": "國文",
-        "subjects": [
-          "國文"
-        ],
-        "minScore": 3,
-        "rawText": "國文3"
+        "applicantGender": "male",
+        "label": "男生組",
+        "quota": 16,
+        "screeningRules": [
+          {
+            "order": 1,
+            "label": "國文",
+            "subjects": [
+              "國文"
+            ],
+            "minScore": 2,
+            "rawText": "國文2"
+          }
+        ]
+      },
+      {
+        "applicantGender": "female",
+        "label": "女生組",
+        "quota": 12,
+        "screeningRules": [
+          {
+            "order": 1,
+            "label": "國文",
+            "subjects": [
+              "國文"
+            ],
+            "minScore": 3,
+            "rawText": "國文3"
+          }
+        ]
       }
     ],
     "source": {
@@ -62961,16 +62985,41 @@
         "rawText": "英文底標"
       }
     ],
-    "screeningRules": [
+    "screeningRules": [],
+    "screeningVariants": [
       {
-        "order": 1,
-        "label": "國文＋英文",
-        "subjects": [
-          "國文",
-          "英文"
-        ],
-        "minScore": 16,
-        "rawText": "國文＋英文16"
+        "applicantGender": "male",
+        "label": "男生組",
+        "quota": 6,
+        "screeningRules": [
+          {
+            "order": 1,
+            "label": "國文＋英文",
+            "subjects": [
+              "國文",
+              "英文"
+            ],
+            "minScore": 13,
+            "rawText": "國文＋英文13"
+          }
+        ]
+      },
+      {
+        "applicantGender": "female",
+        "label": "女生組",
+        "quota": 16,
+        "screeningRules": [
+          {
+            "order": 1,
+            "label": "國文＋英文",
+            "subjects": [
+              "國文",
+              "英文"
+            ],
+            "minScore": 16,
+            "rawText": "國文＋英文16"
+          }
+        ]
       }
     ],
     "source": {
@@ -69644,17 +69693,25 @@
         "rawText": "數學B底標"
       }
     ],
-    "screeningRules": [
+    "screeningRules": [],
+    "screeningVariants": [
       {
-        "order": 1,
-        "label": "國文＋英文＋社會",
-        "subjects": [
-          "國文",
-          "英文",
-          "社會"
-        ],
-        "minScore": 13,
-        "rawText": "國文＋英文＋社會13"
+        "applicantGender": "female",
+        "label": "女生組",
+        "quota": 5,
+        "screeningRules": [
+          {
+            "order": 1,
+            "label": "國文＋英文＋社會",
+            "subjects": [
+              "國文",
+              "英文",
+              "社會"
+            ],
+            "minScore": 13,
+            "rawText": "國文＋英文＋社會13"
+          }
+        ]
       }
     ],
     "source": {
@@ -88377,17 +88434,43 @@
         "rawText": "英聽B級"
       }
     ],
-    "screeningRules": [
+    "screeningRules": [],
+    "screeningVariants": [
       {
-        "order": 1,
-        "label": "國文＋英文＋社會",
-        "subjects": [
-          "國文",
-          "英文",
-          "社會"
-        ],
-        "minScore": 28,
-        "rawText": "國文＋英文＋社會28"
+        "applicantGender": "male",
+        "label": "男生組",
+        "quota": 10,
+        "screeningRules": [
+          {
+            "order": 1,
+            "label": "國文＋英文＋社會",
+            "subjects": [
+              "國文",
+              "英文",
+              "社會"
+            ],
+            "minScore": 21,
+            "rawText": "國文＋英文＋社會21"
+          }
+        ]
+      },
+      {
+        "applicantGender": "female",
+        "label": "女生組",
+        "quota": 10,
+        "screeningRules": [
+          {
+            "order": 1,
+            "label": "國文＋英文＋社會",
+            "subjects": [
+              "國文",
+              "英文",
+              "社會"
+            ],
+            "minScore": 28,
+            "rawText": "國文＋英文＋社會28"
+          }
+        ]
       }
     ],
     "source": {

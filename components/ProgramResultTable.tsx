@@ -247,6 +247,10 @@ export function UnsupportedProgramTable({
         );
         const requiresGenderSelection =
           (program.screeningVariants?.length ?? 0) > 0;
+        const singleGenderRestriction =
+          program.screeningVariants?.length === 1
+            ? program.screeningVariants[0]
+            : undefined;
 
         return (
           <article
@@ -273,7 +277,9 @@ export function UnsupportedProgramTable({
                     className={`review-badge${requiresGenderSelection ? " incomplete" : requiresSpecialScreening ? " special" : ""}`}
                   >
                     {requiresGenderSelection
-                      ? "需選性別組別"
+                      ? singleGenderRestriction
+                        ? `限${singleGenderRestriction.applicantGender === "female" ? "女生" : "男生"}組`
+                        : "需選性別組別"
                       : requiresSpecialScreening
                         ? "須特殊檢定"
                         : "資料待確認"}
@@ -348,7 +354,9 @@ export function UnsupportedProgramTable({
               <div className="review-reasons">
                 <b>
                   {requiresGenderSelection
-                    ? "官方分列男、女生名額與門檻；請返回上頁選擇招生性別組別："
+                    ? singleGenderRestriction
+                      ? `官方限定${singleGenderRestriction.applicantGender === "female" ? "女性" : "男性"}報考；請返回上頁選擇${singleGenderRestriction.label}：`
+                      : "官方分列男、女生名額與門檻；請返回上頁選擇招生性別組別："
                     : requiresSpecialScreening
                       ? "其他官方條件與資料說明："
                       : "目前無法安全自動判斷："}

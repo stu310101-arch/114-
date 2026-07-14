@@ -12,6 +12,7 @@ import {
   toggleProgramSelection,
 } from "../lib/programSelection";
 import { filterPrograms } from "../lib/filters";
+import { supportsProgramEvaluation } from "../lib/admission";
 import type { Program } from "../lib/types";
 import {
   DEFAULT_QUERY_STATE,
@@ -179,6 +180,100 @@ describe("114 官方校系選取資料", () => {
     ]);
   });
 
+  it("三筆校系保留官方男女名額與不同篩選門檻", () => {
+    const expectedVariants = {
+      "031232": [
+        { applicantGender: "male", label: "男生組", quota: 16, minScore: 2 },
+        {
+          applicantGender: "female",
+          label: "女生組",
+          quota: 12,
+          minScore: 3,
+        },
+      ],
+      "033202": [
+        {
+          applicantGender: "male",
+          label: "男生組",
+          quota: 6,
+          minScore: 13,
+        },
+        {
+          applicantGender: "female",
+          label: "女生組",
+          quota: 16,
+          minScore: 16,
+        },
+      ],
+      "056042": [
+        {
+          applicantGender: "male",
+          label: "男生組",
+          quota: 10,
+          minScore: 21,
+        },
+        {
+          applicantGender: "female",
+          label: "女生組",
+          quota: 10,
+          minScore: 28,
+        },
+      ],
+    } as const;
+
+    for (const [programCode, variants] of Object.entries(expectedVariants)) {
+      const program = programs.find((item) => item.programCode === programCode);
+
+      expect(program).toMatchObject({
+        screeningRules: [],
+        evaluationSupport: "supported",
+      });
+      expect(program?.screeningVariants).toHaveLength(2);
+      expect(
+        program?.screeningVariants?.map((variant) => ({
+          applicantGender: variant.applicantGender,
+          label: variant.label,
+          quota: variant.quota,
+          minScore: variant.screeningRules[0]?.minScore,
+        })),
+      ).toEqual(variants);
+      expect(
+        program?.screeningVariants?.reduce(
+          (total, variant) => total + variant.quota,
+          0,
+        ),
+      ).toBe(program?.quota);
+    }
+  });
+
+  it("女子啦啦舞組只允許女生組進行通過判定", () => {
+    const cheerDance = programs.find(
+      (program) => program.programCode === "039072",
+    );
+
+    expect(cheerDance).toMatchObject({
+      quota: 5,
+      screeningRules: [],
+      evaluationSupport: "supported",
+    });
+    expect(cheerDance?.screeningVariants).toEqual([
+      expect.objectContaining({
+        applicantGender: "female",
+        label: "女生組",
+        quota: 5,
+        screeningRules: [
+          expect.objectContaining({
+            label: "國文＋英文＋社會",
+            minScore: 13,
+          }),
+        ],
+      }),
+    ]);
+    expect(supportsProgramEvaluation(cheerDance!, "female")).toBe(true);
+    expect(supportsProgramEvaluation(cheerDance!, "male")).toBe(false);
+    expect(supportsProgramEvaluation(cheerDance!)).toBe(false);
+  });
+
   it("臺大資工 APCS 組明列特殊門檻並警示不可只用學測完整判定", () => {
     const apcs = programs.find(
       (program) => program.programCode === "001602",
@@ -320,7 +415,11 @@ describe("114 官方校系選取資料", () => {
           minScore: 75.36,
           rawText: "體育百分等級75.36",
         },
-        { label: "國文＋英文", minScore: 30, rawText: "國文＋英文30" },
+        {
+          label: "國文＋英文＋社會＋自然",
+          minScore: 30,
+          rawText: "國文＋英文＋社會＋自然30",
+        },
       ],
       "002512": [
         {
@@ -328,7 +427,11 @@ describe("114 官方校系選取資料", () => {
           minScore: 75.3,
           rawText: "體育百分等級75.3",
         },
-        { label: "國文＋英文", minScore: 37, rawText: "國文＋英文37" },
+        {
+          label: "國文＋英文＋社會＋自然",
+          minScore: 37,
+          rawText: "國文＋英文＋社會＋自然37",
+        },
       ],
       "002522": [
         {
@@ -336,7 +439,11 @@ describe("114 官方校系選取資料", () => {
           minScore: 82.7,
           rawText: "體育百分等級82.7",
         },
-        { label: "國文＋英文", minScore: 43, rawText: "國文＋英文43" },
+        {
+          label: "國文＋英文＋社會＋自然",
+          minScore: 43,
+          rawText: "國文＋英文＋社會＋自然43",
+        },
       ],
     } as const;
     const expectedDetails = {
@@ -345,9 +452,9 @@ describe("114 官方校系選取資料", () => {
       "002472": ["國文＋英文 34", "素描＋彩繪技法＋創意表現 213"],
       "002482": ["國文＋英文 28", "彩繪技法 72", "素描 75"],
       "002492": ["國文＋英文 26", "彩繪技法 69", "素描 69", "水墨書畫 79.8"],
-      "002502": ["體育百分等級 75.36", "國文＋英文 30"],
-      "002512": ["體育百分等級 75.3", "國文＋英文 37"],
-      "002522": ["體育百分等級 82.7", "國文＋英文 43"],
+      "002502": ["體育百分等級 75.36", "國文＋英文＋社會＋自然 30"],
+      "002512": ["體育百分等級 75.3", "國文＋英文＋社會＋自然 37"],
+      "002522": ["體育百分等級 82.7", "國文＋英文＋社會＋自然 43"],
     } as const;
 
     Object.entries(expectedDetails).forEach(([programCode, details]) => {
