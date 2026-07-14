@@ -18,6 +18,11 @@ import {
   type ProgramSelection,
 } from "@/lib/programSelection";
 import type { GroupTag } from "@/lib/types";
+import {
+  matchesProgramTrackIds,
+  PROGRAM_TRACK_OPTIONS,
+  type ProgramTrackId,
+} from "@/lib/programTracks";
 import type { GroupSelection } from "./queryState";
 import { RouteLink } from "./PageNavigation";
 
@@ -39,6 +44,8 @@ type FilterPanelProps = {
     value: ProgramSelection,
   ) => void;
   programOptions: readonly ProgramOption[];
+  programTrackIds: readonly ProgramTrackId[];
+  onProgramTrackIdsChange: (value: ProgramTrackId[]) => void;
   schoolSources: readonly SchoolSourceOption[];
 };
 
@@ -91,6 +98,8 @@ export function FilterPanel({
   programSelections,
   onProgramSelectionChange,
   programOptions,
+  programTrackIds,
+  onProgramTrackIdsChange,
   schoolSources,
 }: FilterPanelProps) {
   const [schoolSearch, setSchoolSearch] = useState("");
@@ -114,16 +123,23 @@ export function FilterPanel({
     );
   }, [schoolSearch, schoolSources]);
 
+  const trackFilteredPrograms = useMemo(
+    () =>
+      programOptions.filter((program) =>
+        matchesProgramTrackIds(program.programTrackIds, programTrackIds),
+      ),
+    [programOptions, programTrackIds],
+  );
   const programsByGroup = useMemo(
     () => ({
-      自然組: programOptions.filter((program) =>
+      自然組: trackFilteredPrograms.filter((program) =>
         program.groupTags.includes("自然組"),
       ),
-      社會組: programOptions.filter((program) =>
+      社會組: trackFilteredPrograms.filter((program) =>
         program.groupTags.includes("社會組"),
       ),
     }),
-    [programOptions],
+    [trackFilteredPrograms],
   );
   const groupPrograms = useMemo(
     () =>
@@ -132,10 +148,10 @@ export function FilterPanel({
   );
   const departmentsByGroup = useMemo(
     () => ({
-      自然組: toDepartmentOptions(programOptions, "自然組"),
-      社會組: toDepartmentOptions(programOptions, "社會組"),
+      自然組: toDepartmentOptions(trackFilteredPrograms, "自然組"),
+      社會組: toDepartmentOptions(trackFilteredPrograms, "社會組"),
     }),
-    [programOptions],
+    [trackFilteredPrograms],
   );
   const groupDepartments = useMemo(
     () =>
@@ -255,6 +271,57 @@ export function FilterPanel({
         <p className="microcopy">
           分組依 114 學年度官方採計科目與系名整理；兩組各自選取，可同時全選。
         </p>
+        {groupSelection !== "all" ? (
+          <div className="program-track-filter">
+            <div className="filter-label-row">
+              <h3>細分類組</h3>
+              <span>可不選、可複選</span>
+            </div>
+            <div
+              aria-label="細分類組（可複選）"
+              className="program-track-grid"
+              role="group"
+            >
+              <button
+                aria-pressed={programTrackIds.length === 0}
+                className={programTrackIds.length === 0 ? "selected" : ""}
+                onClick={() => {
+                  onProgramTrackIdsChange([]);
+                  setProgramSearch("");
+                  setProgramPage(0);
+                }}
+                type="button"
+              >
+                <b>不限細分類</b>
+                <small>顯示{groupSelection}全部科系</small>
+              </button>
+              {PROGRAM_TRACK_OPTIONS.map((option) => (
+                <button
+                  aria-pressed={programTrackIds.includes(option.id)}
+                  className={
+                    programTrackIds.includes(option.id) ? "selected" : ""
+                  }
+                  key={option.id}
+                  onClick={() => {
+                    onProgramTrackIdsChange(
+                      toggleValue(programTrackIds, option.id),
+                    );
+                    setProgramSearch("");
+                    setProgramPage(0);
+                  }}
+                  title={option.description}
+                  type="button"
+                >
+                  <b>{option.label}</b>
+                  <small>{option.description}</small>
+                </button>
+              ))}
+            </div>
+            <p className="microcopy">
+              細分類依科系名稱與領域整理，非官方招生類組；跨領域科系可能同時出現在多個類組。
+            </p>
+          </div>
+        ) : null}
       </div>
 
       <div className="filter-block">

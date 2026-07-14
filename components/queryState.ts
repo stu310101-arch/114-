@@ -10,6 +10,10 @@ import {
   type SchoolGroupId,
 } from "../config/schoolGroups";
 import type { ApplicantGender, GroupTag } from "../lib/types";
+import {
+  isProgramTrackId,
+  type ProgramTrackId,
+} from "../lib/programTracks";
 import { SCORE_SUBJECTS, type ScoreDraft } from "./ScoreForm";
 
 export type SiteRoute =
@@ -27,6 +31,7 @@ export type AdmissionQueryState = {
   schoolGroupIds: SchoolGroupId[];
   customSchoolIds: string[];
   programSelections: GroupedProgramSelections;
+  programTrackIds: ProgramTrackId[];
 };
 
 export const EMPTY_SCORES: ScoreDraft = {
@@ -56,16 +61,19 @@ export const DEFAULT_QUERY_STATE: AdmissionQueryState = {
   schoolGroupIds: [],
   customSchoolIds: [],
   programSelections: EMPTY_GROUPED_PROGRAM_SELECTIONS,
+  programTrackIds: [],
 };
 
-const SESSION_KEY = "admission-114-query-v5";
+const SESSION_KEY = "admission-114-query-v6";
 const LEGACY_SESSION_KEYS = [
+  { key: "admission-114-query-v5", usesLegacySchoolState: false },
   { key: "admission-114-query-v4", usesLegacySchoolState: false },
   { key: "admission-114-query-v3", usesLegacySchoolState: true },
 ] as const;
 const SCHOOL_MODE_PARAM = "schoolMode";
 const MULTI_SCHOOL_MODE = "multi";
 const APPLICANT_GENDER_PARAM = "gender";
+const PROGRAM_TRACK_PARAM = "track";
 const CONFIGURED_BASE_PATH = (process.env.NEXT_PUBLIC_BASE_PATH ?? "")
   .replace(/\/$/, "")
   .replace(/^\/$/, "");
@@ -124,6 +132,10 @@ function safeSchoolIds(value: unknown): string[] {
 
 function safeSchoolGroupIds(value: unknown): SchoolGroupId[] {
   return safeStringArray(value).filter(isSchoolGroupId);
+}
+
+function safeProgramTrackIds(value: unknown): ProgramTrackId[] {
+  return safeStringArray(value).filter(isProgramTrackId);
 }
 
 function safeProgramSelection(value: unknown): ProgramSelection {
@@ -194,6 +206,7 @@ function normalizeStoredState(
         ? customSchoolIds
         : [],
     programSelections: safeGroupedProgramSelections(candidate.programSelections),
+    programTrackIds: safeProgramTrackIds(candidate.programTrackIds),
   };
 }
 
@@ -240,6 +253,7 @@ export function queryStateFromParams(
         ? customSchoolIds
         : [],
     programSelections,
+    programTrackIds: safeProgramTrackIds(params.getAll(PROGRAM_TRACK_PARAM)),
   };
 }
 
@@ -252,6 +266,9 @@ export function queryStateToParams(state: AdmissionQueryState): URLSearchParams 
   });
   const applicantGender = safeApplicantGender(state.applicantGender);
   if (applicantGender) params.set(APPLICANT_GENDER_PARAM, applicantGender);
+  safeProgramTrackIds(state.programTrackIds).forEach((trackId) => {
+    params.append(PROGRAM_TRACK_PARAM, trackId);
+  });
   if (state.groupSelection !== "all") {
     params.set("group", state.groupSelection);
   }
@@ -284,6 +301,7 @@ export function restoreQueryState(): AdmissionQueryState {
   const queryKeys = new Set([
     ...Object.values(SCORE_PARAMS),
     APPLICANT_GENDER_PARAM,
+    PROGRAM_TRACK_PARAM,
     "group",
     SCHOOL_MODE_PARAM,
     "schoolGroup",

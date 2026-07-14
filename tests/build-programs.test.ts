@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   deriveRuleSubjects,
   makeRules,
+  parseApcsDetail,
   parseSubjectsFromLabel,
 } from "../scripts/buildProgramsFromOfficial";
 
@@ -64,5 +65,20 @@ describe("official program importer", () => {
     ]);
     expect(result.rules).toEqual([]);
     expect(result.issues[0]).toContain("無法解析倍率篩選科目");
+  });
+
+  it("把 APCS 個別檢定與倍率分開解析，官方 -- 保留為 null", () => {
+    const html = `
+      <td>程式設計觀念題<br>程式設計實作題</td>
+      <td>2級<br>--</td>
+      <td>20<br>--</td>
+    `;
+
+    expect(parseApcsDetail(html)).toEqual({
+      conceptMin: 2,
+      practiceMin: null,
+      conceptMultiplier: 20,
+      practiceMultiplier: null,
+    });
   });
 });

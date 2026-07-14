@@ -4132,6 +4132,10 @@
         "rawText": "APCS 實作題5"
       }
     ],
+    "apcsConceptMin": 4,
+    "apcsPracticeMin": 4,
+    "apcsConceptMultiplier": null,
+    "apcsPracticeMultiplier": 5,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/001.htm",
@@ -6828,6 +6832,10 @@
         "rawText": "APCS 觀念題＋實作題7"
       }
     ],
+    "apcsConceptMin": 4,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": 5,
+    "apcsPracticeMultiplier": 5,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/002.htm",
@@ -8817,6 +8825,10 @@
         "rawText": "數學A9"
       }
     ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/003.htm",
@@ -10057,6 +10069,10 @@
         "rawText": "APCS 觀念題＋實作題7"
       }
     ],
+    "apcsConceptMin": 4,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": 4,
+    "apcsPracticeMultiplier": 4,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/003.htm",
@@ -13432,6 +13448,10 @@
         "rawText": "APCS 觀念題＋實作題8"
       }
     ],
+    "apcsConceptMin": 4,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": 5,
+    "apcsPracticeMultiplier": 5,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/004.htm",
@@ -15269,6 +15289,10 @@
         "rawText": "自然12"
       }
     ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/004.htm",
@@ -16850,6 +16874,10 @@
         "rawText": "英文＋數學B12"
       }
     ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/005.htm",
@@ -20067,6 +20095,10 @@
         "rawText": "APCS 實作題3"
       }
     ],
+    "apcsConceptMin": 4,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": null,
+    "apcsPracticeMultiplier": 5,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/006.htm",
@@ -21229,6 +21261,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 4,
+        "rawText": "APCS 觀念題＋實作題4"
+      },
+      {
+        "label": "國文＋英文",
+        "minScore": 11,
+        "rawText": "國文＋英文11"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/007.htm",
@@ -21238,7 +21286,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -24987,6 +25035,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 4,
+        "rawText": "APCS 觀念題＋實作題4"
+      },
+      {
+        "label": "英文＋數學A＋自然",
+        "minScore": 20,
+        "rawText": "英文＋數學A＋自然20"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/009.htm",
@@ -24996,7 +25060,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -28629,6 +28693,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 實作題",
+        "minScore": 4,
+        "rawText": "APCS 實作題4"
+      },
+      {
+        "label": "數學A",
+        "minScore": 9,
+        "rawText": "數學A9"
+      }
+    ],
+    "apcsConceptMin": 4,
+    "apcsPracticeMin": 4,
+    "apcsConceptMultiplier": null,
+    "apcsPracticeMultiplier": 20,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/011.htm",
@@ -28638,7 +28718,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -31110,6 +31190,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "數學A",
+        "minScore": 9,
+        "rawText": "數學A9"
+      },
+      {
+        "label": "APCS 實作題",
+        "minScore": 4,
+        "rawText": "APCS 實作題4"
+      }
+    ],
+    "apcsConceptMin": 4,
+    "apcsPracticeMin": 4,
+    "apcsConceptMultiplier": null,
+    "apcsPracticeMultiplier": 9,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/013.htm",
@@ -31119,7 +31215,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -31149,6 +31245,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "數學A",
+        "minScore": 9,
+        "rawText": "數學A9"
+      },
+      {
+        "label": "APCS 實作題",
+        "minScore": 3,
+        "rawText": "APCS 實作題3"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": null,
+    "apcsPracticeMultiplier": 9,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/013.htm",
@@ -31158,7 +31270,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -36608,6 +36720,10 @@
         "rawText": "APCS 觀念題＋實作題4"
       }
     ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 8,
+    "apcsPracticeMultiplier": 8,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/014.htm",
@@ -36660,6 +36776,10 @@
         "rawText": "APCS 觀念題＋實作題4"
       }
     ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/014.htm",
@@ -36712,6 +36832,10 @@
         "rawText": "APCS 觀念題＋實作題4"
       }
     ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/014.htm",
@@ -36752,11 +36876,15 @@
         "rawText": "APCS 觀念題＋實作題4"
       },
       {
-        "label": "數B",
+        "label": "數學B",
         "minScore": 5,
-        "rawText": "數B5"
+        "rawText": "數學B5"
       }
     ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 15,
+    "apcsPracticeMultiplier": 15,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/014.htm",
@@ -38055,6 +38183,10 @@
         "rawText": "國文＋英文＋數學A24"
       }
     ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/015.htm",
@@ -40612,6 +40744,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "數學A",
+        "minScore": 9,
+        "rawText": "數學A9"
+      },
+      {
+        "label": "英文",
+        "minScore": 11,
+        "rawText": "英文11"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 6,
+        "rawText": "APCS 觀念題＋實作題6"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": 9,
+    "apcsPracticeMultiplier": 9,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
@@ -40621,7 +40774,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -40949,6 +41102,37 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 8,
+        "rawText": "APCS 觀念題＋實作題8"
+      },
+      {
+        "label": "英文＋數學A＋自然",
+        "minScore": 35,
+        "rawText": "英文＋數學A＋自然35"
+      },
+      {
+        "label": "自然",
+        "minScore": 12,
+        "rawText": "自然12"
+      },
+      {
+        "label": "英文",
+        "minScore": 11,
+        "rawText": "英文11"
+      },
+      {
+        "label": "數學A",
+        "minScore": 10,
+        "rawText": "數學A10"
+      }
+    ],
+    "apcsConceptMin": 4,
+    "apcsPracticeMin": 4,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
@@ -40958,7 +41142,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -41000,6 +41184,32 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 實作題",
+        "minScore": 4,
+        "rawText": "APCS 實作題4"
+      },
+      {
+        "label": "數學A",
+        "minScore": 9,
+        "rawText": "數學A9"
+      },
+      {
+        "label": "英文",
+        "minScore": 12,
+        "rawText": "英文12"
+      },
+      {
+        "label": "自然",
+        "minScore": 12,
+        "rawText": "自然12"
+      }
+    ],
+    "apcsConceptMin": null,
+    "apcsPracticeMin": 4,
+    "apcsConceptMultiplier": null,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/016.htm",
@@ -41009,7 +41219,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -45327,6 +45537,10 @@
         "rawText": "國文＋英文9"
       }
     ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": null,
+    "apcsConceptMultiplier": 20,
+    "apcsPracticeMultiplier": null,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/018.htm",
@@ -45454,6 +45668,10 @@
         "rawText": "數學B3"
       }
     ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": null,
+    "apcsConceptMultiplier": 20,
+    "apcsPracticeMultiplier": null,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/018.htm",
@@ -45593,6 +45811,10 @@
         "rawText": "國文6"
       }
     ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": null,
+    "apcsConceptMultiplier": 20,
+    "apcsPracticeMultiplier": null,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/018.htm",
@@ -47442,6 +47664,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 6,
+        "rawText": "APCS 觀念題＋實作題6"
+      },
+      {
+        "label": "英文＋數學A",
+        "minScore": 16,
+        "rawText": "英文＋數學A16"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 5,
+    "apcsPracticeMultiplier": 5,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/020.htm",
@@ -47451,7 +47689,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -47685,6 +47923,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 4,
+        "rawText": "APCS 觀念題＋實作題4"
+      },
+      {
+        "label": "英文＋數學A＋自然",
+        "minScore": 24,
+        "rawText": "英文＋數學A＋自然24"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 5,
+    "apcsPracticeMultiplier": 5,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/020.htm",
@@ -47694,7 +47948,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -48839,6 +49093,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "國文",
+        "minScore": 8,
+        "rawText": "國文8"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 4,
+        "rawText": "APCS 觀念題＋實作題4"
+      },
+      {
+        "label": "英文＋數學B",
+        "minScore": 11,
+        "rawText": "英文＋數學B11"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 5,
+    "apcsPracticeMultiplier": 5,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/020.htm",
@@ -48848,7 +49123,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -50334,6 +50609,17 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "數學A",
+        "minScore": 9,
+        "rawText": "數學A9"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": null,
+    "apcsPracticeMultiplier": null,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/021.htm",
@@ -50343,7 +50629,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -51874,6 +52160,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "國文＋英文＋數學A",
+        "minScore": 10,
+        "rawText": "國文＋英文＋數學A10"
+      },
+      {
+        "label": "APCS 觀念題",
+        "minScore": 3,
+        "rawText": "APCS 觀念題3"
+      },
+      {
+        "label": "APCS 實作題",
+        "minScore": 3,
+        "rawText": "APCS 實作題3"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 12,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/022.htm",
@@ -51883,7 +52190,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -52968,6 +53275,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 7,
+        "rawText": "APCS 觀念題＋實作題7"
+      },
+      {
+        "label": "英文＋數學A",
+        "minScore": 17,
+        "rawText": "英文＋數學A17"
+      }
+    ],
+    "apcsConceptMin": 4,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": 20,
+    "apcsPracticeMultiplier": 20,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/023.htm",
@@ -52977,7 +53300,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -53719,6 +54042,7 @@
       }
     ],
     "screeningRules": [],
+    "officialThresholdStatus": "dash",
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/023.htm",
@@ -53728,7 +54052,8 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（術科），詳情請至官方網站查詢"
+      "需特殊檢定（術科），詳情請至官方網站查詢",
+      "官方「通過倍率篩選最低級分」欄為 --，沒有數值可供自動判定。"
     ],
     "verified": false
   },
@@ -54995,6 +55320,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 4,
+        "rawText": "APCS 觀念題＋實作題4"
+      },
+      {
+        "label": "英文＋數學A",
+        "minScore": 7,
+        "rawText": "英文＋數學A7"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/026.htm",
@@ -55004,7 +55345,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -55872,6 +56213,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 7,
+        "rawText": "APCS 觀念題＋實作題7"
+      },
+      {
+        "label": "英文＋數學A＋自然",
+        "minScore": 36,
+        "rawText": "英文＋數學A＋自然36"
+      }
+    ],
+    "apcsConceptMin": 4,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": 5,
+    "apcsPracticeMultiplier": 5,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/027.htm",
@@ -55881,7 +56238,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -57480,6 +57837,7 @@
       }
     ],
     "screeningRules": [],
+    "officialThresholdStatus": "dash",
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/027.htm",
@@ -57489,7 +57847,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "缺少可信的最低級分"
+      "官方「通過倍率篩選最低級分」欄為 --，沒有數值可供自動判定。"
     ],
     "verified": false
   },
@@ -57652,6 +58010,7 @@
       }
     ],
     "screeningRules": [],
+    "officialThresholdStatus": "dash",
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/027.htm",
@@ -57661,7 +58020,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "缺少可信的最低級分"
+      "官方「通過倍率篩選最低級分」欄為 --，沒有數值可供自動判定。"
     ],
     "verified": false
   },
@@ -60664,6 +61023,7 @@
       }
     ],
     "screeningRules": [],
+    "officialThresholdStatus": "dash",
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/032.htm",
@@ -60673,7 +61033,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "缺少可信的最低級分"
+      "官方「通過倍率篩選最低級分」欄為 --，沒有數值可供自動判定。"
     ],
     "verified": false
   },
@@ -61517,6 +61877,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "英文＋數學A",
+        "minScore": 18,
+        "rawText": "英文＋數學A18"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 7,
+        "rawText": "APCS 觀念題＋實作題7"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": 5,
+    "apcsPracticeMultiplier": 5,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/032.htm",
@@ -61526,7 +61902,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -61872,6 +62248,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "英文＋數學B",
+        "minScore": 15,
+        "rawText": "英文＋數學B15"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 5,
+        "rawText": "APCS 觀念題＋實作題5"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 5,
+    "apcsPracticeMultiplier": 5,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/032.htm",
@@ -61881,7 +62273,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -62723,6 +63115,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 5,
+        "rawText": "APCS 觀念題＋實作題5"
+      },
+      {
+        "label": "數學A",
+        "minScore": 8,
+        "rawText": "數學A8"
+      },
+      {
+        "label": "英文＋數學A",
+        "minScore": 20,
+        "rawText": "英文＋數學A20"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 20,
+    "apcsPracticeMultiplier": 20,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/033.htm",
@@ -62732,7 +63145,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -62756,6 +63169,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 5,
+        "rawText": "APCS 觀念題＋實作題5"
+      },
+      {
+        "label": "數學A",
+        "minScore": 6,
+        "rawText": "數學A6"
+      },
+      {
+        "label": "英文＋數學A",
+        "minScore": 16,
+        "rawText": "英文＋數學A16"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 20,
+    "apcsPracticeMultiplier": 20,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/033.htm",
@@ -62765,7 +63199,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -63565,6 +63999,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "數學A",
+        "minScore": 6,
+        "rawText": "數學A6"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 5,
+        "rawText": "APCS 觀念題＋實作題5"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 6,
+    "apcsPracticeMultiplier": 6,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/034.htm",
@@ -63574,7 +64024,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -66496,6 +66946,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "英文＋數學A",
+        "minScore": 15,
+        "rawText": "英文＋數學A15"
+      },
+      {
+        "label": "數學A",
+        "minScore": 6,
+        "rawText": "數學A6"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 5,
+        "rawText": "APCS 觀念題＋實作題5"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 5,
+    "apcsPracticeMultiplier": 5,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/035.htm",
@@ -66505,7 +66976,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -70568,6 +71039,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題",
+        "minScore": 2,
+        "rawText": "APCS 觀念題2"
+      },
+      {
+        "label": "APCS 實作題",
+        "minScore": 2,
+        "rawText": "APCS 實作題2"
+      },
+      {
+        "label": "英文",
+        "minScore": 8,
+        "rawText": "英文8"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 12,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/040.htm",
@@ -70577,7 +71069,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -70856,6 +71348,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 4,
+        "rawText": "APCS 觀念題＋實作題4"
+      },
+      {
+        "label": "數學A",
+        "minScore": 3,
+        "rawText": "數學A3"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 12,
+    "apcsPracticeMultiplier": 12,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/040.htm",
@@ -70865,7 +71373,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -72698,6 +73206,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "數學A",
+        "minScore": 6,
+        "rawText": "數學A6"
+      },
+      {
+        "label": "英文",
+        "minScore": 11,
+        "rawText": "英文11"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 6,
+        "rawText": "APCS 觀念題＋實作題6"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": 9,
+    "apcsPracticeMultiplier": 9,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/041.htm",
@@ -72707,7 +73236,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -73824,6 +74353,23 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題",
+        "minScore": null,
+        "rawText": "APCS 觀念題--（官方未刊載數值）"
+      },
+      {
+        "label": "數學A",
+        "minScore": null,
+        "rawText": "數學A--（官方未刊載數值）"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": null,
+    "apcsConceptMultiplier": 15,
+    "apcsPracticeMultiplier": null,
+    "officialThresholdStatus": "dash",
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/042.htm",
@@ -73833,7 +74379,8 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢",
+      "官方「通過倍率篩選最低級分」欄為 --，沒有數值可供自動判定。"
     ],
     "verified": false
   },
@@ -74035,6 +74582,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題",
+        "minScore": 3,
+        "rawText": "APCS 觀念題3"
+      },
+      {
+        "label": "數學A",
+        "minScore": 8,
+        "rawText": "數學A8"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": null,
+    "apcsConceptMultiplier": 20,
+    "apcsPracticeMultiplier": null,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/042.htm",
@@ -74044,7 +74607,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -77169,6 +77732,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "數學A",
+        "minScore": 4,
+        "rawText": "數學A4"
+      },
+      {
+        "label": "APCS 觀念題",
+        "minScore": 2,
+        "rawText": "APCS 觀念題2"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": null,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": null,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/045.htm",
@@ -77178,7 +77757,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -80835,6 +81414,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 4,
+        "rawText": "APCS 觀念題＋實作題4"
+      },
+      {
+        "label": "國文",
+        "minScore": 9,
+        "rawText": "國文9"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/046.htm",
@@ -80844,7 +81439,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -83955,6 +84550,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題",
+        "minScore": 2,
+        "rawText": "APCS 觀念題2"
+      },
+      {
+        "label": "自然",
+        "minScore": 7,
+        "rawText": "自然7"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": null,
+    "apcsConceptMultiplier": 20,
+    "apcsPracticeMultiplier": null,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/050.htm",
@@ -83964,7 +84575,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -89484,6 +90095,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 6,
+        "rawText": "APCS 觀念題＋實作題6"
+      },
+      {
+        "label": "英文＋數學B",
+        "minScore": 17,
+        "rawText": "英文＋數學B17"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/058.htm",
@@ -89493,7 +90120,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -89997,6 +90624,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "英文＋數學A",
+        "minScore": 12,
+        "rawText": "英文＋數學A12"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 5,
+        "rawText": "APCS 觀念題＋實作題5"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 7,
+    "apcsPracticeMultiplier": 7,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/058.htm",
@@ -90006,7 +90649,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -95510,6 +96153,7 @@
       }
     ],
     "screeningRules": [],
+    "officialThresholdStatus": "dash",
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/099.htm",
@@ -95519,7 +96163,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "缺少可信的最低級分"
+      "官方「通過倍率篩選最低級分」欄為 --，沒有數值可供自動判定。"
     ],
     "verified": false
   },
@@ -96915,6 +97559,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "英文＋數學A",
+        "minScore": 17,
+        "rawText": "英文＋數學A17"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 7,
+        "rawText": "APCS 觀念題＋實作題7"
+      }
+    ],
+    "apcsConceptMin": 4,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": 6,
+    "apcsPracticeMultiplier": 6,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/099.htm",
@@ -96924,7 +97584,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -98691,6 +99351,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "英文＋數學A",
+        "minScore": 11,
+        "rawText": "英文＋數學A11"
+      },
+      {
+        "label": "APCS 觀念題",
+        "minScore": 3,
+        "rawText": "APCS 觀念題3"
+      },
+      {
+        "label": "APCS 實作題",
+        "minScore": 2,
+        "rawText": "APCS 實作題2"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 8,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/100.htm",
@@ -98700,7 +99381,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -100142,6 +100823,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 7,
+        "rawText": "APCS 觀念題＋實作題7"
+      },
+      {
+        "label": "國文＋英文",
+        "minScore": 18,
+        "rawText": "國文＋英文18"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 3,
+    "apcsConceptMultiplier": 5,
+    "apcsPracticeMultiplier": 5,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/101.htm",
@@ -100151,7 +100848,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -103782,6 +104479,23 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題",
+        "minScore": null,
+        "rawText": "APCS 觀念題--（官方未刊載數值）"
+      },
+      {
+        "label": "國文",
+        "minScore": null,
+        "rawText": "國文--（官方未刊載數值）"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": null,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": null,
+    "officialThresholdStatus": "dash",
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/110.htm",
@@ -103791,7 +104505,8 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢",
+      "官方「通過倍率篩選最低級分」欄為 --，沒有數值可供自動判定。"
     ],
     "verified": false
   },
@@ -104201,6 +104916,23 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "英文",
+        "minScore": null,
+        "rawText": "英文--（官方未刊載數值）"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": null,
+        "rawText": "APCS 觀念題＋實作題--（官方未刊載數值）"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
+    "officialThresholdStatus": "dash",
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/110.htm",
@@ -104210,7 +104942,8 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢",
+      "官方「通過倍率篩選最低級分」欄為 --，沒有數值可供自動判定。"
     ],
     "verified": false
   },
@@ -104925,6 +105658,7 @@
       }
     ],
     "screeningRules": [],
+    "officialThresholdStatus": "dash",
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/130.htm",
@@ -104934,7 +105668,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "缺少可信的最低級分"
+      "官方「通過倍率篩選最低級分」欄為 --，沒有數值可供自動判定。"
     ],
     "verified": false
   },
@@ -106896,6 +107630,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題",
+        "minScore": 2,
+        "rawText": "APCS 觀念題2"
+      },
+      {
+        "label": "英文",
+        "minScore": 3,
+        "rawText": "英文3"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": null,
+    "apcsConceptMultiplier": 20,
+    "apcsPracticeMultiplier": null,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/134.htm",
@@ -106905,7 +107655,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -108419,6 +109169,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 5,
+        "rawText": "APCS 觀念題＋實作題5"
+      },
+      {
+        "label": "英文",
+        "minScore": 4,
+        "rawText": "英文4"
+      },
+      {
+        "label": "數學A",
+        "minScore": 5,
+        "rawText": "數學A5"
+      }
+    ],
+    "apcsConceptMin": 3,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/150.htm",
@@ -108428,7 +109199,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -108452,6 +109223,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 4,
+        "rawText": "APCS 觀念題＋實作題4"
+      },
+      {
+        "label": "英文",
+        "minScore": 8,
+        "rawText": "英文8"
+      },
+      {
+        "label": "數學A",
+        "minScore": 4,
+        "rawText": "數學A4"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/150.htm",
@@ -108461,7 +109253,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -109143,6 +109935,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 4,
+        "rawText": "APCS 觀念題＋實作題4"
+      },
+      {
+        "label": "國文＋英文＋數學B",
+        "minScore": 18,
+        "rawText": "國文＋英文＋數學B18"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/151.htm",
@@ -109152,7 +109960,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -110252,6 +111060,22 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "國文",
+        "minScore": 8,
+        "rawText": "國文8"
+      },
+      {
+        "label": "APCS 觀念題",
+        "minScore": 2,
+        "rawText": "APCS 觀念題2"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": null,
+    "apcsConceptMultiplier": 12,
+    "apcsPracticeMultiplier": null,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/153.htm",
@@ -110261,7 +111085,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -110477,6 +111301,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "國文",
+        "minScore": 3,
+        "rawText": "國文3"
+      },
+      {
+        "label": "數學A",
+        "minScore": 6,
+        "rawText": "數學A6"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 5,
+        "rawText": "APCS 觀念題＋實作題5"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/153.htm",
@@ -110486,7 +111331,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },
@@ -110510,6 +111355,27 @@
       }
     ],
     "screeningRules": [],
+    "additionalScreeningRules": [
+      {
+        "label": "國文",
+        "minScore": 10,
+        "rawText": "國文10"
+      },
+      {
+        "label": "數學A",
+        "minScore": 6,
+        "rawText": "數學A6"
+      },
+      {
+        "label": "APCS 觀念題＋實作題",
+        "minScore": 5,
+        "rawText": "APCS 觀念題＋實作題5"
+      }
+    ],
+    "apcsConceptMin": 2,
+    "apcsPracticeMin": 2,
+    "apcsConceptMultiplier": 10,
+    "apcsPracticeMultiplier": 10,
     "source": {
       "collegeListUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/collegeList.htm",
       "reportHtmlUrl": "https://www.cac.edu.tw/CacLink/apply114/114appLy_3Hd_SieVe_QueRy_9dS4cqa1g_Kp3z/html_sieve_114_Ja9z51F/Standard/report/153.htm",
@@ -110519,7 +111385,7 @@
     "dataStatus": "needs-review",
     "evaluationSupport": "unsupported",
     "reviewReasons": [
-      "需特殊檢定（APCS），詳情請至官方網站查詢"
+      "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢"
     ],
     "verified": false
   },

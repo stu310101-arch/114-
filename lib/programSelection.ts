@@ -1,4 +1,8 @@
 import type { GroupTag, Program } from "./types";
+import {
+  programTrackIdsFor,
+  type ProgramTrackId,
+} from "./programTracks";
 
 export const PROGRAM_SELECTION_MODES = [
   "none",
@@ -28,6 +32,7 @@ export type ProgramOption = Readonly<{
   schoolId: string;
   schoolName: string;
   groupTags: readonly GroupTag[];
+  programTrackIds: readonly ProgramTrackId[];
 }>;
 
 export type DepartmentOption = Readonly<{
@@ -117,12 +122,24 @@ export function toProgramOptions(
   programs: readonly Program[],
 ): ProgramOption[] {
   return programs.map(
-    ({ programCode, programName, schoolId, schoolName, groupTags }) => ({
+    ({
       programCode,
       programName,
       schoolId,
       schoolName,
       groupTags,
+      departmentKeywords,
+    }) => ({
+      programCode,
+      programName,
+      schoolId,
+      schoolName,
+      groupTags,
+      programTrackIds: programTrackIdsFor({
+        programName,
+        departmentKeywords,
+        groupTags,
+      }),
     }),
   );
 }

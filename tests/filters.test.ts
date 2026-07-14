@@ -8,6 +8,9 @@ import {
   matchesSchoolSelection,
 } from "../lib/filters";
 import type { Program } from "../lib/types";
+import {
+  programTrackIdsFor,
+} from "../lib/programTracks";
 import { validatePrograms } from "../scripts/validatePrograms";
 
 const SOURCE: Program["source"] = {
@@ -110,6 +113,27 @@ describe("filterPrograms", () => {
       "900001",
       "901001",
     ]);
+  });
+
+  it("細分類組可複選並與其他篩選條件取交集", () => {
+    expect(programTrackIdsFor(programs[0])).toEqual(["science-engineering"]);
+    expect(programTrackIdsFor(programs[1])).toEqual([
+      "humanities-business",
+      "science-engineering",
+    ]);
+    expect(programTrackIdsFor(programs[2])).toEqual(["humanities-business"]);
+
+    expect(
+      filterPrograms(programs, {
+        groupTags: ["自然組"],
+        programTrackIds: ["humanities-business"],
+      }).map(({ programCode }) => programCode),
+    ).toEqual(["041082"]);
+    expect(
+      filterPrograms(programs, {
+        programTrackIds: ["humanities-business", "science-engineering"],
+      }).map(({ programCode }) => programCode),
+    ).toEqual(["001012", "041082", "099202", "900001", "901001"]);
   });
 
   it("預設學校群組多選與自訂學校採聯集", () => {

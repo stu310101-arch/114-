@@ -33,6 +33,30 @@ function restoreFromSession(key: string, value: unknown) {
 }
 
 describe("school query state", () => {
+  it("科系細分類可不選、單選或複選並安全寫入網址", () => {
+    const params = queryStateToParams({
+      ...DEFAULT_QUERY_STATE,
+      programTrackIds: ["humanities-business", "science-engineering"],
+    });
+
+    expect(params.getAll("track")).toEqual([
+      "humanities-business",
+      "science-engineering",
+    ]);
+    expect(queryStateFromParams(params).programTrackIds).toEqual([
+      "humanities-business",
+      "science-engineering",
+    ]);
+    expect(
+      queryStateFromParams(
+        new URLSearchParams("track=unknown&track=biomedical"),
+      ).programTrackIds,
+    ).toEqual(["biomedical"]);
+    expect(queryStateFromParams(new URLSearchParams()).programTrackIds).toEqual(
+      [],
+    );
+  });
+
   it("官方招生性別組別可寫入網址，非法值會安全忽略", () => {
     const params = queryStateToParams({
       ...DEFAULT_QUERY_STATE,

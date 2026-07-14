@@ -34,6 +34,7 @@ const VALID_REQUIREMENT_STANDARDS = new Set([
 const VALID_GROUP_TAGS = new Set(["自然組", "社會組"]);
 const VALID_DATA_STATUSES = new Set(["complete", "needs-review"]);
 const VALID_EVALUATION_SUPPORT = new Set(["supported", "unsupported"]);
+const VALID_OFFICIAL_THRESHOLD_STATUSES = new Set(["available", "dash"]);
 const SOURCE_URL_FIELDS = [
   "collegeListUrl",
   "reportHtmlUrl",
@@ -158,11 +159,12 @@ function validateAdditionalScreeningRule(
     addError(`${rulePath}.label`, "label 必須是非空字串");
   }
   if (
-    typeof rule.minScore !== "number" ||
-    !Number.isFinite(rule.minScore) ||
-    rule.minScore < 0
+    rule.minScore !== null &&
+    (typeof rule.minScore !== "number" ||
+      !Number.isFinite(rule.minScore) ||
+      rule.minScore < 0)
   ) {
-    addError(`${rulePath}.minScore`, "minScore 必須是非負數字");
+    addError(`${rulePath}.minScore`, "minScore 必須是非負數字或官方 -- 的 null");
   }
   if (typeof rule.rawText !== "string") {
     addError(`${rulePath}.rawText`, "rawText 必須是字串");
@@ -427,6 +429,48 @@ export function validatePrograms(input: unknown): ProgramsValidationReport {
             addError,
           );
         });
+      }
+    }
+
+    if (
+      candidate.officialThresholdStatus !== undefined &&
+      (typeof candidate.officialThresholdStatus !== "string" ||
+        !VALID_OFFICIAL_THRESHOLD_STATUSES.has(candidate.officialThresholdStatus))
+    ) {
+      addError(
+        "officialThresholdStatus",
+        "officialThresholdStatus 只能是 available 或 dash",
+      );
+    }
+    const apcsFields = [
+      "apcsConceptMin",
+      "apcsPracticeMin",
+      "apcsConceptMultiplier",
+      "apcsPracticeMultiplier",
+    ] as const;
+    const presentApcsFields = apcsFields.filter((field) =>
+      Object.prototype.hasOwnProperty.call(candidate, field),
+    );
+    if (presentApcsFields.length > 0 && presentApcsFields.length !== apcsFields.length) {
+      addError("apcsConceptMin", "APCS 四個檢定與倍率欄位必須完整成組");
+    }
+    for (const field of apcsFields) {
+      if (!Object.prototype.hasOwnProperty.call(candidate, field)) continue;
+      const value = candidate[field];
+      const isMinimum = field.endsWith("Min");
+      if (
+        value !== null &&
+        (typeof value !== "number" ||
+          !Number.isFinite(value) ||
+          value < (isMinimum ? 1 : 0) ||
+          (isMinimum && value > 5))
+      ) {
+        addError(
+          field,
+          isMinimum
+            ? `${field} 必須是 1 至 5 或官方 -- 的 null`
+            : `${field} 必須是非負數字或官方 -- 的 null`,
+        );
       }
     }
 

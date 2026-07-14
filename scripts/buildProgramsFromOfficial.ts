@@ -82,6 +82,18 @@ type DerivedRule = {
   subjects: Subject[];
 };
 
+type ApcsDetail = {
+  conceptMin: number | null;
+  practiceMin: number | null;
+  conceptMultiplier: number | null;
+  practiceMultiplier: number | null;
+};
+
+type ApcsDerivedRule = DerivedRule & {
+  label: string;
+  maximumScore: number;
+};
+
 type RuleDerivation = {
   rules: DerivedRule[];
   issues: string[];
@@ -146,6 +158,8 @@ const EXPECTED_PROGRAM_COUNT = 2168;
 const EXPECTED_APCS_PROGRAM_COUNT = 60;
 const EXPECTED_ART_EXAM_PROGRAM_COUNT = 70;
 const MAX_ORDER_COLUMNS = 12;
+const OFFICIAL_DASH_REASON =
+  "官方「通過倍率篩選最低級分」欄為 --，沒有數值可供自動判定。";
 const FIVE_STANDARDS = new Set<RequirementStandard>([
   "頂標",
   "前標",
@@ -205,6 +219,7 @@ const SPECIAL_SCREENING_DETAILS_BY_CODE: Readonly<
 const catalogUrl = new URL("../work/official-114/catalog.json", import.meta.url);
 const ocrDirectoryUrl = new URL("../work/official-114/ocr/", import.meta.url);
 const imageDirectoryUrl = new URL("../work/official-114/images/", import.meta.url);
+const detailDirectoryUrl = new URL("../work/official-114/details/", import.meta.url);
 const sourceIndexUrl = new URL("../data/sources_114.json", import.meta.url);
 const outputUrl = new URL("../data/programs_114.json", import.meta.url);
 const reviewUrl = new URL("../work/official-114/review.json", import.meta.url);
@@ -283,6 +298,99 @@ function parseMultiplier(value: string): number | null | "invalid" {
   if (!/^\d+(?:\.\d+)?$/.test(compact)) return "invalid";
   const parsed = Number(compact);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : "invalid";
+}
+
+function htmlCellLines(value: string): string[] {
+  return value
+    .replace(/<br\s*\/?\s*>/giu, "\n")
+    .replace(/<[^>]+>/gu, "")
+    .replace(/&nbsp;/giu, " ")
+    .split(/\r?\n/gu)
+    .map((line) => normalize(line))
+    .filter(Boolean);
+}
+
+function parseApcsCellValue(
+  value: string,
+  kind: "minimum" | "multiplier",
+): number | null {
+  if (/^-+$/u.test(value)) return null;
+  const compact = kind === "minimum" ? value.replace(/級$/u, "") : value;
+  const parsed = Number(compact);
+  const valid =
+    Number.isFinite(parsed) &&
+    parsed > 0 &&
+    (kind === "multiplier" || (Number.isInteger(parsed) && parsed <= 5));
+  if (!valid) throw new Error(`無法解析 APCS ${kind}：${value}`);
+  return parsed;
+}
+
+/** Parse the two official APCS individual requirements and screening multipliers. */
+export function parseApcsDetail(html: string): ApcsDetail {
+  const match = html.match(
+    /<td[^>]*>\s*程式設計觀念題\s*<br\s*\/?\s*>\s*程式設計實作題\s*<\/td>\s*<td[^>]*>([^]*?)<\/td>\s*<td[^>]*>([^]*?)<\/td>/iu,
+  );
+  if (!match) throw new Error("官方校系分則缺少 APCS 篩選表格");
+  const minimums = htmlCellLines(match[1] ?? "");
+  const multipliers = htmlCellLines(match[2] ?? "");
+  if (minimums.length !== 2 || multipliers.length !== 2) {
+    throw new Error("官方 APCS 表格欄位數量不符預期");
+  }
+  return {
+    conceptMin: parseApcsCellValue(minimums[0]!, "minimum"),
+    practiceMin: parseApcsCellValue(minimums[1]!, "minimum"),
+    conceptMultiplier: parseApcsCellValue(multipliers[0]!, "multiplier"),
+    practiceMultiplier: parseApcsCellValue(multipliers[1]!, "multiplier"),
+  };
+}
+
+function displaySubject(subject: Subject): string {
+  if (subject === "數A") return "數學A";
+  if (subject === "數B") return "數學B";
+  return subject;
+}
+
+function deriveApcsScreeningRules(
+  items: readonly CatalogItem[],
+  detail: ApcsDetail,
+): { rules: ApcsDerivedRule[]; issues: string[] } {
+  const academic = deriveRuleSubjects(items);
+  const grouped = new Map<
+    number,
+    { subjects: Subject[]; apcsParts: Array<"觀念題" | "實作題"> }
+  >();
+  for (const rule of academic.rules) {
+    grouped.set(rule.multiplier, {
+      subjects: [...rule.subjects],
+      apcsParts: [],
+    });
+  }
+  const apcsParts = [
+    ["觀念題", detail.conceptMultiplier],
+    ["實作題", detail.practiceMultiplier],
+  ] as const;
+  for (const [part, multiplier] of apcsParts) {
+    if (multiplier === null) continue;
+    const group = grouped.get(multiplier) ?? { subjects: [], apcsParts: [] };
+    group.apcsParts.push(part);
+    grouped.set(multiplier, group);
+  }
+
+  const rules = [...grouped.entries()]
+    .sort(([left], [right]) => right - left)
+    .map(([multiplier, group]) => {
+      const academicLabel = group.subjects.map(displaySubject).join("＋");
+      const apcsLabel = group.apcsParts.length
+        ? `APCS ${group.apcsParts.join("＋")}`
+        : "";
+      return {
+        multiplier,
+        subjects: group.subjects,
+        label: [academicLabel, apcsLabel].filter(Boolean).join("＋"),
+        maximumScore: group.subjects.length * 15 + group.apcsParts.length * 5,
+      };
+    });
+  return { rules, issues: academic.issues };
 }
 
 /** Same multiplier means a combined screening gate; larger multiplier is first. */
@@ -601,7 +709,7 @@ function targetedScoreCandidates(cell: TargetedCellOcr | undefined): number[] {
 
 function thresholdScoresForProgram(
   programCode: string,
-  derivedRules: readonly DerivedRule[],
+  derivedRules: readonly (DerivedRule & { maximumScore?: number })[],
   index: OcrIndex | null,
   geometry: ImageGeometry | null,
   targetedCells: ReadonlyMap<string, TargetedCellOcr>,
@@ -630,7 +738,9 @@ function thresholdScoresForProgram(
   const scores: Array<number | null> = [];
   for (let order = 0; order < derivedRules.length; order += 1) {
     const { left, right } = edges.columns[order]!;
-    const maximum = derivedRules[order]!.subjects.length * 15;
+    const maximum =
+      derivedRules[order]!.maximumScore ??
+      derivedRules[order]!.subjects.length * 15;
     const overrideKey = `${programCode}-${order + 1}`;
     if (thresholdOverrides.has(overrideKey)) {
       const override = thresholdOverrides.get(overrideKey);
@@ -700,6 +810,23 @@ export function makeRules(
     });
   });
   return rules;
+}
+
+function makeAdditionalRules(
+  derived: readonly ApcsDerivedRule[],
+  scores: readonly (number | null)[],
+): AdditionalScreeningRule[] {
+  return derived.map((rule, index) => {
+    const minScore = scores[index] ?? null;
+    return {
+      label: rule.label,
+      minScore,
+      rawText:
+        minScore === null
+          ? `${rule.label}--（官方未刊載數值）`
+          : `${rule.label}${minScore}`,
+    };
+  });
 }
 
 function deriveGroupTags(program: CatalogProgram): GroupTag[] {
@@ -774,6 +901,23 @@ async function readProgramOverrides(): Promise<Map<string, ProgramOverride>> {
     throw new Error("官方校系人工覆核檔 academicYear 必須是 114");
   }
   return new Map(Object.entries(document.programs ?? {}));
+}
+
+async function readApcsDetails(
+  programs: readonly CatalogProgram[],
+): Promise<Map<string, ApcsDetail>> {
+  const entries = await Promise.all(
+    programs
+      .filter((program) => program.raw?.requiresApcs === true)
+      .map(async (program) => {
+        const html = await readFile(
+          new URL(`${program.programCode}.html`, detailDirectoryUrl),
+          "utf8",
+        );
+        return [program.programCode, parseApcsDetail(html)] as const;
+      }),
+  );
+  return new Map(entries);
 }
 
 async function writeJsonAtomically(url: URL, value: unknown): Promise<void> {
@@ -927,6 +1071,7 @@ async function main(): Promise<void> {
   const targetedCells = await readTargetedCells();
   const thresholdOverrides = await readThresholdOverrides();
   const programOverrides = await readProgramOverrides();
+  const apcsDetails = await readApcsDetails(catalog.programs);
   for (const schoolId of sourceBySchool.keys()) {
     ocrBySchool.set(schoolId, await readOcrIndex(schoolId));
     geometryBySchool.set(schoolId, await readImageGeometry(schoolId));
@@ -966,35 +1111,64 @@ async function main(): Promise<void> {
     const requiresArtExam = artExamCell?.includes("是") ?? false;
     const requiresApcs = catalogProgram.raw?.requiresApcs === true;
     const programOverride = programOverrides.get(catalogProgram.programCode);
+    const apcsDetail = requiresApcs
+      ? apcsDetails.get(catalogProgram.programCode)
+      : undefined;
+    const apcsRuleDerivation = apcsDetail
+      ? deriveApcsScreeningRules(catalogProgram.items, apcsDetail)
+      : null;
+    const thresholdRules = apcsRuleDerivation?.rules ?? ruleDerivation.rules;
     const threshold = thresholdScoresForProgram(
       catalogProgram.programCode,
-      ruleDerivation.rules,
+      thresholdRules,
       ocrBySchool.get(catalogProgram.schoolId) ?? null,
       geometryBySchool.get(catalogProgram.schoolId) ?? null,
       targetedCells,
       thresholdOverrides,
     );
+    const officialThresholdStatus =
+      threshold.scores &&
+      threshold.scores.length > 0 &&
+      threshold.scores.every((score) => score === null)
+        ? "dash"
+        : undefined;
     const hasNoScreeningMultiplier =
       ruleDerivation.rules.length === 0 && ruleDerivation.issues.length === 0;
     const requirementOnly =
       hasNoScreeningMultiplier && requirementDerivation.requirements.length > 0;
-    let screeningRules = hasNoScreeningMultiplier
+    let screeningRules = requiresApcs
       ? []
-      : threshold.scores
-        ? makeRules(ruleDerivation.rules, threshold.scores)
-        : null;
+      : hasNoScreeningMultiplier
+        ? []
+        : threshold.scores
+          ? makeRules(ruleDerivation.rules, threshold.scores)
+          : null;
+    const generatedApcsRules =
+      apcsRuleDerivation && threshold.scores
+        ? makeAdditionalRules(apcsRuleDerivation.rules, threshold.scores)
+        : [];
     const specialScreeningReasons = uniqueStrings([
       ...(requiresArtExam
         ? ["需特殊檢定（術科），詳情請至官方網站查詢"]
         : []),
       ...(requiresApcs
-        ? ["需特殊檢定（APCS），詳情請至官方網站查詢"]
+        ? [
+            "需特殊檢定（APCS），不可用一般學測成績完整判定，詳情請至官方網站查詢",
+            ...(apcsDetail ? [] : ["未能解析官方 APCS 個別檢定與倍率"]),
+            ...(apcsRuleDerivation?.issues ?? []),
+            ...(threshold.scores
+              ? []
+              : [threshold.reason ?? "未能解析 APCS 完整倍率篩選最低分"]),
+          ]
         : []),
+      ...(officialThresholdStatus === "dash" ? [OFFICIAL_DASH_REASON] : []),
     ]);
     const ordinaryReviewReasons = uniqueStrings([
       ...ruleDerivation.issues,
       ...requirementDerivation.issues,
-      ...(screeningRules !== null && (screeningRules.length > 0 || requirementOnly)
+      ...(officialThresholdStatus === "dash"
+        ? [OFFICIAL_DASH_REASON]
+        : screeningRules !== null && (screeningRules.length > 0 || requirementOnly)
         ? []
         : [
             hasNoScreeningMultiplier
@@ -1002,17 +1176,24 @@ async function main(): Promise<void> {
               : threshold.reason ?? "缺少可信的最低級分",
           ]),
     ]);
-    const reasons = programOverride?.reviewReasons
-      ? uniqueStrings([
-          ...programOverride.reviewReasons,
-          ...(SPECIAL_SCREENING_DETAILS_BY_CODE[catalogProgram.programCode] ?? []),
-        ])
-      : specialScreeningReasons.length > 0
+    const reasons = specialScreeningReasons.length > 0
         ? uniqueStrings([
-            ...specialScreeningReasons,
+            ...specialScreeningReasons.filter(
+              (reason) =>
+                !reason.startsWith("需特殊檢定") ||
+                !programOverride?.reviewReasons?.some((overrideReason) =>
+                  overrideReason.startsWith("需特殊檢定"),
+                ),
+            ),
+            ...(programOverride?.reviewReasons ?? []),
             ...(SPECIAL_SCREENING_DETAILS_BY_CODE[catalogProgram.programCode] ?? []),
           ])
-        : ordinaryReviewReasons;
+        : programOverride?.reviewReasons
+          ? uniqueStrings([
+              ...programOverride.reviewReasons,
+              ...(SPECIAL_SCREENING_DETAILS_BY_CODE[catalogProgram.programCode] ?? []),
+            ])
+          : ordinaryReviewReasons;
     const screeningVariants = programOverride?.screeningVariants ?? [];
     const hasScreeningVariants = screeningVariants.length > 0;
     const supported =
@@ -1026,6 +1207,9 @@ async function main(): Promise<void> {
       // 但在支援特殊成績型別前，不發布可能誤導的部分 rules[]。
       screeningRules = [];
     }
+    const additionalScreeningRules = generatedApcsRules.length
+      ? generatedApcsRules
+      : (programOverride?.additionalScreeningRules ?? []);
 
     if (
       !supported &&
@@ -1035,7 +1219,7 @@ async function main(): Promise<void> {
         ...cropRequestsForProgram(
           catalogProgram.schoolId,
           catalogProgram.programCode,
-          ruleDerivation.rules.length,
+          thresholdRules.length,
           ocrBySchool.get(catalogProgram.schoolId) ?? null,
           geometryBySchool.get(catalogProgram.schoolId) ?? null,
         ),
@@ -1060,9 +1244,18 @@ async function main(): Promise<void> {
       requirements: requirementDerivation.requirements,
       screeningRules: screeningRules ?? [],
       ...(hasScreeningVariants ? { screeningVariants } : {}),
-      ...(programOverride?.additionalScreeningRules?.length
-        ? { additionalScreeningRules: programOverride.additionalScreeningRules }
+      ...(additionalScreeningRules.length
+        ? { additionalScreeningRules }
         : {}),
+      ...(apcsDetail
+        ? {
+            apcsConceptMin: apcsDetail.conceptMin,
+            apcsPracticeMin: apcsDetail.practiceMin,
+            apcsConceptMultiplier: apcsDetail.conceptMultiplier,
+            apcsPracticeMultiplier: apcsDetail.practiceMultiplier,
+          }
+        : {}),
+      ...(officialThresholdStatus ? { officialThresholdStatus } : {}),
       ...(programOverride?.specialScreeningGroups?.length
         ? { specialScreeningGroups: programOverride.specialScreeningGroups }
         : {}),

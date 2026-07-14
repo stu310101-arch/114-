@@ -41,6 +41,9 @@ describe("114 官方校系選取資料", () => {
     expect([...codes].every((code) => /^\d{6}$/.test(code))).toBe(true);
     expect(natural).toHaveLength(1280);
     expect(social).toHaveLength(1287);
+    expect(options.every((program) => program.programTrackIds.length > 0)).toBe(
+      true,
+    );
   });
 
   it("長庚大學 27 個校系均可進入選取清單", () => {
@@ -376,6 +379,77 @@ describe("114 官方校系選取資料", () => {
     });
     expectedApcsPrograms.forEach((program) => {
       expect(specialPrograms).toContain(program);
+    });
+  });
+
+  it("60 筆 APCS 均完整收錄個別檢定、倍率與依序最低分", () => {
+    const apcsPrograms = programs.filter((program) =>
+      Object.prototype.hasOwnProperty.call(program, "apcsConceptMin"),
+    );
+    const knownIndividualMinimums: Record<
+      string,
+      readonly [number | null, number | null]
+    > = {
+      "001602": [4, 4],
+      "002282": [4, 3],
+      "003082": [3, 3],
+      "003272": [4, 3],
+      "004252": [4, 3],
+      "004522": [3, 2],
+      "005222": [2, 2],
+      "006422": [4, 3],
+      "014482": [2, 2],
+      "014492": [2, 2],
+      "014502": [2, 2],
+      "014512": [2, 2],
+      "015262": [2, 2],
+      "018232": [2, null],
+      "018262": [2, null],
+      "018292": [2, null],
+    };
+
+    expect(apcsPrograms).toHaveLength(60);
+    apcsPrograms.forEach((program) => {
+      expect(program.additionalScreeningRules?.length).toBeGreaterThan(0);
+      expect(program).toHaveProperty("apcsPracticeMin");
+      expect(program).toHaveProperty("apcsConceptMultiplier");
+      expect(program).toHaveProperty("apcsPracticeMultiplier");
+      expect(program.reviewReasons?.join(" ")).not.toMatch(
+        /未能解析|OCR|無法確認/u,
+      );
+    });
+    Object.entries(knownIndividualMinimums).forEach(
+      ([programCode, [conceptMin, practiceMin]]) => {
+        const program = apcsPrograms.find(
+          (candidate) => candidate.programCode === programCode,
+        );
+        expect(program?.apcsConceptMin).toBe(conceptMin);
+        expect(program?.apcsPracticeMin).toBe(practiceMin);
+      },
+    );
+  });
+
+  it("官方最低分全為 -- 的校系使用 dash 狀態，不再描述為資料缺失", () => {
+    const dashCodes = [
+      "027402",
+      "027432",
+      "032062",
+      "099142",
+      "130092",
+      "042052",
+      "110112",
+      "110222",
+    ];
+    const exactReason =
+      "官方「通過倍率篩選最低級分」欄為 --，沒有數值可供自動判定。";
+
+    dashCodes.forEach((programCode) => {
+      const program = programs.find(
+        (candidate) => candidate.programCode === programCode,
+      );
+      expect(program?.officialThresholdStatus).toBe("dash");
+      expect(program?.reviewReasons).toContain(exactReason);
+      expect(program?.reviewReasons?.join(" ")).not.toContain("資料缺失");
     });
   });
 
@@ -761,7 +835,7 @@ describe("114 官方校系選取資料", () => {
           minScore: 4,
           rawText: "APCS 觀念題＋實作題4",
         },
-        { label: "數B", minScore: 5, rawText: "數B5" },
+        { label: "數學B", minScore: 5, rawText: "數學B5" },
       ],
     } as const;
 

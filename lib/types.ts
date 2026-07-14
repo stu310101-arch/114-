@@ -25,6 +25,12 @@ export const EVALUATION_SUPPORT_STATUSES = [
 export type EvaluationSupportStatus =
   (typeof EVALUATION_SUPPORT_STATUSES)[number];
 
+export const OFFICIAL_THRESHOLD_STATUSES = ["available", "dash"] as const;
+
+/** Whether the official minimum-threshold table publishes numeric values. */
+export type OfficialThresholdStatus =
+  (typeof OFFICIAL_THRESHOLD_STATUSES)[number];
+
 export const APPLICANT_GENDERS = ["male", "female"] as const;
 
 export type ApplicantGender = (typeof APPLICANT_GENDERS)[number];
@@ -76,7 +82,8 @@ export type ProgramScreeningVariant = {
 /** A verified threshold that cannot yet be evaluated from ordinary GSAT inputs alone. */
 export type AdditionalScreeningRule = {
   label: string;
-  minScore: number;
+  /** `null` is the official `--`, not a missing or zero-point threshold. */
+  minScore: number | null;
   rawText: string;
 };
 
@@ -110,6 +117,14 @@ export type Program = {
   screeningVariants?: ProgramScreeningVariant[];
   /** Verified special thresholds retained for display while automatic evaluation is unsupported. */
   additionalScreeningRules?: AdditionalScreeningRule[];
+  /** Official APCS individual application requirements; null means official `--`. */
+  apcsConceptMin?: number | null;
+  apcsPracticeMin?: number | null;
+  /** Official APCS first-stage screening multipliers; null means official `--`. */
+  apcsConceptMultiplier?: number | null;
+  apcsPracticeMultiplier?: number | null;
+  /** Distinguishes an official `--` result from unparsed or missing source data. */
+  officialThresholdStatus?: OfficialThresholdStatus;
   /** Official major/instrument subgroups with separate quotas and special thresholds. */
   specialScreeningGroups?: SpecialScreeningGroup[];
   source: ProgramSource;

@@ -34,6 +34,64 @@ function requiresSpecialScreening(program: Program): boolean {
   );
 }
 
+function apcsMinimumLabel(value: number | null | undefined): string {
+  if (value === null) return "官方 --（無個別檢定門檻）";
+  return value === undefined ? "未提供" : `${value} 級`;
+}
+
+function apcsMultiplierLabel(value: number | null | undefined): string {
+  if (value === null) return "官方 --（未啟動倍率篩選）";
+  return value === undefined ? "未提供" : `${value}`;
+}
+
+function RecordedSpecialScreeningDetails({ program }: { program: Program }) {
+  if (
+    !program.additionalScreeningRules?.length &&
+    program.apcsConceptMin === undefined
+  ) {
+    return null;
+  }
+
+  return (
+    <div className="recorded-special-rules">
+      {program.additionalScreeningRules?.length ? (
+        <>
+          <p className="additional-screening-heading">
+            官方倍率篩選最低分（依關卡順序）
+          </p>
+          <ol aria-label="官方倍率篩選最低分（依關卡順序）">
+            {program.additionalScreeningRules.map((rule) => (
+              <li key={`${rule.label}-${rule.minScore}`}>
+                {rule.label}：
+                {rule.minScore === null
+                  ? "官方 --（未刊載數值）"
+                  : rule.minScore}
+              </li>
+            ))}
+          </ol>
+        </>
+      ) : null}
+      {program.apcsConceptMin !== undefined ? (
+        <div className="apcs-official-details">
+          <p className="additional-screening-heading">
+            APCS 個別檢定與篩選倍率
+          </p>
+          <ul aria-label="APCS 個別檢定與篩選倍率">
+            <li>
+              觀念題：個別檢定 {apcsMinimumLabel(program.apcsConceptMin)}；
+              篩選倍率 {apcsMultiplierLabel(program.apcsConceptMultiplier)}
+            </li>
+            <li>
+              實作題：個別檢定 {apcsMinimumLabel(program.apcsPracticeMin)}；
+              篩選倍率 {apcsMultiplierLabel(program.apcsPracticeMultiplier)}
+            </li>
+          </ul>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function RuleSummary({ result }: { result: RuleResult }) {
   return (
     <li className={result.passed ? "rule-line passed" : "rule-line failed"}>
@@ -220,6 +278,9 @@ export function ProgramResultTable({
                   <p>
                     本校系另須特殊檢定／證照；請務必使用卡片右上角「官方原表」連結確認資格、採計方式與最低標準。
                   </p>
+                  <RecordedSpecialScreeningDetails
+                    program={evaluation.program}
+                  />
                 </div>
               </div>
             ) : null}
@@ -373,20 +434,7 @@ export function UnsupportedProgramTable({
                     ))}
                   </ul>
                 ) : null}
-                {program.additionalScreeningRules?.length ? (
-                  <>
-                    <p className="additional-screening-heading">
-                      已錄入的官方最低篩選分數
-                    </p>
-                    <ul aria-label="已錄入的官方最低篩選分數">
-                      {program.additionalScreeningRules.map((rule) => (
-                        <li key={`${rule.label}-${rule.minScore}`}>
-                          {rule.label}：{rule.minScore}
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                ) : null}
+                <RecordedSpecialScreeningDetails program={program} />
                 {program.specialScreeningGroups?.length ? (
                   <details className="special-screening-details">
                     <summary>

@@ -7,6 +7,7 @@ import {
   selectedUniqueProgramCodes,
   type ProgramOption,
 } from "@/lib/programSelection";
+import { matchesProgramTrackIds } from "@/lib/programTracks";
 import { FilterPanel, type SchoolSourceOption } from "./FilterPanel";
 import {
   NavigationLoadingScreen,
@@ -54,9 +55,20 @@ function HydratedQueryWorkspace({
   );
   const { navigate } = useNavigationLoading();
 
+  const trackFilteredProgramOptions = useMemo(
+    () =>
+      programOptions.filter((program) =>
+        matchesProgramTrackIds(program.programTrackIds, query.programTrackIds),
+      ),
+    [programOptions, query.programTrackIds],
+  );
   const selectedProgramCodes = useMemo(
-    () => selectedUniqueProgramCodes(programOptions, query.programSelections),
-    [programOptions, query.programSelections],
+    () =>
+      selectedUniqueProgramCodes(
+        trackFilteredProgramOptions,
+        query.programSelections,
+      ),
+    [query.programSelections, trackFilteredProgramOptions],
   );
   const selectedCount = selectedProgramCodes.length;
   const requiresProgramSelection = selectedCount === 0;
@@ -165,6 +177,10 @@ function HydratedQueryWorkspace({
               update("schoolGroupIds", value)
             }
             programOptions={programOptions}
+            programTrackIds={query.programTrackIds}
+            onProgramTrackIdsChange={(value) =>
+              update("programTrackIds", value)
+            }
             programSelections={query.programSelections}
             schoolGroupIds={query.schoolGroupIds}
             schoolSources={schoolSources}

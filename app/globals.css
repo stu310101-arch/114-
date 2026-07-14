@@ -1158,6 +1158,53 @@ input:focus-visible {
   color: #c7dcdf;
 }
 
+.program-track-filter {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--line);
+}
+
+.program-track-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.program-track-grid button {
+  display: grid;
+  min-height: 62px;
+  align-content: center;
+  gap: 3px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: var(--surface-soft);
+  color: var(--navy);
+  cursor: pointer;
+  text-align: left;
+}
+
+.program-track-grid button b {
+  font-size: 12px;
+}
+
+.program-track-grid button small {
+  color: #7c898c;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.program-track-grid button.selected {
+  border-color: rgba(11, 117, 108, 0.55);
+  background: var(--teal-soft);
+  box-shadow: inset 0 0 0 1px rgba(11, 117, 108, 0.08);
+  color: #075f58;
+}
+
+.program-track-grid button.selected small {
+  color: #39736f;
+}
+
 .choice-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1986,6 +2033,18 @@ input:focus-visible {
   margin: 2px 0 0;
 }
 
+.special-result-warning .recorded-special-rules {
+  margin-top: 10px;
+  border-top: 1px dashed rgba(160, 113, 22, 0.35);
+  padding-top: 8px;
+}
+
+.recorded-special-rules ul,
+.recorded-special-rules ol {
+  margin: 5px 0 0;
+  padding-left: 18px;
+}
+
 .special-evaluation-panel {
   margin-top: 16px;
   border: 2px solid #e0b33f;
@@ -2127,9 +2186,16 @@ input:focus-visible {
   border-bottom: 0;
 }
 
-.review-reasons ul {
+.review-reasons ul,
+.review-reasons ol {
   margin: 5px 0 0;
   padding-left: 18px;
+}
+
+.apcs-official-details {
+  margin-top: 10px;
+  border-left: 3px solid #c9971a;
+  padding-left: 10px;
 }
 
 .result-pagination {
@@ -2573,6 +2639,14 @@ footer span {
 }
 
 @media (max-width: 720px) {
+  .program-track-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .program-track-grid button {
+    min-height: 56px;
+  }
+
   .site-header {
     width: calc(100% - 28px);
     min-height: 68px;

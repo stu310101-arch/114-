@@ -129,6 +129,7 @@ export function academicScreeningRulesFor(
   let nextOrder = Math.max(0, ...baseRules.map((rule) => rule.order)) + 1;
   const additionalRules = (program.additionalScreeningRules ?? []).flatMap(
     (rule) => {
+      if (rule.minScore === null) return [];
       const subjects = academicSubjectsFromLabel(rule.label);
       if (!subjects) return [];
 
