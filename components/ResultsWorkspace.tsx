@@ -3,7 +3,9 @@
 import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { SCHOOL_GROUPS } from "@/config/schoolGroups";
 import {
+  evaluateAcademicCriteria,
   evaluateProgram,
+  supportsAcademicPartialEvaluation,
   supportsProgramEvaluation,
 } from "@/lib/admission";
 import { filterPrograms, type ProgramFilterCriteria } from "@/lib/filters";
@@ -13,6 +15,7 @@ import { NavigationLoadingScreen } from "./NavigationLoadingProvider";
 import {
   ProgramResultTable,
   UnsupportedProgramTable,
+  type UnsupportedProgramItem,
 } from "./ProgramResultTable";
 import { SCORE_SUBJECTS } from "./ScoreForm";
 import {
@@ -111,6 +114,14 @@ function compareProgramRecords(left: Program, right: Program): number {
   );
 }
 
+function requiresSpecialScreening(program: Program): boolean {
+  return (
+    program.reviewReasons?.some((reason) =>
+      reason.startsWith("需特殊檢定"),
+    ) ?? false
+  );
+}
+
 const subscribeToHydration = () => () => {};
 
 export function ResultsWorkspace(props: ResultsWorkspaceProps) {
@@ -147,7 +158,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
     const supported = matched.filter((program) =>
       supportsProgramEvaluation(program, applicantGender),
     );
-    const needsOfficialReview = matched
+    const needsOfficialReviewPrograms = matched
       .filter(
         (program) => !supportsProgramEvaluation(program, applicantGender),
       )
@@ -157,8 +168,27 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
     );
     const passed = evaluated.filter((result) => result.passed).sort(comparePrograms);
     const near = evaluated.filter((result) => !result.passed).sort(compareNear);
+    const needsOfficialReview: UnsupportedProgramItem[] =
+      needsOfficialReviewPrograms.map((program) => ({
+        program,
+        ...(requiresSpecialScreening(program) &&
+        supportsAcademicPartialEvaluation(program, applicantGender)
+          ? {
+              academicEvaluation: evaluateAcademicCriteria(
+                program,
+                userScores,
+                applicantGender,
+              ),
+            }
+          : {}),
+      }));
+    const academicReviewEvaluations = needsOfficialReview.flatMap((item) =>
+      item.academicEvaluation ? [item.academicEvaluation] : [],
+    );
     const missingSubjects = SCORE_SUBJECTS.filter((subject) =>
-      evaluated.some((result) => result.missingSubjects.includes(subject)),
+      [...evaluated, ...academicReviewEvaluations].some((result) =>
+        result.missingSubjects.includes(subject),
+      ),
     );
 
     return {
@@ -308,9 +338,9 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
             <div>
               <span className="result-icon" aria-hidden="true">!</span>
               <div>
-                <h2>無法完整判定／查看官方</h2>
+                <h2>特殊檢定／查看官方</h2>
                 <p>
-                  這些校系可被搜尋，但含尚未完整建模的特殊或待確認門檻；每頁顯示 20 筆。
+                  特殊校系仍先試算可確認的學測門檻，完整資格與特殊檢定請以官方資料為準；每頁顯示 20 筆。
                 </p>
               </div>
             </div>
@@ -318,7 +348,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
           </div>
           <UnsupportedProgramTable
             emptyMessage="目前符合條件的校系都已有完整門檻，可以自動回測。"
-            programs={evaluation.needsOfficialReview.slice(
+            items={evaluation.needsOfficialReview.slice(
               reviewStart,
               reviewStart + RESULT_PAGE_SIZE,
             )}

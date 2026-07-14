@@ -19,6 +19,16 @@ import {
 } from "./subjects";
 
 const MAX_BOOST_PLANS = 5;
+const ACADEMIC_SUBJECT_ALIASES: Readonly<Record<string, Subject>> = {
+  國文: "國文",
+  英文: "英文",
+  數學A: "數A",
+  數A: "數A",
+  數學B: "數B",
+  數B: "數B",
+  社會: "社會",
+  自然: "自然",
+};
 
 type SearchRule = {
   subjects: ReadonlySet<Subject>;
@@ -91,6 +101,70 @@ export function supportsProgramEvaluation(
     : program.screeningRules;
   return (
     screeningRules.length > 0 || (program.requirements?.length ?? 0) > 0
+  );
+}
+
+function academicSubjectsFromLabel(label: string): Subject[] | undefined {
+  const tokens = label
+    .normalize("NFKC")
+    .replace(/\s+/gu, "")
+    .split(/[+＋]/u)
+    .filter(Boolean);
+  if (tokens.length === 0) return undefined;
+
+  const subjects = tokens.map((token) => ACADEMIC_SUBJECT_ALIASES[token]);
+  if (subjects.some((subject) => subject === undefined)) return undefined;
+  return [...new Set(subjects as Subject[])];
+}
+
+export function academicScreeningRulesFor(
+  program: Program,
+  applicantGender?: ApplicantGender,
+): ScreeningRule[] {
+  const hasVariants = (program.screeningVariants?.length ?? 0) > 0;
+  const variant = screeningVariantFor(program, applicantGender);
+  if (hasVariants && !variant) return [];
+
+  const baseRules = [...(variant?.screeningRules ?? program.screeningRules)];
+  let nextOrder = Math.max(0, ...baseRules.map((rule) => rule.order)) + 1;
+  const additionalRules = (program.additionalScreeningRules ?? []).flatMap(
+    (rule) => {
+      const subjects = academicSubjectsFromLabel(rule.label);
+      if (!subjects) return [];
+
+      return [
+        {
+          order: nextOrder++,
+          label: rule.label,
+          subjects,
+          minScore: rule.minScore,
+          rawText: rule.rawText,
+        },
+      ];
+    },
+  );
+  const seen = new Set<string>();
+
+  return [...baseRules, ...additionalRules].filter((rule) => {
+    const key = `${uniqueRuleSubjects(rule).join("+")}|${rule.minScore}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+export function supportsAcademicPartialEvaluation(
+  program: Program,
+  applicantGender?: ApplicantGender,
+): boolean {
+  const hasVariants = (program.screeningVariants?.length ?? 0) > 0;
+  if (hasVariants && !screeningVariantFor(program, applicantGender)) {
+    return false;
+  }
+
+  return (
+    academicScreeningRulesFor(program, applicantGender).length > 0 ||
+    (program.requirements?.length ?? 0) > 0
   );
 }
 
@@ -303,23 +377,12 @@ function findNearestBoosts(
   return plans;
 }
 
-export function evaluateProgram(
+function evaluateWithRules(
   program: Program,
   scores: UserScores,
-  applicantGender?: ApplicantGender,
+  screeningRules: readonly ScreeningRule[],
+  screeningVariant?: ProgramScreeningVariant,
 ): EvaluationResult {
-  const screeningVariant = screeningVariantFor(program, applicantGender);
-  if ((program.screeningVariants?.length ?? 0) > 0 && !screeningVariant) {
-    throw new Error(`校系 ${program.programCode} 需先選擇官方招生性別組別`);
-  }
-  if (!supportsProgramEvaluation(program, applicantGender)) {
-    throw new Error(
-      `校系 ${program.programCode} 的官方篩選門檻尚待確認，不能自動判斷`,
-    );
-  }
-
-  const screeningRules = screeningVariant?.screeningRules ?? program.screeningRules;
-
   assertValidUserScores(scores);
 
   const ruleResults = screeningRules.map((rule) =>
@@ -380,6 +443,50 @@ export function evaluateProgram(
       scores,
     ),
   };
+}
+
+export function evaluateProgram(
+  program: Program,
+  scores: UserScores,
+  applicantGender?: ApplicantGender,
+): EvaluationResult {
+  const screeningVariant = screeningVariantFor(program, applicantGender);
+  if ((program.screeningVariants?.length ?? 0) > 0 && !screeningVariant) {
+    throw new Error(`校系 ${program.programCode} 需先選擇官方招生性別組別`);
+  }
+  if (!supportsProgramEvaluation(program, applicantGender)) {
+    throw new Error(
+      `校系 ${program.programCode} 的官方篩選門檻尚待確認，不能自動判斷`,
+    );
+  }
+
+  return evaluateWithRules(
+    program,
+    scores,
+    screeningVariant?.screeningRules ?? program.screeningRules,
+    screeningVariant,
+  );
+}
+
+export function evaluateAcademicCriteria(
+  program: Program,
+  scores: UserScores,
+  applicantGender?: ApplicantGender,
+): EvaluationResult {
+  const screeningVariant = screeningVariantFor(program, applicantGender);
+  if ((program.screeningVariants?.length ?? 0) > 0 && !screeningVariant) {
+    throw new Error(`校系 ${program.programCode} 需先選擇官方招生性別組別`);
+  }
+  if (!supportsAcademicPartialEvaluation(program, applicantGender)) {
+    throw new Error(`校系 ${program.programCode} 沒有可獨立試算的學測門檻`);
+  }
+
+  return evaluateWithRules(
+    program,
+    scores,
+    academicScreeningRulesFor(program, applicantGender),
+    screeningVariant,
+  );
 }
 
 export type {

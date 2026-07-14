@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   SCHOOL_GROUP_OPTIONS,
   type SchoolGroupId,
@@ -8,6 +8,7 @@ import {
 import {
   areProgramCodesSelected,
   EMPTY_PROGRAM_SELECTION,
+  rankDepartmentOptions,
   selectedDepartmentCount,
   selectedProgramCount,
   toDepartmentOptions,
@@ -42,6 +43,8 @@ type FilterPanelProps = {
 };
 
 const PROGRAM_PAGE_SIZE = 12;
+const MOBILE_PROGRAM_PAGE_SIZE = 4;
+const MOBILE_PROGRAM_MEDIA_QUERY = "(max-width: 720px)";
 const SCHOOL_SEARCH_ALIASES: Readonly<Record<string, readonly string[]>> = {
   "152": ["馬偕醫學大學"],
 };
@@ -57,6 +60,25 @@ function normalizeSearch(value: string): string {
     .normalize("NFKC")
     .toLocaleLowerCase("zh-Hant")
     .replace(/[\s\u3000·・‧,，、()（）\-_/]+/gu, "");
+}
+
+function useProgramPageSize(): number {
+  const [pageSize, setPageSize] = useState(PROGRAM_PAGE_SIZE);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(MOBILE_PROGRAM_MEDIA_QUERY);
+    const updatePageSize = () => {
+      setPageSize(
+        mediaQuery.matches ? MOBILE_PROGRAM_PAGE_SIZE : PROGRAM_PAGE_SIZE,
+      );
+    };
+
+    updatePageSize();
+    mediaQuery.addEventListener("change", updatePageSize);
+    return () => mediaQuery.removeEventListener("change", updatePageSize);
+  }, []);
+
+  return pageSize;
 }
 
 export function FilterPanel({
@@ -77,6 +99,7 @@ export function FilterPanel({
   );
   const [programSearch, setProgramSearch] = useState("");
   const [programPage, setProgramPage] = useState(0);
+  const programPageSize = useProgramPageSize();
 
   const filteredSchools = useMemo(() => {
     const query = normalizeSearch(schoolSearch);
@@ -135,11 +158,7 @@ export function FilterPanel({
   };
 
   const filteredDepartments = useMemo(() => {
-    const query = normalizeSearch(programSearch);
-    if (!query) return groupDepartments;
-    return groupDepartments.filter((department) =>
-      normalizeSearch(department.departmentName).includes(query),
-    );
+    return rankDepartmentOptions(groupDepartments, programSearch);
   }, [groupDepartments, programSearch]);
 
   const availableProgramCodes = useMemo(
@@ -154,15 +173,23 @@ export function FilterPanel({
     schoolGroupIds.length === 0 && customSchoolIds.length === 0;
   const totalProgramPages = Math.max(
     1,
-    Math.ceil(filteredDepartments.length / PROGRAM_PAGE_SIZE),
+    Math.ceil(filteredDepartments.length / programPageSize),
   );
   const visibleProgramPage = Math.min(programPage, totalProgramPages - 1);
   const visibleDepartments = filteredDepartments.slice(
-    visibleProgramPage * PROGRAM_PAGE_SIZE,
-    (visibleProgramPage + 1) * PROGRAM_PAGE_SIZE,
+    visibleProgramPage * programPageSize,
+    (visibleProgramPage + 1) * programPageSize,
   );
+  const visibleProgramCodes = visibleDepartments.flatMap(
+    (department) => department.programCodes,
+  );
+  const allVisibleDepartmentsSelected =
+    visibleDepartments.length > 0 &&
+    visibleDepartments.every((department) =>
+      areProgramCodesSelected(programSelection, department.programCodes),
+    );
 
-  function toggleDepartment(programCodes: readonly string[]) {
+  function toggleProgramCodeScope(programCodes: readonly string[]) {
     const next = toggleProgramCodes(programSelection, programCodes);
     const nextCount = selectedProgramCount(next, availableProgramCodes);
     if (nextCount === 0) {
@@ -177,10 +204,10 @@ export function FilterPanel({
     }
   }
 
-  const programStart = visibleProgramPage * PROGRAM_PAGE_SIZE + 1;
+  const programStart = visibleProgramPage * programPageSize + 1;
   const programEnd = Math.min(
     filteredDepartments.length,
-    programStart + PROGRAM_PAGE_SIZE - 1,
+    programStart + programPageSize - 1,
   );
 
   return (
@@ -328,9 +355,9 @@ export function FilterPanel({
                     }
                     type="checkbox"
                   />
-                  <span>
+                  <span className="school-check-label">
                     <b>{school.schoolId}</b>
-                    {school.schoolName}
+                    <span>{school.schoolName}</span>
                   </span>
                 </label>
               ))}
@@ -351,20 +378,14 @@ export function FilterPanel({
           </div>
           {groupSelection !== "all" ? (
             <button
-              aria-pressed={programSelection.mode === "all"}
+              aria-pressed={allVisibleDepartmentsSelected}
               className="select-all-programs"
               data-testid="select-all-programs"
-              onClick={() =>
-                onProgramSelectionChange(
-                  groupSelection,
-                  selectedCount === groupDepartments.length
-                    ? EMPTY_PROGRAM_SELECTION
-                    : { mode: "all", codes: [] },
-                )
-              }
+              disabled={visibleDepartments.length === 0}
+              onClick={() => toggleProgramCodeScope(visibleProgramCodes)}
               type="button"
             >
-              {selectedCount === groupDepartments.length ? "全部取消" : "全選"}
+              {allVisibleDepartmentsSelected ? "取消本頁" : "全選本頁"}
             </button>
           ) : null}
         </div>
@@ -397,7 +418,11 @@ export function FilterPanel({
             </div>
 
             {visibleDepartments.length > 0 ? (
-              <div className="program-checklist" aria-label={`${groupSelection}科系列表`}>
+              <div
+                aria-label={`${groupSelection}科系列表`}
+                className="program-checklist"
+                data-page-size={programPageSize}
+              >
                 {visibleDepartments.map((department) => (
                   <label className="program-check" key={department.departmentName}>
                     <input
@@ -406,7 +431,7 @@ export function FilterPanel({
                         department.programCodes,
                       )}
                       onChange={() =>
-                        toggleDepartment(department.programCodes)
+                        toggleProgramCodeScope(department.programCodes)
                       }
                       type="checkbox"
                     />

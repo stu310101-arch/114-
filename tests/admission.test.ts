@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { evaluateProgram } from "../lib/admission";
+import {
+  academicScreeningRulesFor,
+  evaluateAcademicCriteria,
+  evaluateProgram,
+  supportsAcademicPartialEvaluation,
+} from "../lib/admission";
 import type {
   Program,
   ScreeningRule,
@@ -250,6 +255,85 @@ describe("evaluateProgram", () => {
 
     expect(() => evaluateProgram(target, { 英文: 15 })).toThrow(
       "尚待確認",
+    );
+  });
+
+  it("特殊檢定校系只試算可確認的學測門檻，不把 APCS 分數當學測", () => {
+    const target = program([], {
+      schoolId: "003",
+      schoolName: "國立中興大學",
+      programCode: "003082",
+      programName: "資訊管理學系（APCS組）",
+      requirements: [
+        {
+          subject: "英文",
+          standard: "前標",
+          minScore: 11,
+          rawText: "英文前標",
+        },
+      ],
+      additionalScreeningRules: [
+        { label: "英文＋自然", minScore: 23, rawText: "英文＋自然23" },
+        {
+          label: "APCS 觀念題＋實作題",
+          minScore: 6,
+          rawText: "APCS 觀念題＋實作題6",
+        },
+        { label: "數學A", minScore: 9, rawText: "數學A9" },
+      ],
+      dataStatus: "needs-review",
+      evaluationSupport: "unsupported",
+      reviewReasons: ["需特殊檢定：APCS"],
+      verified: false,
+    });
+
+    expect(supportsAcademicPartialEvaluation(target)).toBe(true);
+    expect(academicScreeningRulesFor(target)).toEqual([
+      expect.objectContaining({
+        order: 1,
+        label: "英文＋自然",
+        subjects: ["英文", "自然"],
+        minScore: 23,
+      }),
+      expect.objectContaining({
+        order: 2,
+        label: "數學A",
+        subjects: ["數A"],
+        minScore: 9,
+      }),
+    ]);
+
+    const result = evaluateAcademicCriteria(target, {
+      英文: 11,
+      自然: 12,
+      數A: 8,
+    });
+    expect(result.ruleResults.map((item) => item.rule.label)).toEqual([
+      "英文＋自然",
+      "數學A",
+    ]);
+    expect(result.requirementResults[0].passed).toBe(true);
+    expect(result.passed).toBe(false);
+    expect(result.nearestBoost[0]).toEqual({
+      totalPoints: 1,
+      changes: [{ subject: "數A", points: 1, from: 8, to: 9 }],
+    });
+  });
+
+  it("只有特殊術科、沒有獨立學測門檻時不自行推估", () => {
+    const target = program([], {
+      additionalScreeningRules: [
+        { label: "素描", minScore: 70, rawText: "素描70" },
+      ],
+      dataStatus: "needs-review",
+      evaluationSupport: "unsupported",
+      reviewReasons: ["需特殊檢定：術科"],
+      verified: false,
+    });
+
+    expect(supportsAcademicPartialEvaluation(target)).toBe(false);
+    expect(() => evaluateAcademicCriteria(target, {})).toThrow(
+      "沒有可獨立試算",
     );
   });
 

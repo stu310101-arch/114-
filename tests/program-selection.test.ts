@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import programsJson from "../data/programs_114.json";
 import {
   isProgramSelected,
+  rankDepartmentOptions,
   selectedDepartmentCount,
   selectedUniqueProgramCodes,
   selectedProgramCount,
@@ -365,6 +366,57 @@ describe("114 官方校系選取資料", () => {
         );
       }
     });
+  });
+
+  it("科系搜尋逐字依序比對並依相似度排序", () => {
+    const naturalDepartments = toDepartmentOptions(
+      toProgramOptions(programs),
+      "自然組",
+    );
+    const computerScience = rankDepartmentOptions(
+      naturalDepartments,
+      "資工系",
+    );
+    const dentistry = rankDepartmentOptions(naturalDepartments, "牙醫系");
+
+    expect(computerScience.length).toBeGreaterThan(3);
+    expect(
+      computerScience.some(
+        (department) => department.departmentName === "資訊工程學系",
+      ),
+    ).toBe(true);
+    const firstNonInformationEngineering = computerScience.findIndex(
+      (department) => !department.departmentName.includes("資訊工程"),
+    );
+    const lastInformationEngineering = computerScience.reduce(
+      (lastIndex, department, index) =>
+        department.departmentName.includes("資訊工程") ? index : lastIndex,
+      -1,
+    );
+    expect(firstNonInformationEngineering).toBeGreaterThanOrEqual(0);
+    expect(lastInformationEngineering).toBeLessThan(
+      firstNonInformationEngineering,
+    );
+    expect(
+      computerScience.every((department) => {
+        let cursor = 0;
+        return [..."資工系"].every((character) => {
+          const index = department.departmentName.indexOf(character, cursor);
+          if (index < 0) return false;
+          cursor = index + 1;
+          return true;
+        });
+      }),
+    ).toBe(true);
+    expect(dentistry.length).toBeGreaterThan(0);
+    expect(
+      dentistry.every((department) =>
+        department.departmentName.includes("牙"),
+      ),
+    ).toBe(true);
+    expect(
+      dentistry.some((department) => department.departmentName === "中醫學系"),
+    ).toBe(false);
   });
 
   it("完整說明中興大學 2 筆 APCS 特殊門檻", () => {

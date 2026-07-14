@@ -16,9 +16,14 @@ type ProgramResultTableProps = {
 };
 
 type UnsupportedProgramTableProps = {
-  programs: readonly Program[];
+  items: readonly UnsupportedProgramItem[];
   emptyMessage: string;
   startIndex?: number;
+};
+
+export type UnsupportedProgramItem = {
+  program: Program;
+  academicEvaluation?: EvaluationResult;
 };
 
 function RuleSummary({ result }: { result: RuleResult }) {
@@ -184,17 +189,17 @@ export function ProgramResultTable({
 }
 
 export function UnsupportedProgramTable({
-  programs,
+  items,
   emptyMessage,
   startIndex = 0,
 }: UnsupportedProgramTableProps) {
-  if (programs.length === 0) {
+  if (items.length === 0) {
     return <div className="empty-state">{emptyMessage}</div>;
   }
 
   return (
     <div className="program-list">
-      {programs.map((program, index) => {
+      {items.map(({ program, academicEvaluation }, index) => {
         const requiresSpecialScreening = program.reviewReasons?.some(
           (reason) => reason.startsWith("需特殊檢定"),
         );
@@ -223,12 +228,12 @@ export function UnsupportedProgramTable({
                 </div>
                 <div className="program-actions">
                   <span
-                    className={`review-badge${requiresSpecialScreening || requiresGenderSelection ? " incomplete" : ""}`}
+                    className={`review-badge${requiresGenderSelection ? " incomplete" : requiresSpecialScreening ? " special" : ""}`}
                   >
                     {requiresGenderSelection
                       ? "需選性別組別"
                       : requiresSpecialScreening
-                        ? "無法完整判定"
+                        ? "須特殊檢定"
                         : "資料待確認"}
                   </span>
                   <SourceLink
@@ -241,12 +246,69 @@ export function UnsupportedProgramTable({
                 </div>
               </div>
 
+              {requiresSpecialScreening ? (
+                <div className="special-evaluation-panel" role="note">
+                  <div className="special-evaluation-heading">
+                    <div>
+                      <span>學測門檻試算</span>
+                      <strong>
+                        {academicEvaluation
+                          ? academicEvaluation.passed
+                            ? "已達目前可試算門檻"
+                            : academicEvaluation.nearestBoost[0]
+                              ? `尚差最少 ${academicEvaluation.nearestBoost[0].totalPoints} 級分`
+                              : "尚未達到門檻"
+                          : "官方未列可獨立試算的學測最低級分"}
+                      </strong>
+                    </div>
+                    {academicEvaluation ? (
+                      <span
+                        className={`academic-evaluation-status ${academicEvaluation.passed ? "passed" : "failed"}`}
+                      >
+                        {academicEvaluation.passed ? "學測已達" : "學測未達"}
+                      </span>
+                    ) : null}
+                  </div>
+
+                  {academicEvaluation ? (
+                    <>
+                      <ul className="rule-list" aria-label="可獨立試算的學測門檻">
+                        {academicEvaluation.requirementResults.map((result) => (
+                          <RequirementSummary
+                            key={`${program.programCode}-academic-requirement-${result.requirement.subject}`}
+                            result={result}
+                          />
+                        ))}
+                        {academicEvaluation.ruleResults.map((result) => (
+                          <RuleSummary
+                            key={`${program.programCode}-academic-rule-${result.rule.order}-${result.rule.label}`}
+                            result={result}
+                          />
+                        ))}
+                      </ul>
+                      {!academicEvaluation.passed ? (
+                        <BoostPlan evaluation={academicEvaluation} />
+                      ) : null}
+                    </>
+                  ) : (
+                    <p className="special-evaluation-empty">
+                      這筆官方資料沒有能和一般學測級分分開計算的最低門檻，因此不自行推估分數。
+                    </p>
+                  )}
+
+                  <p className="special-evaluation-warning">
+                    <b>重要：</b>
+                    此校系另須特殊檢定／證照；上方學測試算不代表完整通過，特殊檢定資格與門檻請以官方資料為準。
+                  </p>
+                </div>
+              ) : null}
+
               <div className="review-reasons">
                 <b>
                   {requiresGenderSelection
                     ? "官方分列男、女生名額與門檻；請返回上頁選擇招生性別組別："
                     : requiresSpecialScreening
-                      ? "含系統尚未完整建模的特殊門檻，無法完整判定："
+                      ? "其他官方條件與資料說明："
                       : "目前無法安全自動判斷："}
                 </b>
                 {requiresGenderSelection ? (

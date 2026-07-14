@@ -36,6 +36,73 @@ export type DepartmentOption = Readonly<{
   programCodes: readonly string[];
 }>;
 
+function normalizeDepartmentSearch(value: string): string {
+  return value
+    .normalize("NFKC")
+    .toLocaleLowerCase("zh-Hant")
+    .replace(/[\s\u3000·・‧,，、()（）\-_/]+/gu, "");
+}
+
+function departmentMatchScore(name: string, query: string): number | null {
+  const exactIndex = name.indexOf(query);
+  if (exactIndex >= 0) {
+    return exactIndex * 100 + (name.length - query.length);
+  }
+
+  let searchFrom = 0;
+  let firstIndex = -1;
+  let lastIndex = -1;
+  for (const character of query) {
+    const index = name.indexOf(character, searchFrom);
+    if (index < 0) return null;
+    if (firstIndex < 0) firstIndex = index;
+    lastIndex = index;
+    searchFrom = index + character.length;
+  }
+
+  const matchSpan = lastIndex - firstIndex + 1;
+  const gapCount = matchSpan - query.length;
+  const commonAbbreviationBonus =
+    query.includes("資工") && name.includes("資訊工程") ? 6_000 : 0;
+  return (
+    10_000 +
+    gapCount * 1_000 +
+    firstIndex * 100 +
+    name.length -
+    commonAbbreviationBonus
+  );
+}
+
+/**
+ * 關鍵字必須逐字、依順序出現在系名中；完全連續命中優先，其次依字距排序。
+ * 例如「資工系」可命中「資訊工程學系」，但「牙醫系」不會命中「中醫學系」。
+ */
+export function rankDepartmentOptions(
+  departments: readonly DepartmentOption[],
+  rawQuery: string,
+): DepartmentOption[] {
+  const query = normalizeDepartmentSearch(rawQuery);
+  if (!query) return [...departments];
+
+  return departments
+    .flatMap((department) => {
+      const score = departmentMatchScore(
+        normalizeDepartmentSearch(department.departmentName),
+        query,
+      );
+      return score === null ? [] : [{ department, score }];
+    })
+    .sort(
+      (left, right) =>
+        left.score - right.score ||
+        left.department.departmentName.localeCompare(
+          right.department.departmentName,
+          "zh-Hant",
+        ),
+    )
+    .map(({ department }) => department);
+}
+
 export const EMPTY_PROGRAM_SELECTION: ProgramSelection = {
   mode: "none",
   codes: [],
