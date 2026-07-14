@@ -33,26 +33,28 @@ function restoreFromSession(key: string, value: unknown) {
 }
 
 describe("school query state", () => {
-  it("科系細分類可不選、單選或複選並安全寫入網址", () => {
+  it("官方十八學群可不選、單選或複選並安全寫入網址", () => {
     const params = queryStateToParams({
       ...DEFAULT_QUERY_STATE,
-      programTrackIds: ["humanities-business", "science-engineering"],
+      learningGroupIds: ["information", "engineering"],
     });
 
-    expect(params.getAll("track")).toEqual([
-      "humanities-business",
-      "science-engineering",
+    expect(params.getAll("learningGroup")).toEqual([
+      "information",
+      "engineering",
     ]);
-    expect(queryStateFromParams(params).programTrackIds).toEqual([
-      "humanities-business",
-      "science-engineering",
+    expect(queryStateFromParams(params).learningGroupIds).toEqual([
+      "information",
+      "engineering",
     ]);
     expect(
       queryStateFromParams(
-        new URLSearchParams("track=unknown&track=biomedical"),
-      ).programTrackIds,
-    ).toEqual(["biomedical"]);
-    expect(queryStateFromParams(new URLSearchParams()).programTrackIds).toEqual(
+        new URLSearchParams(
+          "learningGroup=unknown&learningGroup=health-medicine",
+        ),
+      ).learningGroupIds,
+    ).toEqual(["health-medicine"]);
+    expect(queryStateFromParams(new URLSearchParams()).learningGroupIds).toEqual(
       [],
     );
   });

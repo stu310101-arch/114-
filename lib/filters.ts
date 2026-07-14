@@ -14,9 +14,9 @@ import {
 } from "./programSelection";
 import type { Program } from "./types";
 import {
-  matchesProgramTracks,
-  type ProgramTrackId,
-} from "./programTracks";
+  matchesLearningGroups,
+  type LearningGroupId,
+} from "./learningGroups";
 
 export type ProgramGroupTag = Program["groupTags"][number];
 
@@ -35,8 +35,8 @@ export type ProgramFilterCriteria = Readonly<{
   programSelection?: ProgramSelection;
   /** 自然組與社會組各自選取後採聯集，重疊校系只保留一次。 */
   groupedProgramSelections?: GroupedProgramSelections;
-  /** 科系領域細分類採聯集，並與其他欄位取交集。 */
-  programTrackIds?: readonly ProgramTrackId[];
+  /** 官方十八學群採聯集，並與其他欄位取交集。 */
+  learningGroupIds?: readonly LearningGroupId[];
 }>;
 
 function normalizeText(value: string): string {
@@ -189,7 +189,7 @@ export function matchesProgramFilters(
     return false;
   }
 
-  if (!matchesProgramTracks(program, criteria.programTrackIds)) {
+  if (!matchesLearningGroups(program, criteria.learningGroupIds)) {
     return false;
   }
 

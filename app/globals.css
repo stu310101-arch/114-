@@ -1158,21 +1158,21 @@ input:focus-visible {
   color: #c7dcdf;
 }
 
-.program-track-filter {
+.learning-group-filter {
   margin-top: 18px;
   padding-top: 18px;
   border-top: 1px dashed var(--line);
 }
 
-.program-track-grid {
+.learning-group-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
-.program-track-grid button {
+.learning-group-grid button {
   display: grid;
-  min-height: 62px;
+  min-height: 54px;
   align-content: center;
   gap: 3px;
   border: 1px solid var(--line);
@@ -1184,24 +1184,24 @@ input:focus-visible {
   text-align: left;
 }
 
-.program-track-grid button b {
+.learning-group-grid button b {
   font-size: 12px;
 }
 
-.program-track-grid button small {
+.learning-group-grid button small {
   color: #7c898c;
   font-size: 9px;
   line-height: 1.45;
 }
 
-.program-track-grid button.selected {
+.learning-group-grid button.selected {
   border-color: rgba(11, 117, 108, 0.55);
   background: var(--teal-soft);
   box-shadow: inset 0 0 0 1px rgba(11, 117, 108, 0.08);
   color: #075f58;
 }
 
-.program-track-grid button.selected small {
+.learning-group-grid button.selected small {
   color: #39736f;
 }
 
@@ -2639,12 +2639,12 @@ footer span {
 }
 
 @media (max-width: 720px) {
-  .program-track-grid {
-    grid-template-columns: 1fr;
+  .learning-group-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .program-track-grid button {
-    min-height: 56px;
+  .learning-group-grid button {
+    min-height: 50px;
   }
 
   .site-header {

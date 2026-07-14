@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import programsJson from "../data/programs_114.json";
+import learningGroupsJson from "../data/program_learning_groups_114.json";
+import { LEARNING_GROUP_OPTIONS } from "../lib/learningGroups";
 import {
   isProgramSelected,
   rankDepartmentOptions,
@@ -41,9 +43,14 @@ describe("114 官方校系選取資料", () => {
     expect([...codes].every((code) => /^\d{6}$/.test(code))).toBe(true);
     expect(natural).toHaveLength(1280);
     expect(social).toHaveLength(1287);
-    expect(options.every((program) => program.programTrackIds.length > 0)).toBe(
-      true,
-    );
+    expect(Object.keys(learningGroupsJson.programs)).toHaveLength(2168);
+    expect(learningGroupsJson.unresolvedPrograms).toEqual([]);
+    expect(LEARNING_GROUP_OPTIONS).toHaveLength(18);
+    LEARNING_GROUP_OPTIONS.forEach(({ id }) => {
+      expect(
+        options.some((program) => program.learningGroupIds.includes(id)),
+      ).toBe(true);
+    });
   });
 
   it("長庚大學 27 個校系均可進入選取清單", () => {

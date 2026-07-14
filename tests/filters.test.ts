@@ -9,8 +9,8 @@ import {
 } from "../lib/filters";
 import type { Program } from "../lib/types";
 import {
-  programTrackIdsFor,
-} from "../lib/programTracks";
+  learningGroupIdsFor,
+} from "../lib/learningGroups";
 import { validatePrograms } from "../scripts/validatePrograms";
 
 const SOURCE: Program["source"] = {
@@ -49,14 +49,14 @@ const programs: Program[] = [
   program({
     schoolId: "001",
     schoolName: "國立臺灣大學",
-    programCode: "001012",
+    programCode: "001592",
     programName: "資訊工程學系",
     departmentKeywords: ["資訊工程", "資工"],
   }),
   program({
     schoolId: "041",
     schoolName: "國立中正大學",
-    programCode: "041082",
+    programCode: "041262",
     programName: "資訊管理學系",
     groupTags: ["自然組", "社會組"],
     departmentKeywords: ["資訊管理"],
@@ -64,7 +64,7 @@ const programs: Program[] = [
   program({
     schoolId: "099",
     schoolName: "國立臺北大學",
-    programCode: "099202",
+    programCode: "099052",
     programName: "法律學系財經法組",
     groupTags: ["社會組"],
     departmentKeywords: ["法律", "財經法律"],
@@ -107,33 +107,36 @@ describe("filterPrograms", () => {
       groupTags: ["自然組", "社會組"],
     });
     expect(result.map(({ programCode }) => programCode)).toEqual([
-      "001012",
-      "041082",
-      "099202",
+      "001592",
+      "041262",
+      "099052",
       "900001",
       "901001",
     ]);
   });
 
-  it("細分類組可複選並與其他篩選條件取交集", () => {
-    expect(programTrackIdsFor(programs[0])).toEqual(["science-engineering"]);
-    expect(programTrackIdsFor(programs[1])).toEqual([
-      "humanities-business",
-      "science-engineering",
+  it("官方十八學群可複選並與其他篩選條件取交集", () => {
+    expect(learningGroupIdsFor(programs[0])).toEqual([
+      "information",
+      "engineering",
     ]);
-    expect(programTrackIdsFor(programs[2])).toEqual(["humanities-business"]);
+    expect(learningGroupIdsFor(programs[1])).toEqual([
+      "information",
+      "management",
+    ]);
+    expect(learningGroupIdsFor(programs[2])).toEqual(["law-politics"]);
 
     expect(
       filterPrograms(programs, {
         groupTags: ["自然組"],
-        programTrackIds: ["humanities-business"],
+        learningGroupIds: ["management"],
       }).map(({ programCode }) => programCode),
-    ).toEqual(["041082"]);
+    ).toEqual(["041262"]);
     expect(
       filterPrograms(programs, {
-        programTrackIds: ["humanities-business", "science-engineering"],
+        learningGroupIds: ["information", "law-politics"],
       }).map(({ programCode }) => programCode),
-    ).toEqual(["001012", "041082", "099202", "900001", "901001"]);
+    ).toEqual(["001592", "041262", "099052"]);
   });
 
   it("預設學校群組多選與自訂學校採聯集", () => {
@@ -183,7 +186,7 @@ describe("filterPrograms", () => {
       departmentKeywordIds: ["資工", "電機"],
     });
     expect(result.map(({ programCode }) => programCode)).toEqual([
-      "001012",
+      "001592",
       "900001",
       "901001",
     ]);
@@ -202,7 +205,7 @@ describe("filterPrograms", () => {
         departmentKeywordIds: ["法律", "資工"],
         freeText: "財經法律",
       }).map(({ programCode }) => programCode),
-    ).toEqual(["099202"]);
+    ).toEqual(["099052"]);
   });
 });
 
@@ -273,7 +276,7 @@ describe("validatePrograms", () => {
     const valid = program({
       schoolId: "001",
       schoolName: "國立臺灣大學",
-      programCode: "001012",
+      programCode: "001592",
       programName: "資訊工程學系",
     });
     const duplicateWithInvalidRule = {

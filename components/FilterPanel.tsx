@@ -19,10 +19,10 @@ import {
 } from "@/lib/programSelection";
 import type { GroupTag } from "@/lib/types";
 import {
-  matchesProgramTrackIds,
-  PROGRAM_TRACK_OPTIONS,
-  type ProgramTrackId,
-} from "@/lib/programTracks";
+  LEARNING_GROUP_OPTIONS,
+  matchesLearningGroupIds,
+  type LearningGroupId,
+} from "@/lib/learningGroups";
 import type { GroupSelection } from "./queryState";
 import { RouteLink } from "./PageNavigation";
 
@@ -44,8 +44,8 @@ type FilterPanelProps = {
     value: ProgramSelection,
   ) => void;
   programOptions: readonly ProgramOption[];
-  programTrackIds: readonly ProgramTrackId[];
-  onProgramTrackIdsChange: (value: ProgramTrackId[]) => void;
+  learningGroupIds: readonly LearningGroupId[];
+  onLearningGroupIdsChange: (value: LearningGroupId[]) => void;
   schoolSources: readonly SchoolSourceOption[];
 };
 
@@ -98,8 +98,8 @@ export function FilterPanel({
   programSelections,
   onProgramSelectionChange,
   programOptions,
-  programTrackIds,
-  onProgramTrackIdsChange,
+  learningGroupIds,
+  onLearningGroupIdsChange,
   schoolSources,
 }: FilterPanelProps) {
   const [schoolSearch, setSchoolSearch] = useState("");
@@ -123,23 +123,26 @@ export function FilterPanel({
     );
   }, [schoolSearch, schoolSources]);
 
-  const trackFilteredPrograms = useMemo(
+  const learningGroupFilteredPrograms = useMemo(
     () =>
       programOptions.filter((program) =>
-        matchesProgramTrackIds(program.programTrackIds, programTrackIds),
+        matchesLearningGroupIds(
+          program.learningGroupIds,
+          learningGroupIds,
+        ),
       ),
-    [programOptions, programTrackIds],
+    [learningGroupIds, programOptions],
   );
   const programsByGroup = useMemo(
     () => ({
-      自然組: trackFilteredPrograms.filter((program) =>
+      自然組: learningGroupFilteredPrograms.filter((program) =>
         program.groupTags.includes("自然組"),
       ),
-      社會組: trackFilteredPrograms.filter((program) =>
+      社會組: learningGroupFilteredPrograms.filter((program) =>
         program.groupTags.includes("社會組"),
       ),
     }),
-    [trackFilteredPrograms],
+    [learningGroupFilteredPrograms],
   );
   const groupPrograms = useMemo(
     () =>
@@ -148,10 +151,10 @@ export function FilterPanel({
   );
   const departmentsByGroup = useMemo(
     () => ({
-      自然組: toDepartmentOptions(trackFilteredPrograms, "自然組"),
-      社會組: toDepartmentOptions(trackFilteredPrograms, "社會組"),
+      自然組: toDepartmentOptions(learningGroupFilteredPrograms, "自然組"),
+      社會組: toDepartmentOptions(learningGroupFilteredPrograms, "社會組"),
     }),
-    [trackFilteredPrograms],
+    [learningGroupFilteredPrograms],
   );
   const groupDepartments = useMemo(
     () =>
@@ -240,10 +243,10 @@ export function FilterPanel({
 
       <div className="filter-block">
         <div className="filter-label-row">
-          <h3>選擇學群</h3>
+          <h3>選擇組別</h3>
           <span>點選後展開完整科系列表</span>
         </div>
-        <div className="segmented-control group-control" role="group" aria-label="選擇學群">
+        <div className="segmented-control group-control" role="group" aria-label="選擇組別">
           {(["自然組", "社會組"] as const).map((value) => (
             <button
               aria-pressed={groupSelection === value}
@@ -272,53 +275,53 @@ export function FilterPanel({
           分組依 114 學年度官方採計科目與系名整理；兩組各自選取，可同時全選。
         </p>
         {groupSelection !== "all" ? (
-          <div className="program-track-filter">
+          <div className="learning-group-filter">
             <div className="filter-label-row">
-              <h3>細分類組</h3>
+              <h3>十八學群</h3>
               <span>可不選、可複選</span>
             </div>
             <div
-              aria-label="細分類組（可複選）"
-              className="program-track-grid"
+              aria-label="十八學群（可複選）"
+              className="learning-group-grid"
               role="group"
             >
               <button
-                aria-pressed={programTrackIds.length === 0}
-                className={programTrackIds.length === 0 ? "selected" : ""}
+                aria-pressed={learningGroupIds.length === 0}
+                className={learningGroupIds.length === 0 ? "selected" : ""}
                 onClick={() => {
-                  onProgramTrackIdsChange([]);
+                  onLearningGroupIdsChange([]);
                   setProgramSearch("");
                   setProgramPage(0);
                 }}
                 type="button"
               >
-                <b>不限細分類</b>
+                <b>不限學群</b>
                 <small>顯示{groupSelection}全部科系</small>
               </button>
-              {PROGRAM_TRACK_OPTIONS.map((option) => (
+              {LEARNING_GROUP_OPTIONS.map((option) => (
                 <button
-                  aria-pressed={programTrackIds.includes(option.id)}
+                  aria-pressed={learningGroupIds.includes(option.id)}
                   className={
-                    programTrackIds.includes(option.id) ? "selected" : ""
+                    learningGroupIds.includes(option.id) ? "selected" : ""
                   }
                   key={option.id}
                   onClick={() => {
-                    onProgramTrackIdsChange(
-                      toggleValue(programTrackIds, option.id),
+                    onLearningGroupIdsChange(
+                      toggleValue(learningGroupIds, option.id),
                     );
                     setProgramSearch("");
                     setProgramPage(0);
                   }}
-                  title={option.description}
+                  title={option.label}
                   type="button"
                 >
                   <b>{option.label}</b>
-                  <small>{option.description}</small>
+                  <small>官方對應校系</small>
                 </button>
               ))}
             </div>
             <p className="microcopy">
-              細分類依科系名稱與領域整理，非官方招生類組；跨領域科系可能同時出現在多個類組。
+              依 ColleGo! 官方學群、學類與對應校系整理；同一學類可能跨群。官方跨領域校系不會被硬歸入任一十八學群。
             </p>
           </div>
         ) : null}

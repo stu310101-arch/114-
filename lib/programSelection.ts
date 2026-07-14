@@ -1,8 +1,8 @@
 import type { GroupTag, Program } from "./types";
 import {
-  programTrackIdsFor,
-  type ProgramTrackId,
-} from "./programTracks";
+  learningGroupIdsFor,
+  type LearningGroupId,
+} from "./learningGroups";
 
 export const PROGRAM_SELECTION_MODES = [
   "none",
@@ -32,7 +32,7 @@ export type ProgramOption = Readonly<{
   schoolId: string;
   schoolName: string;
   groupTags: readonly GroupTag[];
-  programTrackIds: readonly ProgramTrackId[];
+  learningGroupIds: readonly LearningGroupId[];
 }>;
 
 export type DepartmentOption = Readonly<{
@@ -128,18 +128,13 @@ export function toProgramOptions(
       schoolId,
       schoolName,
       groupTags,
-      departmentKeywords,
     }) => ({
       programCode,
       programName,
       schoolId,
       schoolName,
       groupTags,
-      programTrackIds: programTrackIdsFor({
-        programName,
-        departmentKeywords,
-        groupTags,
-      }),
+      learningGroupIds: learningGroupIdsFor({ programCode }),
     }),
   );
 }

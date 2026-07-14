@@ -151,7 +151,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
       schoolGroupIds: query.schoolGroupIds,
       customSchoolIds: query.customSchoolIds,
       groupedProgramSelections: query.programSelections,
-      programTrackIds: query.programTrackIds,
+      learningGroupIds: query.learningGroupIds,
     };
     const matched = filterPrograms(programs, criteria);
     const userScores = toUserScores(query);

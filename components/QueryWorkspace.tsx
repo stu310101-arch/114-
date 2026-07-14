@@ -7,7 +7,7 @@ import {
   selectedUniqueProgramCodes,
   type ProgramOption,
 } from "@/lib/programSelection";
-import { matchesProgramTrackIds } from "@/lib/programTracks";
+import { matchesLearningGroupIds } from "@/lib/learningGroups";
 import { FilterPanel, type SchoolSourceOption } from "./FilterPanel";
 import {
   NavigationLoadingScreen,
@@ -55,20 +55,23 @@ function HydratedQueryWorkspace({
   );
   const { navigate } = useNavigationLoading();
 
-  const trackFilteredProgramOptions = useMemo(
+  const learningGroupFilteredProgramOptions = useMemo(
     () =>
       programOptions.filter((program) =>
-        matchesProgramTrackIds(program.programTrackIds, query.programTrackIds),
+        matchesLearningGroupIds(
+          program.learningGroupIds,
+          query.learningGroupIds,
+        ),
       ),
-    [programOptions, query.programTrackIds],
+    [programOptions, query.learningGroupIds],
   );
   const selectedProgramCodes = useMemo(
     () =>
       selectedUniqueProgramCodes(
-        trackFilteredProgramOptions,
+        learningGroupFilteredProgramOptions,
         query.programSelections,
       ),
-    [query.programSelections, trackFilteredProgramOptions],
+    [learningGroupFilteredProgramOptions, query.programSelections],
   );
   const selectedCount = selectedProgramCodes.length;
   const requiresProgramSelection = selectedCount === 0;
@@ -177,9 +180,9 @@ function HydratedQueryWorkspace({
               update("schoolGroupIds", value)
             }
             programOptions={programOptions}
-            programTrackIds={query.programTrackIds}
-            onProgramTrackIdsChange={(value) =>
-              update("programTrackIds", value)
+            learningGroupIds={query.learningGroupIds}
+            onLearningGroupIdsChange={(value) =>
+              update("learningGroupIds", value)
             }
             programSelections={query.programSelections}
             schoolGroupIds={query.schoolGroupIds}

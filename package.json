@@ -16,6 +16,7 @@
     "data:fetch": "node --experimental-strip-types scripts/fetchSources.ts",
     "data:catalog": "node --experimental-strip-types scripts/fetchProgramCatalog.ts",
     "data:build": "node --experimental-strip-types scripts/buildProgramsFromOfficial.ts",
+    "data:learning-groups": "node --experimental-strip-types scripts/buildOfficialLearningGroups.ts",
     "data:validate": "node --experimental-strip-types scripts/validatePrograms.ts data/programs_114.json",
     "db:generate": "drizzle-kit generate"
   },
