@@ -320,6 +320,98 @@ describe("evaluateProgram", () => {
     });
   });
 
+  it("APCS 留白不當零分，有填才納入判斷並保留學測失敗原因", () => {
+    const target = program([], {
+      programName: "資訊工程學系（APCS組）",
+      requirements: [
+        {
+          subject: "英文",
+          standard: "均標",
+          minScore: 8,
+          rawText: "英文均標",
+        },
+      ],
+      additionalScreeningRules: [
+        {
+          label: "APCS 觀念題＋實作題",
+          minScore: 7,
+          rawText: "APCS 觀念題＋實作題7",
+        },
+      ],
+      apcsConceptMin: 4,
+      apcsPracticeMin: 3,
+      apcsConceptMultiplier: 5,
+      apcsPracticeMultiplier: 5,
+      dataStatus: "needs-review",
+      evaluationSupport: "unsupported",
+      reviewReasons: ["需特殊檢定：APCS"],
+      verified: false,
+    });
+
+    const blank = evaluateAcademicCriteria(target, { 英文: 8 });
+    expect(blank.academicPassed).toBe(true);
+    expect(blank.passed).toBe(true);
+    expect(blank.apcsEvaluation).toMatchObject({
+      complete: false,
+      passed: null,
+      providedParts: [],
+      missingParts: ["concept", "practice"],
+      failedRules: [],
+    });
+
+    const partial = evaluateAcademicCriteria(
+      target,
+      { 英文: 8 },
+      undefined,
+      { concept: 4 },
+    );
+    expect(partial.passed).toBe(true);
+    expect(partial.apcsEvaluation).toMatchObject({
+      complete: false,
+      passed: null,
+      providedParts: ["concept"],
+      missingParts: ["practice"],
+    });
+
+    const apcsFailed = evaluateAcademicCriteria(
+      target,
+      { 英文: 8 },
+      undefined,
+      { concept: 4, practice: 0 },
+    );
+    expect(apcsFailed.academicPassed).toBe(true);
+    expect(apcsFailed.passed).toBe(false);
+    expect(apcsFailed.apcsEvaluation).toMatchObject({
+      complete: true,
+      passed: false,
+    });
+    expect(apcsFailed.apcsEvaluation?.failedRules).toHaveLength(2);
+
+    const allPassed = evaluateAcademicCriteria(
+      target,
+      { 英文: 8 },
+      undefined,
+      { concept: 4, practice: 3 },
+    );
+    expect(allPassed.academicPassed).toBe(true);
+    expect(allPassed.passed).toBe(true);
+    expect(allPassed.apcsEvaluation).toMatchObject({
+      complete: true,
+      passed: true,
+      failedRules: [],
+    });
+
+    const gsatFailed = evaluateAcademicCriteria(
+      target,
+      { 英文: 7 },
+      undefined,
+      { concept: 4, practice: 3 },
+    );
+    expect(gsatFailed.academicPassed).toBe(false);
+    expect(gsatFailed.apcsEvaluation?.passed).toBe(true);
+    expect(gsatFailed.passed).toBe(false);
+  });
+
   it("只有特殊術科、沒有獨立學測門檻時不自行推估", () => {
     const target = program([], {
       additionalScreeningRules: [

@@ -14,7 +14,12 @@ import {
   isLearningGroupId,
   type LearningGroupId,
 } from "../lib/learningGroups";
-import { SCORE_SUBJECTS, type ScoreDraft } from "./ScoreForm";
+import {
+  SCORE_SUBJECTS,
+  type ApcsScoreDraft,
+  type ApcsScorePart,
+  type ScoreDraft,
+} from "./ScoreForm";
 
 export type SiteRoute =
   | "home"
@@ -26,6 +31,7 @@ export type GroupSelection = GroupTag[];
 
 export type AdmissionQueryState = {
   scores: ScoreDraft;
+  apcsScores: ApcsScoreDraft;
   applicantGender: ApplicantGender | "";
   groupSelection: GroupSelection;
   schoolGroupIds: SchoolGroupId[];
@@ -54,8 +60,14 @@ export const EXAMPLE_SCORES: ScoreDraft = {
   英聽: "2",
 };
 
+export const EMPTY_APCS_SCORES: ApcsScoreDraft = {
+  concept: "",
+  practice: "",
+};
+
 export const DEFAULT_QUERY_STATE: AdmissionQueryState = {
   scores: { ...EMPTY_SCORES },
+  apcsScores: { ...EMPTY_APCS_SCORES },
   applicantGender: "",
   groupSelection: [],
   schoolGroupIds: [],
@@ -64,8 +76,9 @@ export const DEFAULT_QUERY_STATE: AdmissionQueryState = {
   learningGroupIds: [],
 };
 
-const SESSION_KEY = "admission-114-query-v8";
+const SESSION_KEY = "admission-114-query-v9";
 const LEGACY_SESSION_KEYS = [
+  { key: "admission-114-query-v8", usesLegacySchoolState: false },
   { key: "admission-114-query-v7", usesLegacySchoolState: false },
   { key: "admission-114-query-v6", usesLegacySchoolState: false },
   { key: "admission-114-query-v5", usesLegacySchoolState: false },
@@ -88,6 +101,10 @@ const SCORE_PARAMS = {
   自然: "na",
   英聽: "li",
 } as const;
+const APCS_PARAMS: Record<ApcsScorePart, string> = {
+  concept: "ac",
+  practice: "ap",
+};
 const PROGRAM_SELECTION_PARAMS = {
   自然組: { mode: "naturalMode", code: "natural" },
   社會組: { mode: "socialMode", code: "social" },
@@ -102,6 +119,13 @@ function safeScore(
   if (!Number.isFinite(score)) return "";
   const maximum = subject === "英聽" ? 3 : 15;
   return String(Math.max(0, Math.min(maximum, Math.trunc(score))));
+}
+
+function safeApcsScore(value: unknown): string {
+  if (typeof value !== "string" || value.trim() === "") return "";
+  const score = Number(value);
+  if (!Number.isFinite(score)) return "";
+  return String(Math.max(0, Math.min(5, Math.trunc(score))));
 }
 
 function safeGroups(value: unknown): GroupSelection {
@@ -186,6 +210,7 @@ function normalizeStoredState(
     schoolSelection?: unknown;
   };
   const storedScores = candidate.scores ?? ({} as ScoreDraft);
+  const storedApcsScores = candidate.apcsScores ?? ({} as ApcsScoreDraft);
   const storedSchoolGroupIds = safeSchoolGroupIds(candidate.schoolGroupIds);
   const legacySchoolGroupIds = isSchoolGroupId(candidate.schoolSelection)
     ? [candidate.schoolSelection]
@@ -200,6 +225,10 @@ function normalizeStoredState(
       }),
       { ...EMPTY_SCORES },
     ),
+    apcsScores: {
+      concept: safeApcsScore(storedApcsScores.concept),
+      practice: safeApcsScore(storedApcsScores.practice),
+    },
     applicantGender: safeApplicantGender(candidate.applicantGender),
     groupSelection: safeGroups(candidate.groupSelection),
     schoolGroupIds:
@@ -245,6 +274,10 @@ export function queryStateFromParams(
       }),
       { ...EMPTY_SCORES },
     ),
+    apcsScores: {
+      concept: safeApcsScore(params.get(APCS_PARAMS.concept)),
+      practice: safeApcsScore(params.get(APCS_PARAMS.practice)),
+    },
     applicantGender: safeApplicantGender(params.get(APPLICANT_GENDER_PARAM)),
     groupSelection: safeGroups(params.getAll("group")),
     schoolGroupIds:
@@ -268,6 +301,10 @@ export function queryStateToParams(state: AdmissionQueryState): URLSearchParams 
   SCORE_SUBJECTS.forEach((subject) => {
     const value = safeScore(state.scores[subject], subject);
     if (value !== "") params.set(SCORE_PARAMS[subject], value);
+  });
+  (Object.keys(APCS_PARAMS) as ApcsScorePart[]).forEach((part) => {
+    const value = safeApcsScore(state.apcsScores[part]);
+    if (value !== "") params.set(APCS_PARAMS[part], value);
   });
   const applicantGender = safeApplicantGender(state.applicantGender);
   if (applicantGender) params.set(APPLICANT_GENDER_PARAM, applicantGender);
@@ -305,6 +342,7 @@ export function restoreQueryState(): AdmissionQueryState {
   const params = new URLSearchParams(window.location.search);
   const queryKeys = new Set([
     ...Object.values(SCORE_PARAMS),
+    ...Object.values(APCS_PARAMS),
     APPLICANT_GENDER_PARAM,
     LEARNING_GROUP_PARAM,
     "group",

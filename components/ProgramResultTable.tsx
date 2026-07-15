@@ -2,6 +2,8 @@ import { DeficitBadge } from "./DeficitBadge";
 import { SourceLink } from "./SourceLink";
 import { GSAT_114_FIVE_STANDARDS } from "@/lib/subjects";
 import type {
+  ApcsEvaluationResult,
+  ApcsScorePart,
   EvaluationResult,
   Program,
   RequirementResult,
@@ -31,6 +33,89 @@ function requiresSpecialScreening(program: Program): boolean {
     program.reviewReasons?.some((reason) =>
       reason.startsWith("需特殊檢定"),
     ) ?? false
+  );
+}
+
+const APCS_PART_LABELS: Record<ApcsScorePart, string> = {
+  concept: "觀念題",
+  practice: "實作題",
+};
+
+function needsSpecialReminder(evaluation: EvaluationResult): boolean {
+  if (evaluation.apcsEvaluation) {
+    return !evaluation.apcsEvaluation.complete;
+  }
+  return requiresSpecialScreening(evaluation.program);
+}
+
+function resultFailureLabel(evaluation: EvaluationResult): string {
+  const academicFailed = !evaluation.academicPassed;
+  const apcsFailed = (evaluation.apcsEvaluation?.failedRules.length ?? 0) > 0;
+  if (academicFailed && apcsFailed) return "學測與 APCS 未通過";
+  if (apcsFailed) return "APCS 未通過";
+  if (academicFailed && evaluation.apcsEvaluation?.complete === false) {
+    return "學測未通過・APCS 未填完整";
+  }
+  return "學測未通過";
+}
+
+function ApcsEvaluationSummary({
+  evaluation,
+}: {
+  evaluation: ApcsEvaluationResult;
+}) {
+  if (evaluation.providedParts.length === 0) return null;
+  const failed = evaluation.failedRules.length > 0;
+  const status = failed
+    ? "APCS 未通過"
+    : evaluation.complete
+      ? "APCS 已達標"
+      : "APCS 尚未填完整";
+
+  return (
+    <div
+      className={`apcs-evaluation-result ${
+        failed ? "failed" : evaluation.complete ? "passed" : "incomplete"
+      }`}
+      role="status"
+    >
+      <div className="apcs-evaluation-heading">
+        <b>{status}</b>
+        <span>
+          已填
+          {evaluation.providedParts
+            .map((part) => APCS_PART_LABELS[part])
+            .join("、")}
+        </span>
+      </div>
+      {evaluation.ruleResults.length > 0 ? (
+        <ul aria-label="APCS 判斷結果">
+          {evaluation.ruleResults.map((result) => (
+            <li
+              className={result.passed ? "passed" : "failed"}
+              key={`${result.label}-${result.minScore}`}
+            >
+              <span>{result.label}</span>
+              <span>
+                你的 <b>{result.userScore}</b>／門檻 {result.minScore}
+              </span>
+              <strong>
+                {result.passed ? "通過" : `差 ${result.deficit} 級`}
+              </strong>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {evaluation.missingParts.length > 0 ? (
+        <p>
+          尚未填
+          {evaluation.missingParts
+            .map((part) => APCS_PART_LABELS[part])
+            .join("、")}
+          ；留白不當成 0 級，也不會僅因留白判定未通過。
+        </p>
+      ) : null}
+    </div>
   );
 }
 
@@ -186,7 +271,7 @@ export function ProgramResultTable({
       {evaluations.map((evaluation, index) => (
         <article
           className={`program-card ${tone}${
-            requiresSpecialScreening(evaluation.program)
+            needsSpecialReminder(evaluation)
               ? " special-screening-result"
               : ""
           }`}
@@ -215,23 +300,29 @@ export function ProgramResultTable({
                 ) : null}
               </div>
               <div className="program-actions">
-                {requiresSpecialScreening(evaluation.program) ? (
+                {tone === "passed" && evaluation.apcsEvaluation?.complete ? (
+                  <span className="pass-badge">學測與 APCS 已達標</span>
+                ) : tone === "passed" && evaluation.apcsEvaluation ? (
                   <span className="review-badge special">
-                    {tone === "passed"
-                      ? "學測達標・須特殊檢定"
-                      : "學測未達・須特殊檢定"}
+                    學測達標・APCS 未填完整
+                  </span>
+                ) : tone === "passed" &&
+                  requiresSpecialScreening(evaluation.program) ? (
+                  <span className="review-badge special">
+                    學測達標・須特殊檢定
                   </span>
                 ) : tone === "passed" ? (
                   <span className="pass-badge">可能通過</span>
                 ) : (
-                  <DeficitBadge
-                    points={evaluation.nearestBoost[0]?.totalPoints ?? 0}
-                  />
+                  <span className="review-badge incomplete">
+                    {resultFailureLabel(evaluation)}
+                  </span>
                 )}
-                {requiresSpecialScreening(evaluation.program) &&
-                tone === "near" ? (
+                {tone === "near" &&
+                !evaluation.academicPassed &&
+                evaluation.nearestBoost[0] ? (
                   <DeficitBadge
-                    points={evaluation.nearestBoost[0]?.totalPoints ?? 0}
+                    points={evaluation.nearestBoost[0].totalPoints}
                   />
                 ) : null}
                 <SourceLink
@@ -265,18 +356,28 @@ export function ProgramResultTable({
               ))}
             </ul>
 
-            {tone === "near" ? <BoostPlan evaluation={evaluation} /> : null}
+            {tone === "near" && !evaluation.academicPassed ? (
+              <BoostPlan evaluation={evaluation} />
+            ) : null}
 
-            {requiresSpecialScreening(evaluation.program) ? (
+            {evaluation.apcsEvaluation ? (
+              <ApcsEvaluationSummary evaluation={evaluation.apcsEvaluation} />
+            ) : null}
+
+            {needsSpecialReminder(evaluation) ? (
               <div className="special-result-warning" role="note">
                 <div>
                   <b>
-                    {tone === "passed"
-                      ? "學測門檻已達，但尚未代表完整通過。"
-                      : "此處僅計算可確認的學測門檻。"}
+                    {evaluation.apcsEvaluation
+                      ? "APCS 尚未填完整；留白不會被當成 0 級或直接淘汰。"
+                      : tone === "passed"
+                        ? "學測門檻已達，但尚未代表完整通過。"
+                        : "此處僅計算可確認的學測門檻。"}
                   </b>
                   <p>
-                    本校系另須特殊檢定／證照；請務必使用卡片右上角「官方原表」連結確認資格、採計方式與最低標準。
+                    {evaluation.apcsEvaluation
+                      ? "目前只依已填的 APCS 與學測門檻判斷；補齊觀念題、實作題後，系統會將完整 APCS 條件納入結果。"
+                      : "本校系另須特殊檢定／證照；請務必使用卡片右上角「官方原表」連結確認資格、採計方式與最低標準。"}
                   </p>
                   <RecordedSpecialScreeningDetails
                     program={evaluation.program}

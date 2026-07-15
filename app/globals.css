@@ -975,6 +975,35 @@ input:focus-visible {
   gap: 13px;
 }
 
+.apcs-score-section {
+  min-width: 0;
+  margin: 20px 0 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+  padding: 17px 0 0;
+}
+
+.apcs-score-section legend {
+  padding: 0;
+  color: var(--navy-deep);
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.apcs-score-section > p {
+  margin: 6px 0 13px;
+  color: #738086;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.apcs-score-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
 .score-field {
   display: grid;
   gap: 7px;
@@ -2026,6 +2055,74 @@ input:focus-visible {
   padding-top: 8px;
 }
 
+.apcs-evaluation-result {
+  margin-top: 15px;
+  border: 1px solid #d7b65e;
+  border-radius: 14px;
+  padding: 13px 14px;
+  background: #fff8dc;
+  color: #624a16;
+  font-size: 11px;
+}
+
+.apcs-evaluation-result.passed {
+  border-color: #9bc9bc;
+  background: #edf8f4;
+  color: #155c50;
+}
+
+.apcs-evaluation-result.failed {
+  border-color: #e0a18f;
+  background: #fff0eb;
+  color: #8d3825;
+}
+
+.apcs-evaluation-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.apcs-evaluation-heading b {
+  font-size: 13px;
+}
+
+.apcs-evaluation-heading span {
+  color: inherit;
+  opacity: 0.82;
+}
+
+.apcs-evaluation-result ul {
+  display: grid;
+  gap: 7px;
+  margin: 11px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.apcs-evaluation-result li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 10px;
+  border-radius: 9px;
+  padding: 8px 9px;
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.apcs-evaluation-result li > span:first-child {
+  font-weight: 800;
+}
+
+.apcs-evaluation-result li strong {
+  color: inherit;
+}
+
+.apcs-evaluation-result > p {
+  margin: 10px 0 0;
+  line-height: 1.6;
+}
+
 .recorded-special-rules ul,
 .recorded-special-rules ol {
   margin: 5px 0 0;
@@ -2729,6 +2826,11 @@ footer span {
 
   .score-card .score-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .apcs-evaluation-result li {
+    grid-template-columns: 1fr;
+    gap: 3px;
   }
 
   .choice-grid {

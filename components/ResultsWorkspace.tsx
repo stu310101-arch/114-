@@ -9,7 +9,12 @@ import {
   supportsProgramEvaluation,
 } from "@/lib/admission";
 import { filterPrograms, type ProgramFilterCriteria } from "@/lib/filters";
-import type { EvaluationResult, Program, UserScores } from "@/lib/types";
+import type {
+  ApcsScores,
+  EvaluationResult,
+  Program,
+  UserScores,
+} from "@/lib/types";
 import { PageNavigation, RouteLink, SubpageHeader } from "./PageNavigation";
 import { NavigationLoadingScreen } from "./NavigationLoadingProvider";
 import {
@@ -81,6 +86,17 @@ function toUserScores(query: AdmissionQueryState): UserScores {
   }, {});
 }
 
+function toApcsScores(query: AdmissionQueryState): ApcsScores {
+  const scores: ApcsScores = {};
+  if (query.apcsScores.concept.trim() !== "") {
+    scores.concept = Number(query.apcsScores.concept);
+  }
+  if (query.apcsScores.practice.trim() !== "") {
+    scores.practice = Number(query.apcsScores.practice);
+  }
+  return scores;
+}
+
 function schoolPriority(schoolId: string): number {
   const index = SCHOOL_GROUPS.findIndex((group) =>
     group.schoolIds.includes(schoolId),
@@ -101,8 +117,18 @@ function comparePrograms(
 }
 
 function compareNear(left: EvaluationResult, right: EvaluationResult): number {
-  const leftBoost = left.nearestBoost[0]?.totalPoints ?? Number.POSITIVE_INFINITY;
-  const rightBoost = right.nearestBoost[0]?.totalPoints ?? Number.POSITIVE_INFINITY;
+  const leftBoost = left.academicPassed
+    ? (left.apcsEvaluation?.failedRules.reduce(
+        (total, result) => total + result.deficit,
+        0,
+      ) ?? Number.POSITIVE_INFINITY)
+    : (left.nearestBoost[0]?.totalPoints ?? Number.POSITIVE_INFINITY);
+  const rightBoost = right.academicPassed
+    ? (right.apcsEvaluation?.failedRules.reduce(
+        (total, result) => total + result.deficit,
+        0,
+      ) ?? Number.POSITIVE_INFINITY)
+    : (right.nearestBoost[0]?.totalPoints ?? Number.POSITIVE_INFINITY);
   return leftBoost - rightBoost || comparePrograms(left, right);
 }
 
@@ -155,6 +181,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
     };
     const matched = filterPrograms(programs, criteria);
     const userScores = toUserScores(query);
+    const apcsScores = toApcsScores(query);
     const applicantGender = query.applicantGender || undefined;
     const supported = matched.filter((program) =>
       supportsProgramEvaluation(program, applicantGender),
@@ -165,7 +192,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
       )
       .sort(compareProgramRecords);
     const evaluated = supported.map((program) =>
-      evaluateProgram(program, userScores, applicantGender),
+      evaluateProgram(program, userScores, applicantGender, apcsScores),
     );
     const passed = evaluated.filter((result) => result.passed).sort(comparePrograms);
     const near = evaluated.filter((result) => !result.passed).sort(compareNear);
@@ -179,6 +206,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
                 program,
                 userScores,
                 applicantGender,
+                apcsScores,
               ),
             }
           : {}),
@@ -216,6 +244,11 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
     comparePrograms,
   );
   const nearResults = [...evaluation.near, ...specialNear].sort(compareNear);
+  const pendingSpecialCount = passedResults.filter(
+    (result) =>
+      requiresSpecialScreening(result.program) &&
+      (!result.apcsEvaluation || !result.apcsEvaluation.complete),
+  ).length;
   const unresolvedReviews = evaluation.needsOfficialReview.filter(
     (item) => !item.academicEvaluation,
   );
@@ -253,9 +286,9 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
             <p>
               符合條件 {evaluation.matched.length} 筆；已完成學測門檻試算{" "}
               {evaluation.supported.length + academicReviewEvaluations.length}
-              筆，其中學測可能通過 {passedResults.length} 筆
-              {specialPassed.length > 0
-                ? `（${specialPassed.length} 筆另須特殊檢定／證照）`
+              筆，其中目前可能通過 {passedResults.length} 筆
+              {pendingSpecialCount > 0
+                ? `（${pendingSpecialCount} 筆尚待補填 APCS 或確認其他特殊檢定）`
                 : ""}
               。另有 {unresolvedReviews.length} 筆缺少可獨立試算的學測門檻。
             </p>
@@ -281,8 +314,22 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
             <p>
               你目前選取的科系尚未有任何一筆通過。
               最接近的是 <b>{closest.program.schoolName}</b>
-              {closest.program.programName}，最少還需 +
-              {closest.nearestBoost[0]?.totalPoints ?? "—"} 級分。
+              {closest.program.programName}
+              {closest.academicPassed &&
+              closest.apcsEvaluation?.failedRules.length ? (
+                <>
+                  ，學測已達標，但 APCS
+                  {closest.apcsEvaluation.failedRules
+                    .map((result) => result.label.replace(/^APCS\s*/u, ""))
+                    .join("、")}
+                  未通過。
+                </>
+              ) : (
+                <>
+                  ，學測最少還需 +
+                  {closest.nearestBoost[0]?.totalPoints ?? "—"} 級分。
+                </>
+              )}
             </p>
           </div>
         ) : null}
@@ -294,7 +341,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
               <div>
                 <h2>可能通過的一階校系</h2>
                 <p>
-                  一般校系所有倍率篩選關卡皆達到 114 學年度最低級分；黃色校系僅代表可確認的學測門檻已達標，仍須通過特殊檢定／證照，請點卡片內官方連結確認。
+                  一般校系所有倍率篩選關卡皆達到 114 學年度最低級分；黃色校系代表 APCS 尚未填完整或仍有其他特殊檢定。APCS 留白只提醒，不會當成 0 分淘汰。
                 </p>
               </div>
             </div>

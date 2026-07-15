@@ -14,10 +14,14 @@ export const SCORE_SUBJECTS = [
 
 export type ScoreSubject = (typeof SCORE_SUBJECTS)[number];
 export type ScoreDraft = Record<ScoreSubject, string>;
+export type ApcsScorePart = "concept" | "practice";
+export type ApcsScoreDraft = Record<ApcsScorePart, string>;
 
 type ScoreFormProps = {
+  apcsScores: ApcsScoreDraft;
   applicantGender: ApplicantGender | "";
   scores: ScoreDraft;
+  onApcsChange: (part: ApcsScorePart, value: string) => void;
   onApplicantGenderChange: (value: ApplicantGender | "") => void;
   onChange: (subject: ScoreSubject, value: string) => void;
   onUseExample: () => void;
@@ -25,8 +29,10 @@ type ScoreFormProps = {
 };
 
 export function ScoreForm({
+  apcsScores,
   applicantGender,
   scores,
+  onApcsChange,
   onApplicantGenderChange,
   onChange,
   onUseExample,
@@ -93,6 +99,39 @@ export function ScoreForm({
           </label>
         ))}
       </div>
+
+      <fieldset className="apcs-score-section">
+        <legend>APCS 成績（選填）</legend>
+        <p>
+          觀念題與實作題皆為 0–5 級；留白不會當成 0 級或直接判定未通過，結果頁會以黃色提醒。
+        </p>
+        <div className="apcs-score-grid">
+          {([
+            ["concept", "APCS 觀念題"],
+            ["practice", "APCS 實作題"],
+          ] as const).map(([part, label]) => (
+            <label className="score-field" key={part}>
+              <span>{label}</span>
+              <span className="score-input-wrap">
+                <input
+                  aria-label={`${label}級分`}
+                  data-testid={`apcs-${part}`}
+                  inputMode="numeric"
+                  max={5}
+                  min={0}
+                  name={`apcs-${part}`}
+                  onChange={(event) => onApcsChange(part, event.target.value)}
+                  placeholder="選填"
+                  step={1}
+                  type="number"
+                  value={apcsScores[part]}
+                />
+                <span aria-hidden="true">級</span>
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
       <label className="applicant-gender-field">
         <span>官方招生性別組別</span>

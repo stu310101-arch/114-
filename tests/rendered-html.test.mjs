@@ -79,6 +79,23 @@ test("renders the official five-standard reference and navigation loading UI", a
   assert.doesNotMatch(queryHtml, /class="submit-index">03/);
 });
 
+test("keeps APCS optional while exposing separate APCS and GSAT outcomes", async () => {
+  const [scoreForm, resultTable] = await Promise.all([
+    readFile(new URL("../components/ScoreForm.tsx", import.meta.url), "utf8"),
+    readFile(
+      new URL("../components/ProgramResultTable.tsx", import.meta.url),
+      "utf8",
+    ),
+  ]);
+
+  assert.match(scoreForm, /APCS 成績（選填）/);
+  assert.match(scoreForm, /留白不會當成 0 級或直接判定未通過/);
+  assert.match(resultTable, /APCS 尚未填完整；留白不會被當成 0 級或直接淘汰/);
+  assert.match(resultTable, /學測與 APCS 未通過/);
+  assert.match(resultTable, /APCS 未通過/);
+  assert.match(resultTable, /學測未通過/);
+});
+
 test("keeps the homepage header static and removes starter preview files", async () => {
   const [css, page, layout, packageJson] = await Promise.all([
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),

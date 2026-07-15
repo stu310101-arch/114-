@@ -1,5 +1,10 @@
 import {
+  APCS_SCORE_PARTS,
   SUBJECTS,
+  type ApcsEvaluationResult,
+  type ApcsRuleResult,
+  type ApcsScorePart,
+  type ApcsScores,
   type ApplicantGender,
   type EvaluationResult,
   type Program,
@@ -19,6 +24,7 @@ import {
 } from "./subjects";
 
 const MAX_BOOST_PLANS = 5;
+const APCS_MAX_SCORE = 5;
 const ACADEMIC_SUBJECT_ALIASES: Readonly<Record<string, Subject>> = {
   國文: "國文",
   英文: "英文",
@@ -115,6 +121,127 @@ function academicSubjectsFromLabel(label: string): Subject[] | undefined {
   const subjects = tokens.map((token) => ACADEMIC_SUBJECT_ALIASES[token]);
   if (subjects.some((subject) => subject === undefined)) return undefined;
   return [...new Set(subjects as Subject[])];
+}
+
+function hasApcsScore(scores: ApcsScores, part: ApcsScorePart): boolean {
+  return typeof scores[part] === "number";
+}
+
+function assertValidApcsScores(scores: ApcsScores): void {
+  APCS_SCORE_PARTS.forEach((part) => {
+    const score = scores[part];
+    if (score === undefined) return;
+    if (
+      !Number.isFinite(score) ||
+      !Number.isInteger(score) ||
+      score < 0 ||
+      score > APCS_MAX_SCORE
+    ) {
+      throw new RangeError("APCS 成績必須是 0 到 5 的整數");
+    }
+  });
+}
+
+function apcsPartsFromLabel(label: string): ApcsScorePart[] | undefined {
+  if (!/APCS/iu.test(label)) return undefined;
+  const parts: ApcsScorePart[] = [];
+  if (label.includes("觀念題")) parts.push("concept");
+  if (label.includes("實作題")) parts.push("practice");
+  return parts.length > 0 ? parts : undefined;
+}
+
+export function evaluateApcsCriteria(
+  program: Program,
+  scores: ApcsScores = {},
+): ApcsEvaluationResult | undefined {
+  const hasApcsRequirements = Object.prototype.hasOwnProperty.call(
+    program,
+    "apcsConceptMin",
+  );
+  if (!hasApcsRequirements) return undefined;
+
+  assertValidApcsScores(scores);
+  const ruleSpecs: Array<{
+    label: string;
+    parts: ApcsScorePart[];
+    minScore: number;
+  }> = [];
+
+  if (typeof program.apcsConceptMin === "number") {
+    ruleSpecs.push({
+      label: "APCS 觀念題個別檢定",
+      parts: ["concept"],
+      minScore: program.apcsConceptMin,
+    });
+  }
+  if (typeof program.apcsPracticeMin === "number") {
+    ruleSpecs.push({
+      label: "APCS 實作題個別檢定",
+      parts: ["practice"],
+      minScore: program.apcsPracticeMin,
+    });
+  }
+  (program.additionalScreeningRules ?? []).forEach((rule) => {
+    if (rule.minScore === null) return;
+    const parts = apcsPartsFromLabel(rule.label);
+    if (!parts) return;
+    ruleSpecs.push({ label: rule.label, parts, minScore: rule.minScore });
+  });
+
+  const requiredParts = new Set(
+    ruleSpecs.flatMap((rule) => rule.parts),
+  );
+  const providedParts = APCS_SCORE_PARTS.filter((part) =>
+    hasApcsScore(scores, part),
+  );
+  const missingParts = APCS_SCORE_PARTS.filter(
+    (part) => requiredParts.has(part) && !hasApcsScore(scores, part),
+  );
+  const ruleResults = ruleSpecs.flatMap<ApcsRuleResult>((rule) => {
+    if (rule.parts.some((part) => !hasApcsScore(scores, part))) return [];
+    const userScore = rule.parts.reduce(
+      (total, part) => total + (scores[part] as number),
+      0,
+    );
+    const deficit = Math.max(0, rule.minScore - userScore);
+    return [
+      {
+        ...rule,
+        userScore,
+        deficit,
+        passed: deficit === 0,
+      },
+    ];
+  });
+  const failedRules = ruleResults.filter((result) => !result.passed);
+  const complete = missingParts.length === 0;
+
+  return {
+    providedParts,
+    missingParts,
+    complete,
+    passed: failedRules.length > 0 ? false : complete ? true : null,
+    ruleResults,
+    failedRules,
+  };
+}
+
+function includeApcsEvaluation(
+  evaluation: EvaluationResult,
+  apcsScores: ApcsScores,
+): EvaluationResult {
+  const apcsEvaluation = evaluateApcsCriteria(
+    evaluation.program,
+    apcsScores,
+  );
+  if (!apcsEvaluation) return evaluation;
+
+  return {
+    ...evaluation,
+    passed:
+      evaluation.academicPassed && apcsEvaluation.failedRules.length === 0,
+    apcsEvaluation,
+  };
 }
 
 export function academicScreeningRulesFor(
@@ -425,6 +552,8 @@ function evaluateWithRules(
 
   return {
     passed: failedRules.length === 0 && failedRequirements.length === 0,
+    academicPassed:
+      failedRules.length === 0 && failedRequirements.length === 0,
     program,
     ...(screeningVariant ? { screeningVariant } : {}),
     ruleResults,
@@ -450,6 +579,7 @@ export function evaluateProgram(
   program: Program,
   scores: UserScores,
   applicantGender?: ApplicantGender,
+  apcsScores: ApcsScores = {},
 ): EvaluationResult {
   const screeningVariant = screeningVariantFor(program, applicantGender);
   if ((program.screeningVariants?.length ?? 0) > 0 && !screeningVariant) {
@@ -461,11 +591,14 @@ export function evaluateProgram(
     );
   }
 
-  return evaluateWithRules(
-    program,
-    scores,
-    screeningVariant?.screeningRules ?? program.screeningRules,
-    screeningVariant,
+  return includeApcsEvaluation(
+    evaluateWithRules(
+      program,
+      scores,
+      screeningVariant?.screeningRules ?? program.screeningRules,
+      screeningVariant,
+    ),
+    apcsScores,
   );
 }
 
@@ -473,6 +606,7 @@ export function evaluateAcademicCriteria(
   program: Program,
   scores: UserScores,
   applicantGender?: ApplicantGender,
+  apcsScores: ApcsScores = {},
 ): EvaluationResult {
   const screeningVariant = screeningVariantFor(program, applicantGender);
   if ((program.screeningVariants?.length ?? 0) > 0 && !screeningVariant) {
@@ -482,11 +616,14 @@ export function evaluateAcademicCriteria(
     throw new Error(`校系 ${program.programCode} 沒有可獨立試算的學測門檻`);
   }
 
-  return evaluateWithRules(
-    program,
-    scores,
-    academicScreeningRulesFor(program, applicantGender),
-    screeningVariant,
+  return includeApcsEvaluation(
+    evaluateWithRules(
+      program,
+      scores,
+      academicScreeningRulesFor(program, applicantGender),
+      screeningVariant,
+    ),
+    apcsScores,
   );
 }
 

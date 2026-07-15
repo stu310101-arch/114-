@@ -141,6 +141,32 @@ export type Program = {
 
 export type UserScores = Partial<Record<Subject, number>>;
 
+export const APCS_SCORE_PARTS = ["concept", "practice"] as const;
+
+export type ApcsScorePart = (typeof APCS_SCORE_PARTS)[number];
+
+/** APCS levels explicitly entered by the user. Missing means unanswered, not zero. */
+export type ApcsScores = Partial<Record<ApcsScorePart, number>>;
+
+export type ApcsRuleResult = {
+  label: string;
+  parts: ApcsScorePart[];
+  userScore: number;
+  minScore: number;
+  deficit: number;
+  passed: boolean;
+};
+
+export type ApcsEvaluationResult = {
+  providedParts: ApcsScorePart[];
+  missingParts: ApcsScorePart[];
+  complete: boolean;
+  /** `null` means the entered APCS data is not yet complete enough to decide. */
+  passed: boolean | null;
+  ruleResults: ApcsRuleResult[];
+  failedRules: ApcsRuleResult[];
+};
+
 export type RuleResult = {
   rule: ScreeningRule;
   userScore: number;
@@ -172,6 +198,8 @@ export type SubjectBoost = {
 
 export type EvaluationResult = {
   passed: boolean;
+  /** Result of the GSAT requirements and screening rules before optional APCS. */
+  academicPassed: boolean;
   program: Program;
   screeningVariant?: ProgramScreeningVariant;
   ruleResults: RuleResult[];
@@ -184,4 +212,6 @@ export type EvaluationResult = {
   missingSubjects: Subject[];
   /** Up to five tied, minimum-total-points boost plans. */
   nearestBoost: SubjectBoost[];
+  /** Present only for programs with official APCS requirements. */
+  apcsEvaluation?: ApcsEvaluationResult;
 };

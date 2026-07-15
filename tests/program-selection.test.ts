@@ -14,7 +14,11 @@ import {
   toggleProgramSelection,
 } from "../lib/programSelection";
 import { filterPrograms } from "../lib/filters";
-import { supportsProgramEvaluation } from "../lib/admission";
+import {
+  evaluateAcademicCriteria,
+  supportsAcademicPartialEvaluation,
+  supportsProgramEvaluation,
+} from "../lib/admission";
 import type { Program } from "../lib/types";
 import {
   DEFAULT_QUERY_STATE,
@@ -434,6 +438,42 @@ describe("114 官方校系選取資料", () => {
         expect(program?.apcsPracticeMin).toBe(practiceMin);
       },
     );
+  });
+
+  it("60 筆 APCS 校系皆可用選填成績判斷，留白不會被當成零分", () => {
+    const apcsPrograms = programs.filter((program) =>
+      Object.prototype.hasOwnProperty.call(program, "apcsConceptMin"),
+    );
+    const fullGsatScores = {
+      國文: 15,
+      英文: 15,
+      數A: 15,
+      數B: 15,
+      社會: 15,
+      自然: 15,
+      英聽: 3,
+    } as const;
+
+    expect(apcsPrograms).toHaveLength(60);
+    apcsPrograms.forEach((program) => {
+      expect(supportsAcademicPartialEvaluation(program)).toBe(true);
+
+      const blank = evaluateAcademicCriteria(program, fullGsatScores);
+      expect(blank.academicPassed).toBe(true);
+      expect(blank.passed).toBe(true);
+      expect(blank.apcsEvaluation?.complete).toBe(false);
+      expect(blank.apcsEvaluation?.failedRules).toEqual([]);
+
+      const entered = evaluateAcademicCriteria(
+        program,
+        fullGsatScores,
+        undefined,
+        { concept: 5, practice: 5 },
+      );
+      expect(entered.apcsEvaluation?.complete).toBe(true);
+      expect(entered.apcsEvaluation?.passed).toBe(true);
+      expect(entered.passed).toBe(true);
+    });
   });
 
   it("官方最低分全為 -- 的校系使用 dash 狀態，不再描述為資料缺失", () => {

@@ -33,6 +33,36 @@ function restoreFromSession(key: string, value: unknown) {
 }
 
 describe("school query state", () => {
+  it("APCS 觀念題與實作題可選填、可寫入網址，留白不會變成零分", () => {
+    const params = queryStateToParams({
+      ...DEFAULT_QUERY_STATE,
+      apcsScores: { concept: "4", practice: "3" },
+    });
+
+    expect(params.get("ac")).toBe("4");
+    expect(params.get("ap")).toBe("3");
+    expect(queryStateFromParams(params).apcsScores).toEqual({
+      concept: "4",
+      practice: "3",
+    });
+    expect(queryStateFromParams(new URLSearchParams()).apcsScores).toEqual({
+      concept: "",
+      practice: "",
+    });
+    expect(
+      queryStateFromParams(new URLSearchParams("ac=9&ap=-2")).apcsScores,
+    ).toEqual({ concept: "5", practice: "0" });
+  });
+
+  it("v8 session 未保存 APCS 時會安全升級為留白", () => {
+    const restored = restoreFromSession("admission-114-query-v8", {
+      ...DEFAULT_QUERY_STATE,
+      apcsScores: undefined,
+    });
+
+    expect(restored.apcsScores).toEqual({ concept: "", practice: "" });
+  });
+
   it("自然組與社會組可複選並完整寫入網址", () => {
     const params = queryStateToParams({
       ...DEFAULT_QUERY_STATE,

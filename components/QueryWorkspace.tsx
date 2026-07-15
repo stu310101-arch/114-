@@ -15,9 +15,14 @@ import {
   NavigationLoadingScreen,
   useNavigationLoading,
 } from "./NavigationLoadingProvider";
-import { ScoreForm, type ScoreSubject } from "./ScoreForm";
+import {
+  ScoreForm,
+  type ApcsScorePart,
+  type ScoreSubject,
+} from "./ScoreForm";
 import { PageNavigation, SubpageHeader } from "./PageNavigation";
 import {
+  EMPTY_APCS_SCORES,
   EMPTY_SCORES,
   EXAMPLE_SCORES,
   queryStateToParams,
@@ -118,6 +123,24 @@ function HydratedQueryWorkspace({
     }));
   }
 
+  function updateApcsScore(part: ApcsScorePart, value: string) {
+    if (value === "") {
+      setQuery((current) => ({
+        ...current,
+        apcsScores: { ...current.apcsScores, [part]: "" },
+      }));
+      return;
+    }
+
+    const numericValue = Number(value);
+    if (!Number.isFinite(numericValue)) return;
+    const bounded = Math.max(0, Math.min(5, Math.trunc(numericValue)));
+    setQuery((current) => ({
+      ...current,
+      apcsScores: { ...current.apcsScores, [part]: String(bounded) },
+    }));
+  }
+
   function update<K extends keyof AdmissionQueryState>(
     key: K,
     value: AdmissionQueryState[K],
@@ -160,18 +183,34 @@ function HydratedQueryWorkspace({
       <form className="query-section standalone-query" onSubmit={showResults}>
         <div className="query-intro">
           <h1>先從你的成績開始</h1>
-          <p>填入成績並選擇學校、科系；未填的科目會以 0 級分計算。</p>
+          <p>
+            學測未填科目以 0 級分計算；APCS 為選填，留白只提醒、不判定為 0 分。
+          </p>
         </div>
 
         <div className="query-grid">
           <ScoreForm
+            apcsScores={query.apcsScores}
             applicantGender={query.applicantGender}
             onApplicantGenderChange={(value) =>
               update("applicantGender", value)
             }
             onChange={updateScore}
-            onClear={() => update("scores", { ...EMPTY_SCORES })}
-            onUseExample={() => update("scores", { ...EXAMPLE_SCORES })}
+            onApcsChange={updateApcsScore}
+            onClear={() =>
+              setQuery((current) => ({
+                ...current,
+                scores: { ...EMPTY_SCORES },
+                apcsScores: { ...EMPTY_APCS_SCORES },
+              }))
+            }
+            onUseExample={() =>
+              setQuery((current) => ({
+                ...current,
+                scores: { ...EXAMPLE_SCORES },
+                apcsScores: { ...EMPTY_APCS_SCORES },
+              }))
+            }
             scores={query.scores}
           />
           <FilterPanel
