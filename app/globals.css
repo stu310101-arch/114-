@@ -70,50 +70,6 @@ select:focus-visible {
   outline-offset: 3px;
 }
 
-.historical-data-banner {
-  position: sticky;
-  z-index: 900;
-  top: 0;
-  display: flex;
-  min-height: 54px;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  border-bottom: 1px solid #d4a747;
-  padding: 8px 20px;
-  background: #fff2c8;
-  box-shadow: 0 5px 18px rgba(83, 59, 11, 0.1);
-  color: #533b0b;
-}
-
-.historical-data-banner > span {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: #d4a747;
-  color: #172b31;
-  font-size: 11px;
-  font-weight: 950;
-}
-
-.historical-data-banner p {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin: 0;
-}
-
-.historical-data-banner b {
-  font-size: 12px;
-}
-
-.historical-data-banner small {
-  font-size: 10px;
-}
-
 .sr-only,
 .visually-hidden {
   position: absolute !important;
@@ -1863,7 +1819,7 @@ select:focus-visible {
 .result-explorer {
   position: sticky;
   z-index: 10;
-  top: 66px;
+  top: 0;
   margin-top: 28px;
   border: 1px solid var(--line);
   border-radius: 20px;
@@ -2984,23 +2940,6 @@ footer span {
 }
 
 @media (max-width: 720px) {
-  .historical-data-banner {
-    min-height: 62px;
-    justify-content: flex-start;
-    gap: 9px;
-    padding: 7px 14px;
-  }
-
-  .historical-data-banner p {
-    display: grid;
-    gap: 0;
-    line-height: 1.4;
-  }
-
-  .historical-data-banner small {
-    font-size: 9px;
-  }
-
   .learning-group-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -3156,7 +3095,7 @@ footer span {
   .program-search-field {
     position: sticky;
     z-index: 6;
-    top: 62px;
+    top: 0;
     margin: 0 -4px;
     padding: 8px 4px 5px;
     background: var(--surface);
@@ -3206,7 +3145,7 @@ footer span {
   }
 
   .result-explorer {
-    top: 62px;
+    top: 0;
     margin-inline: -4px;
     padding: 9px;
   }

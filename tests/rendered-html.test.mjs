@@ -36,8 +36,8 @@ test("server-renders the finished homepage and complete data status", async () =
   assert.match(html, />2168<\/strong><span>筆官方資料總數/);
   assert.match(html, />2115<\/strong><span>筆可做學測試算/);
   assert.match(html, />53<\/strong><span>筆無法獨立試算/);
-  assert.match(html, /這是 114 歷史資料回測/);
-  assert.match(html, /不是 115／下一年度落點預測/);
+  assert.doesNotMatch(html, /這是 114 歷史資料回測/);
+  assert.doesNotMatch(html, /不是 115／下一年度落點預測/);
   assert.match(html, /href="\/how-it-works"/);
   assert.match(html, /href="\/query"/);
   assert.match(html, /官方總表/);
