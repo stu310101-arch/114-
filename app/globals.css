@@ -1505,6 +1505,7 @@ select:focus-visible {
 }
 
 .bulk-selection-confirm,
+.filter-method-confirm,
 .filter-change-notice {
   display: flex;
   align-items: center;
@@ -1521,17 +1522,23 @@ select:focus-visible {
   margin-top: 12px;
 }
 
+.filter-method-confirm {
+  margin-top: 12px;
+}
+
 .filter-change-notice {
   margin: 0 0 18px;
 }
 
 .bulk-selection-confirm p,
+.filter-method-confirm p,
 .filter-change-notice p {
   margin: 0;
   font-size: 11px;
 }
 
 .bulk-selection-confirm > div,
+.filter-method-confirm > div,
 .filter-change-notice > div {
   display: flex;
   flex: none;
@@ -1539,6 +1546,7 @@ select:focus-visible {
 }
 
 .bulk-selection-confirm button,
+.filter-method-confirm button,
 .filter-change-notice button {
   min-height: 34px;
   border: 1px solid #9d7625;
@@ -1552,6 +1560,7 @@ select:focus-visible {
 }
 
 .bulk-selection-confirm .confirm,
+.filter-method-confirm .confirm,
 .filter-change-notice button:first-child {
   background: #6d4d0d;
   color: white;
@@ -3077,17 +3086,20 @@ footer span {
   }
 
   .bulk-selection-confirm,
+  .filter-method-confirm,
   .filter-change-notice {
     align-items: stretch;
     flex-direction: column;
   }
 
   .bulk-selection-confirm > div,
+  .filter-method-confirm > div,
   .filter-change-notice > div {
     width: 100%;
   }
 
   .bulk-selection-confirm button,
+  .filter-method-confirm button,
   .filter-change-notice button {
     flex: 1;
   }
@@ -3151,14 +3163,27 @@ footer span {
   }
 
   .result-tabs {
-    display: flex;
-    overflow-x: auto;
-    padding-bottom: 2px;
-    scrollbar-width: thin;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 5px;
   }
 
   .result-tabs button {
-    flex: 0 0 142px;
+    display: grid;
+    min-width: 0;
+    min-height: 54px;
+    place-content: center;
+    gap: 2px;
+    padding: 5px 2px;
+    font-size: 9px;
+    line-height: 1.2;
+    white-space: normal;
+  }
+
+  .result-tabs b {
+    margin-left: 0;
+    font-size: 13px;
+    line-height: 1;
   }
 
   .result-tools {
@@ -3267,10 +3292,6 @@ footer span {
     align-items: stretch;
     flex-direction: column-reverse;
     padding-bottom: 34px;
-  }
-
-  .query-page .page-step-navigation .page-next {
-    display: none;
   }
 
   .page-previous,

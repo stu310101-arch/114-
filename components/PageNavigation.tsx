@@ -86,6 +86,7 @@ type PageNavigationProps = {
   previousLabel: string;
   previousRoute: SiteRoute;
   previousSearch?: string;
+  showNext?: boolean;
 };
 
 export function PageNavigation({
@@ -96,6 +97,7 @@ export function PageNavigation({
   previousLabel,
   previousRoute,
   previousSearch,
+  showNext = true,
 }: PageNavigationProps) {
   return (
     <nav className="page-step-navigation" aria-label="頁面導覽">
@@ -106,7 +108,7 @@ export function PageNavigation({
       >
         <span aria-hidden="true">←</span> {previousLabel}
       </RouteLink>
-      {nextDisabled ? (
+      {!showNext ? null : nextDisabled ? (
         <span className="page-next disabled" aria-disabled="true">
           {nextLabel} <span aria-hidden="true">→</span>
         </span>

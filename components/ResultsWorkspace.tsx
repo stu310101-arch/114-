@@ -34,7 +34,9 @@ type ResultsWorkspaceProps = {
   programs: Program[];
 };
 
-const RESULT_PAGE_SIZE = 20;
+const RESULT_DESKTOP_PAGE_SIZE = 20;
+const RESULT_MOBILE_PAGE_SIZE = 10;
+const RESULT_MOBILE_MEDIA_QUERY = "(max-width: 720px)";
 type ResultTab = "passed" | "near" | "review";
 type PassedResultScope = "all" | "confirmed" | "pending";
 type ResultSort = "default" | "school" | "department";
@@ -43,6 +45,7 @@ type ResultPaginationProps = {
   currentPage: number;
   label: string;
   onPageChange: (page: number) => void;
+  pageSize: number;
   totalItems: number;
 };
 
@@ -50,13 +53,14 @@ function ResultPagination({
   currentPage,
   label,
   onPageChange,
+  pageSize,
   totalItems,
 }: ResultPaginationProps) {
-  const totalPages = Math.ceil(totalItems / RESULT_PAGE_SIZE);
+  const totalPages = Math.ceil(totalItems / pageSize);
   if (totalPages <= 1) return null;
 
-  const start = currentPage * RESULT_PAGE_SIZE + 1;
-  const end = Math.min(totalItems, start + RESULT_PAGE_SIZE - 1);
+  const start = currentPage * pageSize + 1;
+  const end = Math.min(totalItems, start + pageSize - 1);
 
   return (
     <nav className="result-pagination" aria-label={`${label}分頁`}>
@@ -211,6 +215,25 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
   const [passedScope, setPassedScope] =
     useState<PassedResultScope>("all");
   const [resultSort, setResultSort] = useState<ResultSort>("default");
+  const [resultPageSize, setResultPageSize] = useState(
+    RESULT_DESKTOP_PAGE_SIZE,
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(RESULT_MOBILE_MEDIA_QUERY);
+    const updatePageSize = () => {
+      setResultPageSize(
+        mediaQuery.matches
+          ? RESULT_MOBILE_PAGE_SIZE
+          : RESULT_DESKTOP_PAGE_SIZE,
+      );
+      setResultPage(0);
+    };
+
+    updatePageSize();
+    mediaQuery.addEventListener("change", updatePageSize);
+    return () => mediaQuery.removeEventListener("change", updatePageSize);
+  }, []);
 
   useEffect(() => {
     saveQueryState(query);
@@ -344,7 +367,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
           ) || compareProgramRecords(left.program, right.program)
         : compareProgramRecords(left.program, right.program),
   );
-  const resultStart = resultPage * RESULT_PAGE_SIZE;
+  const resultStart = resultPage * resultPageSize;
 
   function changePage(page: number, blockId: string) {
     setResultPage(page);
@@ -431,7 +454,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
               role="tab"
               type="button"
             >
-              學測達標 <b>{passedResults.length}</b>
+              <span>學測達標</span> <b>{passedResults.length}</b>
             </button>
             <button
               aria-controls="result-tab-panel"
@@ -444,7 +467,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
               role="tab"
               type="button"
             >
-              未通過／接近 <b>{nearResults.length}</b>
+              <span>未通過／接近</span> <b>{nearResults.length}</b>
             </button>
             <button
               aria-controls="result-tab-panel"
@@ -457,7 +480,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
               role="tab"
               type="button"
             >
-              無法試算 <b>{unresolvedReviews.length}</b>
+              <span>無法試算</span> <b>{unresolvedReviews.length}</b>
             </button>
           </div>
 
@@ -550,7 +573,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
               emptyMessage="目前的狀態篩選或搜尋條件沒有符合校系。"
               evaluations={visiblePassedResults.slice(
                 resultStart,
-                resultStart + RESULT_PAGE_SIZE,
+                resultStart + resultPageSize,
               )}
               startIndex={resultStart}
               tone="passed"
@@ -559,6 +582,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
               currentPage={resultPage}
               label="學測達標校系"
               onPageChange={(page) => changePage(page, "result-tab-panel")}
+              pageSize={resultPageSize}
               totalItems={visiblePassedResults.length}
             />
           </div>
@@ -575,7 +599,9 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
                 <span className="result-icon" aria-hidden="true">↗</span>
                 <div>
                   <h2>未通過但接近的校系</h2>
-                  <p>依「最少總加分」由近到遠排列，每頁顯示 20 筆。</p>
+                  <p>
+                    依「最少總加分」由近到遠排列，每頁顯示 {resultPageSize} 筆。
+                  </p>
                 </div>
               </div>
               <strong>{visibleNearResults.length}</strong>
@@ -592,7 +618,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
               }
               evaluations={visibleNearResults.slice(
                 resultStart,
-                resultStart + RESULT_PAGE_SIZE,
+                resultStart + resultPageSize,
               )}
               startIndex={resultStart}
               tone="near"
@@ -601,6 +627,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
               currentPage={resultPage}
               label="接近校系"
               onPageChange={(page) => changePage(page, "result-tab-panel")}
+              pageSize={resultPageSize}
               totalItems={visibleNearResults.length}
             />
           </div>
@@ -628,7 +655,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
               emptyMessage="目前符合條件的校系都有可試算的學測門檻。"
               items={visibleUnresolvedReviews.slice(
                 resultStart,
-                resultStart + RESULT_PAGE_SIZE,
+                resultStart + resultPageSize,
               )}
               startIndex={resultStart}
             />
@@ -636,6 +663,7 @@ function HydratedResultsWorkspace({ programs }: ResultsWorkspaceProps) {
               currentPage={resultPage}
               label="無法完成試算校系"
               onPageChange={(page) => changePage(page, "result-tab-panel")}
+              pageSize={resultPageSize}
               totalItems={visibleUnresolvedReviews.length}
             />
           </div>

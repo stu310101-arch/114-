@@ -4,6 +4,7 @@ import { useMemo, useState, useSyncExternalStore } from "react";
 import type { FormEvent } from "react";
 import { matchesSchoolSelection } from "@/lib/filters";
 import {
+  EMPTY_GROUPED_PROGRAM_SELECTIONS,
   selectedUniqueProgramCodes,
   type ProgramOption,
 } from "@/lib/programSelection";
@@ -175,24 +176,16 @@ function HydratedQueryWorkspace({
   function selectFilterMethod(value: ProgramFilterMethod) {
     setQuery((current) => {
       if (current.filterMethod === value) return current;
-      const hasSelections =
-        current.programSelections.自然組.mode !== "none" ||
-        current.programSelections.社會組.mode !== "none";
-      if (hasSelections) {
-        setFilterChangeNotice({
-          message:
-            "已切換篩選方式，原本勾選的科系仍保留；選好新條件後，只會顯示仍符合的項目。",
-          previousQuery: current,
-        });
-      }
       return {
         ...current,
         filterMethod: value,
         groupSelection: [],
         academicCategoryIds: [],
         learningGroupIds: [],
+        programSelections: EMPTY_GROUPED_PROGRAM_SELECTIONS,
       };
     });
+    setFilterChangeNotice(null);
   }
 
   function selectGroups(value: GroupSelection) {
@@ -397,6 +390,7 @@ function HydratedQueryWorkspace({
         nextSearch={querySearch}
         previousLabel="前一頁：網站介紹"
         previousRoute="how-it-works"
+        showNext={false}
       />
     </main>
   );

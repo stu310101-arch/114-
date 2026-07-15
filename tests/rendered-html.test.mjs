@@ -99,6 +99,33 @@ test("keeps APCS optional while exposing separate APCS and GSAT outcomes", async
   assert.match(resultTable, /學測未通過/);
 });
 
+test("guards filter switches and keeps mobile result controls compact", async () => {
+  const [filterPanel, queryWorkspace, resultsWorkspace, css] =
+    await Promise.all([
+      readFile(new URL("../components/FilterPanel.tsx", import.meta.url), "utf8"),
+      readFile(
+        new URL("../components/QueryWorkspace.tsx", import.meta.url),
+        "utf8",
+      ),
+      readFile(
+        new URL("../components/ResultsWorkspace.tsx", import.meta.url),
+        "utf8",
+      ),
+      readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+    ]);
+
+  assert.match(filterPanel, /切換方式將清除目前/);
+  assert.match(filterPanel, />\s*取消\s*<\/button>/);
+  assert.match(filterPanel, />\s*確認切換\s*<\/button>/);
+  assert.match(queryWorkspace, /programSelections: EMPTY_GROUPED_PROGRAM_SELECTIONS/);
+  assert.match(queryWorkspace, /showNext=\{false\}/);
+  assert.match(resultsWorkspace, /RESULT_MOBILE_PAGE_SIZE = 10/);
+  assert.match(
+    css,
+    /@media \(max-width: 720px\)[\s\S]*?\.result-tabs \{[\s\S]*?grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/,
+  );
+});
+
 test("keeps the homepage header static and removes starter preview files", async () => {
   const [css, page, layout, packageJson] = await Promise.all([
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),

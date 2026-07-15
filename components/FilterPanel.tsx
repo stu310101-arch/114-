@@ -132,6 +132,8 @@ export function FilterPanel({
     departments: readonly GroupedDepartmentOption[];
     label: string;
   } | null>(null);
+  const [pendingFilterMethod, setPendingFilterMethod] =
+    useState<ProgramFilterMethod | null>(null);
   const programPageSize = useProgramPageSize();
 
   const availableAcademicCategoryOptions = useMemo(
@@ -262,6 +264,23 @@ export function FilterPanel({
     groupDepartments.length > 0 &&
     groupDepartments.every((department) => isDepartmentSelected(department));
 
+  function requestFilterMethodChange(value: ProgramFilterMethod) {
+    if (filterMethod === value) return;
+    if (selectedCount > 0) {
+      setPendingFilterMethod(value);
+      return;
+    }
+    applyFilterMethodChange(value);
+  }
+
+  function applyFilterMethodChange(value: ProgramFilterMethod) {
+    setPendingBulkSelection(null);
+    setPendingFilterMethod(null);
+    setProgramSearch("");
+    setProgramPage(0);
+    onFilterMethodChange(value);
+  }
+
   function isDepartmentSelected(department: GroupedDepartmentOption): boolean {
     return activeProgramGroups.some((group) => {
       const programCodes = department.programCodesByGroup[group];
@@ -372,12 +391,7 @@ export function FilterPanel({
               filterMethod === "academic-categories" ? "selected" : ""
             }
             data-testid="filter-method-academic-categories"
-            onClick={() => {
-              setPendingBulkSelection(null);
-              setProgramSearch("");
-              setProgramPage(0);
-              onFilterMethodChange("academic-categories");
-            }}
+            onClick={() => requestFilterMethodChange("academic-categories")}
             type="button"
           >
             <b>依類組篩選</b>
@@ -387,18 +401,40 @@ export function FilterPanel({
             aria-pressed={filterMethod === "learning-groups"}
             className={filterMethod === "learning-groups" ? "selected" : ""}
             data-testid="filter-method-learning-groups"
-            onClick={() => {
-              setPendingBulkSelection(null);
-              setProgramSearch("");
-              setProgramPage(0);
-              onFilterMethodChange("learning-groups");
-            }}
+            onClick={() => requestFilterMethodChange("learning-groups")}
             type="button"
           >
             <b>依十八學群篩選</b>
             <small>直接複選官方十八學群</small>
           </button>
         </div>
+
+        {pendingFilterMethod ? (
+          <div
+            aria-labelledby="filter-method-confirm-title"
+            className="filter-method-confirm"
+            role="alertdialog"
+          >
+            <p id="filter-method-confirm-title">
+              切換方式將清除目前 <b>{selectedCount}</b> 個選擇。
+            </p>
+            <div>
+              <button
+                onClick={() => setPendingFilterMethod(null)}
+                type="button"
+              >
+                取消
+              </button>
+              <button
+                className="confirm"
+                onClick={() => applyFilterMethodChange(pendingFilterMethod)}
+                type="button"
+              >
+                確認切換
+              </button>
+            </div>
+          </div>
+        ) : null}
 
         {filterMethod === "academic-categories" ? (
           <div className="learning-group-filter">
