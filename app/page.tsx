@@ -1,4 +1,5 @@
 import { RouteLink } from "@/components/PageNavigation";
+import { YearSwitcher } from "@/components/YearSwitcher";
 import programsJson from "@/data/programs_114.json";
 import sourcesJson from "@/data/sources_114.json";
 import {
@@ -36,6 +37,8 @@ export default function Home() {
           </span>
         </div>
       </header>
+
+      <YearSwitcher currentYear="114" variant="home" />
 
       <section className="hero home-hero" aria-labelledby="home-title">
         <div className="hero-copy">

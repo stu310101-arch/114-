@@ -48,6 +48,22 @@ test("server-renders the finished homepage and complete data status", async () =
   assert.doesNotMatch(html, /codex-preview|Codex is working|react-loading-skeleton/);
 });
 
+test("server-renders all three year sites and marks 114 as current", async () => {
+  const response = await render();
+  const html = await response.text();
+
+  assert.match(
+    html,
+    /<nav aria-label="切換回測學年度" class="year-switcher year-switcher--home">/,
+  );
+  assert.match(html, /href="https:\/\/stu310101-arch\.github\.io\/113-\/"/);
+  assert.match(html, /href="https:\/\/stu310101-arch\.github\.io\/115-\/"/);
+  assert.match(
+    html,
+    /aria-current="page"[^>]*>114 年度・目前<\/span>/,
+  );
+});
+
 test("server-renders every requested site page", async () => {
   const cases = [
     ["/how-it-works", /HOW IT WORKS|網站怎麼判斷/],
